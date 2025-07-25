@@ -23,6 +23,7 @@ namespace royale
 
 			Vector2 tileSize = Vector2{ width / fieldSize.x, height / fieldSize.y };
 
+			// draw field
 			for (int row = 0; row < fieldSize.y; row++)
 			{
 				for (int col = 0; col < fieldSize.x; col++)
@@ -37,6 +38,7 @@ namespace royale
 				}
 			}
 
+			// draw units
 			const std::vector<Unit*>& units = game.getUnits();
 			for (Unit* unit : units)
 			{
@@ -48,58 +50,16 @@ namespace royale
 				DrawRectangle(pos.x, pos.y, size.x, size.y, color);
 			}
 
-		EndTextureMode();
-
-		/*BeginDrawing();
-
-		// fill in the background
-		ClearBackground(BACKGROUND_COLOR);
-
-		// draw background
-		Vector2 gameResolution = game.getGameResolution();
-		Vector2 fieldSize = game.getFieldSize();
-
-		int tileSize = game.getTileSize();
-		int rows = fieldSize.y / tileSize;
-		int cols = fieldSize.x / tileSize;
-		int fieldOffsetX = (gameResolution.x - fieldSize.x) / 2;
-		int fieldOffsetY = (gameResolution.y - fieldSize.y) / 10;
-
-		for (int row = 0; row < rows; row++)
-		{
-			for (int col = 0; col < cols; col++)
+			// draw towers
+			auto towers = game.getTowers();
+			for (Tower& tower : towers)
 			{
-				bool isDark = (col + row) % 2 == 1;
-				Color tileColor = isDark ? DARKGREEN : GREEN;
+				Vector2 towerPos{ tower.getPosition().x * tileSize.x, tower.getPosition().y * tileSize.y };
+				Vector2 towerSize{ tower.getSize().x * tileSize.x, tower.getSize().y * tileSize.y };
 
-				int tileX = col * tileSize + fieldOffsetX;
-				int tileY = row * tileSize + fieldOffsetY;
-
-				DrawRectangle(tileX, tileY, tileSize, tileSize, tileColor);
+				DrawRectangle(towerPos.x, towerPos.y, towerSize.x, towerSize.y, TowerColor);
 			}
-		}
 
-		// draw available cards
-
-		int controlPanelX = 0;
-		int controlPanelY = fieldSize.y + fieldOffsetY * 2;
-		int controlPanelWidth = gameResolution.x;
-		int controlPanelHeight = gameResolution.y - fieldSize.y - (fieldOffsetY * 2);
-		Color controlPanelColor = LIGHTGRAY;
-
-		DrawRectangle(controlPanelX, controlPanelY, controlPanelWidth, controlPanelHeight, controlPanelColor);
-
-		int cardWidth = controlPanelWidth / 4 - fieldOffsetX;
-		int cardHeight = controlPanelHeight - fieldOffsetY * 2;
-		int cardY = controlPanelY + fieldOffsetY;
-		Color cardColor = GRAY;
-
-		for (int i = 0; i < 4; i++)
-		{
-			int cardX = controlPanelX + i * cardWidth + (i + 0.5) * fieldOffsetX;
-			DrawRectangle(cardX, cardY, cardWidth, cardHeight, cardColor);
-		}
-		
-		EndDrawing();*/
+		EndTextureMode();
 	}
 }

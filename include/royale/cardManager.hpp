@@ -17,7 +17,7 @@ namespace royale
 	public:
 		CardManager();
 
-		std::array<UnitType, Config::CARD_NUMBER> getHand() const;
+		const std::array<UnitType, Config::CARD_NUMBER>& getHand() const;
 		UnitType getNextCard() const;
 		void drawCard(UnitType unit);
 	};

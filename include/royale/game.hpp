@@ -7,6 +7,7 @@
 #include "event.hpp"
 #include "cardManager.hpp"
 #include "elixirManager.hpp"
+#include "towerManager.hpp"
 #include "config.hpp"
 
 namespace royale
@@ -17,6 +18,7 @@ namespace royale
 		std::vector<Unit*> units{};
 		CardManager mCardManager{};
 		ElixirManager mElixirManager{};
+		TowerManager mTowerManager{};
 		// UnitManager
 		// Maybe more
 		//
@@ -32,7 +34,8 @@ namespace royale
 		void placeUnit(Unit* unit);
 
 		const std::vector<Unit*>& getUnits() const;
-		const std::array<UnitType, Config::CARD_NUMBER> getCards() const;
+		const std::array<UnitType, Config::CARD_NUMBER>& getCards() const;
+		const std::array<Tower, Config::TOWER_COUNT>& getTowers() const;
 		double getElixir() const;
 
 		Vector2 getFieldSize() const;

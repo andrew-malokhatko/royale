@@ -38,9 +38,14 @@ namespace royale
 		return units;
 	}
 
-	const std::array<UnitType, 4> Game::getCards() const
+	const std::array<UnitType, 4>& Game::getCards() const
 	{
 		return mCardManager.getHand();
+	}
+
+	const std::array<Tower, Config::TOWER_COUNT>& Game::getTowers() const
+	{
+		return mTowerManager.getTowers();
 	}
 
 	double Game::getElixir() const

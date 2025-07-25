@@ -12,7 +12,7 @@ namespace royale
 		}
 	}
 
-	std::array<UnitType, Config::CARD_NUMBER> CardManager::getHand() const
+	const std::array<UnitType, Config::CARD_NUMBER>& CardManager::getHand() const
 	{
 		assert(Config::CARD_NUMBER <= Config::DECK_SIZE);
 

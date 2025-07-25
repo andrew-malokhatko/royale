@@ -7,12 +7,14 @@ namespace royale
 {
 	class Unit
 	{
-		Vector2 mPosition;
-		Vector2 mSize;
-		UnitType mUnitType;
-		int mHealth;
+		Vector2 mPosition {};
+		Vector2 mSize {};
+		UnitType mUnitType {};
+		int mHealth {};
 
 	public:
+		Unit() = delete;
+
 		Unit(Vector2 position, Vector2 size, UnitType unitType, int health)
 			: mPosition {position},
 			mSize {size},

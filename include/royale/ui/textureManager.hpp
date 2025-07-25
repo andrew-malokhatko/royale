@@ -50,7 +50,7 @@ public:
 	// resizes the cards keeping the aspect ratio
 	static void ResizeCards(int width, int height)
 	{
-		for (Texture2D& texture : textures)
+		for (Texture2D& texture : textures) 
 		{
 			Image image = LoadImageFromTexture(texture);
 

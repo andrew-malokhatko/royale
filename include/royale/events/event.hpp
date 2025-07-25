@@ -20,6 +20,8 @@ namespace royale
 			mEventType = eventType;
 		}
 
+		virtual ~Event() = default;
+
 		// Each event can be applied to a game 
 		virtual void apply(Game& game) = 0;
 	};

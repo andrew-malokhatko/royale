@@ -35,7 +35,8 @@ add_executable(game
     src/royale/cardManager.cpp
     src/royale/elixirManager.cpp
     src/royale/clock.cpp
- )
+    src/royale/game/towerManager.cpp
+  "src/royale/game/tower.cpp")
 
 target_include_directories(game PRIVATE
     include
@@ -44,6 +45,7 @@ target_include_directories(game PRIVATE
     include/royale/common
     include/royale/units
     include/royale/ui
+    include/royale/game
 
 )
 
