@@ -42,9 +42,9 @@ namespace royale
 			const std::vector<Unit*>& units = game.getUnits();
 			for (Unit* unit : units)
 			{
-				Vector2 pos = unit->getPosition().scale(tileSize);
+				Vector2 pos = unit->getPosition();
+				pos.scale(tileSize);
 				Vector2 size = unit->getSize();
-
 				Color color = unitColors.at(unit->getUnitType());
 
 				DrawRectangle(pos.x, pos.y, size.x, size.y, color);

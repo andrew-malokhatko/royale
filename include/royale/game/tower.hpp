@@ -1,14 +1,12 @@
 #pragma once
 
 #include "unit.hpp"
+#include "gameObject.hpp"
 
 namespace royale
 {
-	class Tower
+	class Tower : public GameObject
 	{
-		Vector2 mPosition{};
-		Vector2 mSize{};
-
 		bool mEnabled = true;
 		bool mBroken = false;
 
@@ -19,8 +17,6 @@ namespace royale
 	public:
 		Tower() = default;
 		Tower(const Vector2& position, const Vector2& size, double fireRate, int damage);
-		Vector2 getPosition();
-		Vector2 getSize();
 		//void update(double dt);
 		//void shoot(Unit* unit);
 	};

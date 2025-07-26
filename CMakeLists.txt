@@ -36,7 +36,7 @@ add_executable(game
     src/royale/elixirManager.cpp
     src/royale/clock.cpp
     src/royale/game/towerManager.cpp
-  "src/royale/game/tower.cpp")
+  "src/royale/game/tower.cpp" "src/royale/common/gameObject.cpp")
 
 target_include_directories(game PRIVATE
     include

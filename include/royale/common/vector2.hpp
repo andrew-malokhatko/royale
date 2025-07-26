@@ -16,21 +16,20 @@ namespace royale
 		{
 		}
 
-		Vector2& scale(double scaleFactorX, double scaleFactorY)
+		void scale(double scaleFactorX, double scaleFactorY)
 		{
 			x = x * scaleFactorX;
 			y = y * scaleFactorY;
-			return *this;
 		}
 
-		Vector2& scale(double scaleFactor)
+		void scale(double scaleFactor)
 		{
-			return scale(scaleFactor, scaleFactor);
+			scale(scaleFactor, scaleFactor);
 		}
 
-		Vector2& scale(Vector2 scaleFactor)
+		void scale(Vector2 scaleFactor)
 		{
-			return scale(scaleFactor.x, scaleFactor.y);
+			scale(scaleFactor.x, scaleFactor.y);
 		}
 	};
 }
