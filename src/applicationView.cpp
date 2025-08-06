@@ -6,6 +6,7 @@
 #include "textureManager.hpp"
 #include <algorithm>
 #include <vector>
+#include <array>
 #include <cassert>
 
 ApplicationView::ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game)
@@ -22,9 +23,13 @@ ApplicationView::ApplicationView(float resolutionX, float resolutionY, const cha
 
 	// remove to somewhere else
 	int i = 0;
-	for (royale::UnitType card : game.getCards())
+	for (royale::Card unitType : game.getCards())
 	{
-		mCards[i].setUnitType(card);
+		mCards[i].setDropCallback([this](UICard& card) {
+			this->onCardDropped(card);
+		});
+
+		mCards[i].setCard(unitType);
 		i++;
 	}
 }
@@ -66,7 +71,7 @@ void ApplicationView::resize(float x, float y, const royale::Game& game)
 
 	for (int i = 0; i < cardNumber; i++)
 	{
-		Card& card = mCards[i];
+		UICard& card = mCards[i];
 
 		float cardX = mControlPanel.x + i * cardWidth + ((i + 1 / cardNumber) * (cardWidth / cardNumber));
 		float cardY = mControlPanel.y + mGameBounds.y;
@@ -77,7 +82,7 @@ void ApplicationView::resize(float x, float y, const royale::Game& game)
 	}
 }
 
-void ApplicationView::drawGhost(const Card& card)
+void ApplicationView::drawGhost(const UICard& card)
 {
 	Vector2 fieldPosition = toFieldCoords(GetMousePosition());
 
@@ -107,7 +112,7 @@ void ApplicationView::render(const royale::Game& game)
 		mElixirBar.draw();
 
 		// draw cards
-		for (const Card& card : mCards)
+		for (const UICard& card : mCards)
 		{
 			if (card.isDragged() && isOnField(GetMousePosition()))
 			{
@@ -124,15 +129,9 @@ void ApplicationView::render(const royale::Game& game)
 	UnloadRenderTexture(gameTexture);
 }
 
-bool isInRange(royale::Vector2 target, royale::Vector2 range)
-{
-	return target.x < range.x && target.x >= 0 
-		&& target.y < range.y && target.y >= 0;
-}
-
 void ApplicationView::update(const royale::Game& game)
 {
-	for (Card& card : mCards)
+	for (UICard& card : mCards)
 	{
 		card.update();
 		card.handleInput();
@@ -141,9 +140,32 @@ void ApplicationView::update(const royale::Game& game)
 	mElixirBar.setElixir(game.getElixir());
 }
 
+// TODO
+// Add more checks for the cards palcement
+// when adding multiplayer it is important that client checks the validity of their own actions
+// for smooth gameplay. Though this may perhaps be solved by rendering the unit in the game
+// only after it was added by the game class itself.
+void ApplicationView::onCardDropped(UICard& card)
+{
+	if (isOnField(card.getCenter()))
+	{
+		Vector2 coords = toFieldCoords(card.getCenter());
+		royale::Vector2 position = { coords.x, coords.y };
+
+		royale::Event* event = new royale::CardPlacedEvent(position, card.getCard());
+		mEvents.push_back(event);
+	}
+}
+
 std::vector<royale::Event*>	ApplicationView::pollEvents()
 {	
 	return std::move(mEvents);
+}
+
+bool isInRange(royale::Vector2 target, royale::Vector2 range)
+{
+	return target.x < range.x && target.x >= 0
+		&& target.y < range.y && target.y >= 0;
 }
 
 bool ApplicationView::isOnField(int x, int y)

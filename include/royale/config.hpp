@@ -7,7 +7,7 @@ namespace royale
 	class Config
 	{
 	public:
-		static constexpr int CARD_NUMBER = 4;
+		static constexpr int HAND_SIZE = 4;
 		static constexpr int DECK_SIZE = 8;
 
 		static constexpr  int FIELD_WIDTH = 18;

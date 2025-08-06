@@ -4,21 +4,16 @@
 
 namespace royale
 {
-
-	CardPlacedEvent::CardPlacedEvent(Vector2 position, UnitType unitType)
+	CardPlacedEvent::CardPlacedEvent(Vector2 position, Card card)
 		: Event(CardPlaced),
 		mPosition{position},
-		mUnitType{unitType}
+		mCard{card}
 	{
 	}
 
 	void CardPlacedEvent::apply(Game& game)
 	{
-		Vector2 defaultUnitSize = Vector2{ 50, 50 };
-
-		// TODO:
-		// initialize new unit
-		Unit* knight = new Unit(mPosition, defaultUnitSize, mUnitType, 100);
+		Unit* knight = new Unit(mCard, mPosition);
 
 		game.placeUnit(knight);
 	}

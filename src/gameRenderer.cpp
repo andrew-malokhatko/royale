@@ -43,12 +43,18 @@ namespace royale
 			for (Unit* unit : units)
 			{
 				Vector2 pos = unit->getPosition();
-				pos.scale(tileSize);
 				Vector2 size = unit->getSize();
-				Color color = unitColors.at(unit->getUnitType());
 
+				pos.scale(tileSize);
+				size.scale(tileSize);
+
+				Color color = unitColors.at(unit->getCard());
 				DrawRectangle(pos.x, pos.y, size.x, size.y, color);
 			}
+
+			// draw structures
+
+			// draw spells
 
 			// draw towers
 			auto towers = game.getTowers();

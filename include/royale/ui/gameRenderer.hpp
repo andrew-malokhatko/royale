@@ -10,13 +10,14 @@ namespace royale
 	{
 		const Color BACKGROUND_COLOR = WHITE;
 		const Color TowerColor = LIGHTGRAY;
-		const std::unordered_map<UnitType, Color> unitColors = 
+		const std::unordered_map<Card, Color> unitColors = 
 		{
-			{UnitType::Knight, BLUE},
-			{UnitType::Bomber, RED},
-			{UnitType::Prince, GOLD},
-			{UnitType::Goblins, GREEN},
-			{UnitType::Archers, PURPLE}
+			{Card::Arrows, WHITE},
+			{Card::Knight, BLUE},
+			{Card::Bomber, RED},
+			{Card::Prince, GOLD},
+			{Card::Goblins, GREEN},
+			{Card::Giant, PURPLE},
 		};
 
 	public:

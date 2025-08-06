@@ -38,7 +38,7 @@ namespace royale
 		return units;
 	}
 
-	const std::array<UnitType, 4>& Game::getCards() const
+	const std::array<Card, Config::HAND_SIZE> Game::getCards() const
 	{
 		return mCardManager.getHand();
 	}

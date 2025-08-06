@@ -3,10 +3,8 @@
 #include "view.hpp"
 #include "gameRenderer.hpp"
 #include "game.hpp"
-#include "vector2.hpp"
-#include "card.hpp"
+#include "UICard.hpp"
 #include "elixirBar.hpp"
-#include "colorScheme.hpp"
 #include <array>
 
 class ApplicationView : public royale::View
@@ -18,7 +16,7 @@ class ApplicationView : public royale::View
 	const char* mWindowTitle;
 
 	ElixirBar mElixirBar {};
-	std::array<Card, royale::Config::CARD_NUMBER> mCards {};
+	std::array<UICard, royale::Config::HAND_SIZE> mCards {};
 	royale::GameRenderer* mGameRenderer {};
 	std::vector<royale::Event*> mEvents {};
 
@@ -27,7 +25,9 @@ class ApplicationView : public royale::View
 	Vector2 toFieldCoords(Vector2 position);
 	Vector2 toFieldCoords(int x, int y);
 
-	void drawGhost(const Card& card);
+	void drawGhost(const UICard& card);
+
+	void onCardDropped(UICard& card);
 
 public:
 	ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game);

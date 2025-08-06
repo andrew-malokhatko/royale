@@ -1,41 +1,48 @@
 #pragma once
 
 #include <array>
+#include <functional>
 #include "vector2.hpp"
 #include "UIElement.hpp"
 #include "colorScheme.hpp"
-#include "unitType.hpp"
-//#include "textureManager.hpp"
+#include "card.hpp"
 #include "textureManager.hpp"
 
-class Card : public UIElement
+class UICard : public UIElement
 {
 	// Default position is where card should be normally drawn
 	// or where it should be drawn after the drag is over
 	Vector2 mDefaultPosition{};
-	royale::UnitType mUnitType{};
+	royale::Card mCard{};
+
+	std::function<void(UICard&)> dropCallback;
 
 	bool mSelected{};
 	bool mDragged{};
 public:
-	Card() = default;
+	UICard() = default;
 
-	Card(Rectangle rec)
+	UICard(Rectangle rec)
 		: UIElement(rec)
 	{
-		mDefaultPosition = {rec.x, rec.y};
+		mDefaultPosition = { rec.x, rec.y };
 	}
 
-	~Card() = default;
+	~UICard() = default;
 
 	void setDefaultPosition(Vector2 position)
 	{
 		mDefaultPosition = position;
 	}
 
-	void setUnitType(royale::UnitType unitType)
+	void setCard(royale::Card card)
 	{
-		mUnitType = unitType;
+		mCard = card;
+	}
+
+	royale::Card getCard()
+	{
+		return mCard;
 	}
 
 	void update()
@@ -71,12 +78,10 @@ public:
 			return;
 		}
 
-		const Texture2D& texture = TextureManager::textures[mUnitType];
-		//DrawTexture(texture, mRec.x, mRec.y, WHITE);
+		const Texture2D& texture = TextureManager::GetTexture(mCard);
 		Rectangle source = { 0, 0, mRec.width, mRec.height };
+
 		DrawTextureRec(texture, source, Vector2{ mRec.x, mRec.y }, WHITE);
-		//Color cardColor = mEnabled ? cardColors[mUnitType] : UIColorScheme.CARD_COLOR;
-		//DrawRectangleRec(mRec, cardColor);
 	}
 
 	void onClick() override
@@ -84,8 +89,15 @@ public:
 		mDragged = true;
 	}
 
+	void setDropCallback(std::function<void(UICard&)> func)
+	{
+		dropCallback = func;
+	}
+
 	void onRelease() override
 	{
+		dropCallback(*this);
+
 		mDragged = false;
 
 		setPosition(mDefaultPosition);

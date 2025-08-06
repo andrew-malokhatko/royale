@@ -53,6 +53,11 @@ public:
 		return { mRec.x, mRec.y };
 	}
 
+	Vector2 getCenter() const
+	{
+		return { mRec.x + mRec.width / 2, mRec.y + mRec.height / 2 };
+	}
+
 	void setPosition(Vector2 position)
 	{
 		mRec.x = position.x;

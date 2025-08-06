@@ -1,25 +1,27 @@
 #pragma once
 
 #include <array>
-#include "unitType.hpp"
+#include "card.hpp"
 #include "raylib.h"
 
 
 class TextureManager
 {
 public:
-	inline static std::array<Texture2D, royale::UNIT_COUNT> textures {};
+	inline static std::array<Texture2D, royale::CARD_COUNT> textures {};
 
 	static void LoadTextures()
 	{
-		textures[royale::None] = LoadTexture("cards/none.png");
-		textures[royale::Knight] = LoadTexture("cards/knight.png");
-		textures[royale::Bomber] = LoadTexture("cards/bomber.png");
-		textures[royale::Prince] = LoadTexture("cards/prince.png");
-		textures[royale::Goblins] = LoadTexture("cards/goblins.png");
-		textures[royale::Archers] = LoadTexture("cards/archers.png");
-		textures[royale::Giant] = LoadTexture("cards/giant.png");
-
+		textures[toIndex(royale::Card::None)] = LoadTexture("cards/none.png");
+		textures[toIndex(royale::Card::Arrows)] = LoadTexture("cards/arrows.png");
+		textures[toIndex(royale::Card::Bomber)] = LoadTexture("cards/bomber.png");
+		textures[toIndex(royale::Card::Knight)] = LoadTexture("cards/knight.png");
+		textures[toIndex(royale::Card::Giant)] = LoadTexture("cards/giant.png");
+		textures[toIndex(royale::Card::Goblins)] = LoadTexture("cards/goblins.png");
+		textures[toIndex(royale::Card::Golem)] = LoadTexture("cards/golem.png");
+		textures[toIndex(royale::Card::Prince)] = LoadTexture("cards/prince.png");
+		textures[toIndex(royale::Card::Princess)] = LoadTexture("cards/princess.png");
+		textures[toIndex(royale::Card::XBow)] = LoadTexture("cards/x_bow.png");
 	}
 	
 	static void UnloadTextures()
@@ -44,6 +46,11 @@ public:
 
 			UnloadImage(image);
 		}
+	}
+
+	static const Texture2D& GetTexture(royale::Card card)
+	{
+		return textures[toIndex(card)];
 	}
 
 #if 0

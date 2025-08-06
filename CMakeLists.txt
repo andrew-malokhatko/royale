@@ -19,7 +19,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(raylib)
 
-find_package(raylib REQUIRED)
+#find_package(raylib REQUIRED)
 
 add_executable(game
     main.cpp
@@ -43,7 +43,7 @@ target_include_directories(game PRIVATE
     include/royale
     include/royale/events
     include/royale/common
-    include/royale/units
+    include/royale/cards
     include/royale/ui
     include/royale/game
 

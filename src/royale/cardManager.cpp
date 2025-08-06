@@ -3,55 +3,56 @@
 
 namespace royale
 {
-	// TEMP 
+	// TEMPORARY
+	// DECK SHOULD AT LEAST BE FILLED RANDOLY
 	CardManager::CardManager()
 	{
 		for (int i = 0; i < Config::DECK_SIZE; i++)
 		{
-			mDeck[i] = static_cast<UnitType>(i + 1);
+			mDeck[i] = static_cast<Card>(i + 1);
 		}
 	}
 
-	const std::array<UnitType, Config::CARD_NUMBER>& CardManager::getHand() const
+	const std::array<Card, Config::HAND_SIZE> CardManager::getHand() const
 	{
-		assert(Config::CARD_NUMBER <= Config::DECK_SIZE);
+		assert(Config::HAND_SIZE <= Config::DECK_SIZE);
 
-		std::array<UnitType, Config::CARD_NUMBER> hand {};
-		std::memcpy(hand.data(), mDeck.data(), hand.size() * sizeof(UnitType));
+		std::array<Card, Config::HAND_SIZE> hand {};
+		std::memcpy(hand.data(), mDeck.data(), hand.size() * sizeof(Card));
 		return hand;
 	}
 
-	UnitType CardManager::getNextCard() const
+	Card CardManager::getNextCard() const
 	{
-		assert(Config::CARD_NUMBER <= Config::DECK_SIZE);
+		assert(Config::HAND_SIZE<= Config::DECK_SIZE);
 
-		if (Config::CARD_NUMBER == Config::DECK_SIZE)
+		if (Config::HAND_SIZE == Config::DECK_SIZE)
 		{
-			return None;
+			return Card::None;
 		}
 
-		return mDeck[Config::CARD_NUMBER];
+		return mDeck[Config::HAND_SIZE];
 	}
 
-	void CardManager::drawCard(UnitType unit)
+	void CardManager::drawCard(Card card)
 	{
-		assert(std::find(mDeck.begin(), mDeck.begin() + Config::CARD_NUMBER, unit) != mDeck.end());
+		assert(std::find(mDeck.begin(), mDeck.begin() + Config::HAND_SIZE, card) != mDeck.end());
 
-		for (int i = 0; i < Config::CARD_NUMBER; i++)
+		for (int i = 0; i < Config::HAND_SIZE; i++)
 		{
-			if (mDeck[i] == unit)
+			if (mDeck[i] == card)
 			{
-				mDeck[i] = mDeck[Config::CARD_NUMBER];
+				mDeck[i] = mDeck[Config::HAND_SIZE];
 			}
 		}
 
 		// Move the deck 1 left
-		for (int i = Config::DECK_SIZE - 1; i >= Config::CARD_NUMBER; i--)
+		for (int i = Config::DECK_SIZE - 1; i >= Config::HAND_SIZE; i--)
 		{
 			mDeck[i - 1] = mDeck[i];
 		}
 
 		// Move drawn unit to the back
-		mDeck[Config::DECK_SIZE - 1] = unit;
+		mDeck[Config::DECK_SIZE - 1] = card;
 	}
 }
