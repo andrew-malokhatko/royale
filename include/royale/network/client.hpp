@@ -13,7 +13,7 @@ namespace Net
 		void endConnection();
 
 		void sendPacket(int packetId);
-		int receivePacket();
+		void receivePacket();
 
 		bool isConnected();
 	};

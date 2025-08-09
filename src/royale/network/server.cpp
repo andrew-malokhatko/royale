@@ -5,9 +5,15 @@
 #include <thread>
 #include <string>
 #include <iostream>
-#include <winsock2.h>
-#include <ws2tcpip.h>
 
+int main()
+{
+	Net::Server server = Net::Server();
+
+	server.start();
+
+	return 0;
+}
 
 namespace Net
 {
@@ -18,6 +24,7 @@ namespace Net
 
 	Server::~Server()
 	{
+		stop();
 		WSACleanup();
 	}
 
@@ -75,12 +82,13 @@ namespace Net
 		}
 
 		addrinfo* addrInfo = p;
-		std::string mAddress = getAddress(addrInfo);
+		mAddress = getAddress(addrInfo);
 		std::cout << "Succesfully bound to " << mAddress << "\n";
 		freeaddrinfo(res);
 
 		// start listening
 		std::thread listenThread(&Server::listenForClients, this);
+		listenThread.join();
 	}
 
 	void Server::listenForClients()
@@ -95,13 +103,13 @@ namespace Net
 		mActive = true;
 		std::cout << "Listening on: " << mAddress << "\n";
 
-		while (mActive)
+		while (mActive.load())
 		{
-			sockaddr_storage clientSockAddrStorage;
-
+			sockaddr_storage clientSockAddrStorage{};
 			sockaddr* clientSockAddr = reinterpret_cast<sockaddr*>(&clientSockAddrStorage);
-			int addrlen = sizeof(clientSockAddrStorage);
-			int clientSocket = accept(mServerSocket, (sockaddr*)clientSockAddr, &addrlen);
+			socklen_t addrlen = sizeof(clientSockAddrStorage);
+
+			int clientSocket = accept(mServerSocket, clientSockAddr, &addrlen);
 
 			if (clientSocket == -1)
 			{
@@ -119,6 +127,7 @@ namespace Net
 			std::cout << "Client connected with: " << clientIPver << " " << clientAddress << "\n";
 
 			std::thread clientThread(&Server::handleClient, this, clientInfo.id);
+			clientThread.detach();
 		}
 	}
 
@@ -140,7 +149,7 @@ namespace Net
 
 	bool Server::isActive()
 	{
-		return mActive;
+		return mActive.load();
 	}
 
 	void Server::handleClient(client_id clientId)

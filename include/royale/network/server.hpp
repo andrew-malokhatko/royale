@@ -2,6 +2,9 @@
 
 #include <unordered_map>
 #include <mutex>
+#include <atomic>
+#include <winsock2.h>
+#include <ws2tcpip.h>
 
 namespace Net
 {
@@ -19,7 +22,7 @@ namespace Net
 		static constexpr int BACKLOG = 10;	// Maximum number of pending connections
 
 		int mServerSocket{};
-		bool mActive{};
+		std::atomic<bool> mActive{};
 		std::string mAddress{};
 		client_id mClientIdCounter = 0;
 

@@ -25,6 +25,43 @@ add_executable(game
     main.cpp
  )
 
+ #           START OF TEMP
+#############################
+#############################
+
+add_executable(server src/royale/network/server.cpp)
+add_executable(client src/royale/network/client.cpp)
+
+target_sources(server PRIVATE
+    src/royale/network/server.cpp
+    src/royale/network/NetUtils.cpp
+)
+
+target_sources(client PRIVATE
+    src/royale/network/client.cpp
+    src/royale/network/NetUtils.cpp
+)
+
+target_include_directories(client PRIVATE
+    include/royale/network
+)
+
+target_include_directories(server PRIVATE
+    include/royale/network
+)
+
+target_link_libraries(server
+    ws2_32
+)
+
+target_link_libraries(client
+    ws2_32
+)
+
+#           END OF TEMP
+#############################
+#############################
+
  target_sources(game PRIVATE
     src/application.cpp
     src/royale/game.cpp

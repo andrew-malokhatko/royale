@@ -7,17 +7,27 @@
 #include <ws2tcpip.h>
 #include <thread>
 
+int main()
+{
+	Net::Client client = Net::Client();
+
+	client.startConnection();
+}
+
 namespace Net
 {
 	Client::Client()
 	{
+		initWSA();
 	}
 
 	Client::~Client()
 	{
+		endConnection();
+		WSACleanup();
 	}
 
-	void Client::startConnection(int port = 3490)
+	void Client::startConnection(int port)
 	{
 		addrinfo hints{};
 		addrinfo* res = nullptr;
@@ -52,7 +62,7 @@ namespace Net
 			int sockConnectSuc = connect(mSocket, p->ai_addr, p->ai_addrlen);
 			if (sockConnectSuc == -1)
 			{
-				std::cerr << "Could not connect to socket" << address << "\n";
+				std::cerr << "Connection Failed" << "\n";
 				continue;
 			}
 
@@ -69,8 +79,16 @@ namespace Net
 			return;
 		}
 
-		std::thread receiveThread(&Client::receivePacket, this);
+		//TODO
+		//
+		//
+		//		CHANGE JOIN TO DETACH !!!!!
+		//		CURRENT VERSION WORKS ONLY INDEPENDENTLY 
+		//
+		//
 
+		std::thread receiveThread(&Client::receivePacket, this);
+		receiveThread.join();
 	}
 
 	void Client::endConnection()
@@ -88,7 +106,7 @@ namespace Net
 		//	...
 	}
 
-	int Client::receivePacket()
+	void Client::receivePacket()
 	{
 		// receive and deserialize packets from the server
 		//  ...
