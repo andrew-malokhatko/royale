@@ -4,4 +4,4 @@ external/**
 
 .vs/**
 .vscode/** 
-.royale/assets/**
+.assets/**
