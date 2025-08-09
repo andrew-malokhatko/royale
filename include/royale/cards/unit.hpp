@@ -21,7 +21,7 @@ namespace royale
 			mCard { card }
 		{
 		}
-
+		 
 		Card getCard()
 		{
 			return mCard;

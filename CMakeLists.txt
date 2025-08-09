@@ -23,7 +23,7 @@ FetchContent_MakeAvailable(raylib)
 
 add_executable(game
     main.cpp
-)
+ )
 
  target_sources(game PRIVATE
     src/application.cpp
@@ -36,7 +36,12 @@ add_executable(game
     src/royale/elixirManager.cpp
     src/royale/clock.cpp
     src/royale/game/towerManager.cpp
-  "src/royale/game/tower.cpp" "src/royale/common/gameObject.cpp")
+    src/royale/game/tower.cpp
+    src/royale/common/gameObject.cpp
+    src/royale/network/client.cpp
+    src/royale/network/server.cpp
+    src/royale/network/NetUtils.cpp
+ )
 
 target_include_directories(game PRIVATE
     include
@@ -46,11 +51,12 @@ target_include_directories(game PRIVATE
     include/royale/cards
     include/royale/ui
     include/royale/game
-
+    include/royale/network
 )
 
 target_link_libraries(game
     raylib
+    ws2_32
 )
 
 # Copy resources folder to build directory
