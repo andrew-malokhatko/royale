@@ -5,15 +5,8 @@
 #include <thread>
 #include <string>
 #include <iostream>
-
-int main()
-{
-	Net::Server server = Net::Server();
-
-	server.start();
-
-	return 0;
-}
+#include <cassert>
+#include <CardPlacedPacket.hpp>
 
 namespace Net
 {
@@ -103,31 +96,30 @@ namespace Net
 		mActive = true;
 		std::cout << "Listening on: " << mAddress << "\n";
 
-		while (mActive.load())
+		while (isActive())
 		{
 			sockaddr_storage clientSockAddrStorage{};
 			sockaddr* clientSockAddr = reinterpret_cast<sockaddr*>(&clientSockAddrStorage);
 			socklen_t addrlen = sizeof(clientSockAddrStorage);
 
 			int clientSocket = accept(mServerSocket, clientSockAddr, &addrlen);
-
 			if (clientSocket == -1)
 			{
 				std::cout << "Client was not accepted\n";
 				continue;
 			}
 
-			ClientInfo clientInfo = {++mClientIdCounter, clientSocket, clientSockAddrStorage};
-			clientsMutex.lock();
-			clients[clientSocket] = clientInfo;
-			clientsMutex.unlock();
-
 			std::string clientAddress = getAddress(clientSockAddr);
 			std::string clientIPver = getIPVersion(clientSockAddr);
 			std::cout << "Client connected with: " << clientIPver << " " << clientAddress << "\n";
 
-			std::thread clientThread(&Server::handleClient, this, clientInfo.id);
-			clientThread.detach();
+			client_id clientId = ++mClientIdCounter;
+			ClientInfo clientInfo = { clientId, clientSocket, clientSockAddrStorage};
+
+			clientsMutex.lock();
+			clients[clientId] = clientInfo;
+			clientThreads[clientId] = std::thread(&Server::handleClient, this, clientId);
+			clientsMutex.unlock();
 		}
 	}
 
@@ -144,29 +136,69 @@ namespace Net
 		}
 		clients.clear();
 
+		for (auto& clientPair : clientThreads)
+		{
+			std::thread& clientThread = clientPair.second;
+			clientThread.join();
+		}
+		clientThreads.clear();
+
 		clientsMutex.unlock();
 	}
 
-	bool Server::isActive()
+	bool Server::isActive() const
 	{
 		return mActive.load();
 	}
 
 	void Server::handleClient(client_id clientId)
 	{
-		// recieve data from client
-		// ...
-		// ...
-		// ...
-		// ...
+		while (isActive())
+		{
+			clientsMutex.lock();
+			const ClientInfo& clientInfo = clients[clientId];
+			clientsMutex.unlock();
+
+			SOCKET clientSocket = clientInfo.socket;
+			std::vector<uint8_t> data(4096); // 4 Kib
+
+			int bytesReceived = recv(clientSocket, reinterpret_cast<char*>(data.data()), data.size(), 0);
+			if (bytesReceived <= 0)
+			{
+				continue;
+			}
+
+			auto packet = packetFromBytes(data);
+			packetHandler.handlePacket(packet.get(), *this);
+		}
+
+		// Do not forget to join the thread after it has finished the execution
+		clientsMutex.lock();
+		assert(clientThreads.contains(clientId));
+		clientThreads[clientId].join();
+		clientsMutex.unlock();
 	}
 
-	void Server::sendPacket(client_id clientId, int packetId)
+	void Server::sendPacket(client_id clientId, const Packet* packet)
 	{
-		// send data to client with clientId
-		// ...
-		// ...
-		// ...
-		// ...
+		clientsMutex.lock();
+		SOCKET clientSocket = clients[clientId].socket;
+		clientsMutex.unlock();
+
+		std::vector<uint8_t> data = packet->pack();
+		assert(!data.empty());
+
+		send(clientSocket, reinterpret_cast<const char*>(data.data()), data.size(), 0);
+	}
+
+	void Server::broadcast(const Packet* packet)
+	{
+		clientsMutex.lock();
+		for (const auto& clientPair : clients)
+		{
+			const ClientInfo& clientInfo = clientPair.second;
+			sendPacket(clientInfo.id, packet);
+		}
+		clientsMutex.unlock();
 	}
 }

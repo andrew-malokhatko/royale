@@ -87,8 +87,8 @@ namespace Net
 		//
 		//
 
-		std::thread receiveThread(&Client::receivePacket, this);
-		receiveThread.join();
+		mReceiveThread = std::thread(&Client::receivePacket, this);
+		mReceiveThread.join();
 	}
 
 	void Client::endConnection()
@@ -104,7 +104,7 @@ namespace Net
 		// 	...
 		// 	...
 		//	...
-	}
+	 }
 
 	void Client::receivePacket()
 	{

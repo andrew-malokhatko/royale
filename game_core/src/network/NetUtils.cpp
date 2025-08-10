@@ -1,6 +1,7 @@
 #include "NetUtils.hpp"
-
 #include <iostream>
+#include <cassert>
+#include "CardPlacedPacket.hpp"
 
 namespace Net
 {
@@ -66,5 +67,19 @@ namespace Net
 	std::string getIPVersion(sockaddr* sockAddr)
 	{
 		return sockAddr->sa_family == AF_INET ? "IPv4" : "IPv6";
+	}
+
+	std::unique_ptr<Packet> packetFromBytes(const std::vector<uint8_t>& bytes)
+	{
+		const PacketData* packetData = reinterpret_cast<const PacketData*>(bytes.data());
+		PacketType packetType = packetData->packetType;
+
+		switch (packetType)
+		{
+		case PacketType::CardPlacedPacket:
+			return std::make_unique<CardPlacedPacket>(CardPlacedPacket::unpack(bytes));
+		}
+
+		assert(false);
 	}
 }

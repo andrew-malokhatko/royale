@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cstdint>
+
 namespace royale
 {
-	enum EventType
+	enum class EventType : uint8_t
 	{
 		CardPlaced,
 		AbilityActivated

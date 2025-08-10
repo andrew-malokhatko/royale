@@ -5,7 +5,7 @@
 namespace royale
 {
 	CardPlacedEvent::CardPlacedEvent(Vector2 position, Card card)
-		: Event(CardPlaced),
+		: Event(EventType::CardPlaced),
 		mPosition{position},
 		mCard{card}
 	{
@@ -16,5 +16,15 @@ namespace royale
 		Unit* knight = new Unit(mCard, mPosition);
 
 		game.placeUnit(knight);
+	}
+
+	Vector2 CardPlacedEvent::getPosition() const
+	{
+		return mPosition;
+	}
+
+	Card CardPlacedEvent::getCard() const
+	{
+		return mCard;
 	}
 };

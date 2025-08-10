@@ -3,8 +3,11 @@
 #include <unordered_map>
 #include <mutex>
 #include <atomic>
+#include <thread>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include "Packet.hpp"
+#include "PacketHandlerRegistry.hpp"
 
 namespace Net
 {
@@ -27,15 +30,15 @@ namespace Net
 		client_id mClientIdCounter = 0;
 
 		std::unordered_map<client_id, ClientInfo> clients;
+		std::unordered_map<client_id, std::thread> clientThreads;
 		std::mutex clientsMutex;
 
-
-		//std::vector<int> data;
-		//royale::Game game;
+		PacketHandlerRegistry packetHandler{};
 
 		void listenForClients();
 		void handleClient(client_id clientId);
-		void sendPacket(client_id clientId, int packetId);
+		void sendPacket(client_id clientId, const Packet* packet);
+		void broadcast(const Packet* packet);
 
 	public:
 		Server();
@@ -43,6 +46,6 @@ namespace Net
 
 		void start(int port = 3490);
 		void stop();
-		bool isActive();
+		bool isActive() const;
 	};
 }

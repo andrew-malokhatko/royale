@@ -14,6 +14,9 @@ namespace royale
 
 	public:
 		CardPlacedEvent(Vector2 position, Card card);
-		void apply(Game& game);
+		void apply(Game& game) override;
+
+		Vector2 getPosition() const;
+		Card getCard() const;
 	};
 }

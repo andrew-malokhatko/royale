@@ -3,6 +3,8 @@
 #include <string>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <memory>
+#include "packet.hpp"
 
 namespace Net
 {
@@ -13,4 +15,6 @@ namespace Net
 
 	std::string getIPVersion(addrinfo* addrInfo);
 	std::string getIPVersion(sockaddr* sockAddr);
+
+	std::unique_ptr<Packet> packetFromBytes(const std::vector<uint8_t>& bytes);
 }

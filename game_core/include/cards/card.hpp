@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cstdint>
+
 namespace royale
 {
-	enum class Card
+	enum class Card : uint8_t
 	{
 		// Units
 		None,
@@ -21,7 +23,7 @@ namespace royale
 		XBow,
 	};
 		
-	enum class CardType
+	enum class CardType : uint8_t
 	{
 		Unit,
 		Spell,
