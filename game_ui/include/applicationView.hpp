@@ -18,7 +18,7 @@ class ApplicationView : public royale::View
 	ElixirBar mElixirBar {};
 	std::array<UICard, royale::Config::HAND_SIZE> mCards {};
 	royale::GameRenderer* mGameRenderer {};
-	std::vector<royale::Event*> mEvents {};
+	std::vector<std::unique_ptr<royale::Event>> mEvents {};
 
 	bool isOnField(int x, int y);
 	bool isOnField(Vector2 position);
@@ -36,5 +36,5 @@ public:
 	void resize(float x, float y, const royale::Game& game) override;
 	void update(const royale::Game& game) override;
 	void render(const royale::Game& game) override;
-	std::vector<royale::Event*> pollEvents() override;
+	std::vector<std::unique_ptr<royale::Event>> pollEvents() override;
 };

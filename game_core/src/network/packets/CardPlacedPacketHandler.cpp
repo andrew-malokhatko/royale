@@ -1,5 +1,7 @@
 #include "CardPlacedPacketHandler.hpp"
+
 #include "CardPlacedPacket.hpp"
+#include "server.hpp"
 #include <cassert>
 
 namespace Net
@@ -9,7 +11,6 @@ namespace Net
 	{
 		// This is how you could cast the packet
 		// to process it on the server
-
 		const CardPlacedPacket* cardPacket = static_cast<const CardPlacedPacket*>(packet);
 
 		server.broadcast(packet);

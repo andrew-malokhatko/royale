@@ -3,6 +3,7 @@
 #include "game.hpp"
 #include "clock.hpp"
 #include "view.hpp"
+#include "client.hpp"
 
 class Application
 {
@@ -12,8 +13,11 @@ class Application
 
 	royale::Clock mClock {};
 	royale::Game mGame {};
-	royale::View* mView;
+	royale::View* mView {};
 
+	Net::Client mClient{};
+
+	bool multiplayer = true;
 	bool running = true;
 
 public:

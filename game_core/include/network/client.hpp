@@ -1,15 +1,24 @@
 #pragma once
 
 #include <thread>
+#include <atomic>
+#include <vector>
+#include <mutex>
+#include <memory>
+#include "Packet.hpp"
+#include "event.hpp"
 
 namespace Net
 {
 	class Client
 	{
 		int mSocket{};
-		bool mConnected{};
 
+		std::atomic<bool> mConnected{};
 		std::thread mReceiveThread {};
+
+		std::vector<std::unique_ptr<Packet>> incomingPackets{};
+		std::mutex packetsMutex{};
 
 	public:
 		Client();
@@ -19,9 +28,13 @@ namespace Net
 		void endConnection();
 
 		//void sendEvent(Event* event);
-		void sendPacket(int packetId);
-		void receivePacket();
+		void sendPacket(const Packet* packet);
+		void receivePackets();
+		std::vector<std::unique_ptr<Packet>> getIncomingPackets();
 
 		bool isConnected();
+
+		// SEPARATE CLASS
+		void sendEvent(const royale::Event* event);
 	};
 }

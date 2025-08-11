@@ -11,7 +11,7 @@ namespace Net
 
 	public:
 		PacketHandlerRegistry();
-		~PacketHandlerRegistry() = default;
+		~PacketHandlerRegistry();
 
 		//
 		// This function matches handlers with corresponding packet types

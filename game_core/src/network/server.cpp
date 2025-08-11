@@ -102,7 +102,7 @@ namespace Net
 			sockaddr* clientSockAddr = reinterpret_cast<sockaddr*>(&clientSockAddrStorage);
 			socklen_t addrlen = sizeof(clientSockAddrStorage);
 
-			int clientSocket = accept(mServerSocket, clientSockAddr, &addrlen);
+			SOCKET clientSocket = accept(mServerSocket, clientSockAddr, &addrlen);
 			if (clientSocket == -1)
 			{
 				std::cout << "Client was not accepted\n";
@@ -167,6 +167,7 @@ namespace Net
 			{
 				continue;
 			}
+			data.resize(bytesReceived);
 
 			auto packet = packetFromBytes(data);
 			packetHandler.handlePacket(packet.get(), *this);
@@ -179,26 +180,41 @@ namespace Net
 		clientsMutex.unlock();
 	}
 
-	void Server::sendPacket(client_id clientId, const Packet* packet)
+	void Server::sendPacketSock(SOCKET socket, const Packet* packet) const
 	{
+		std::vector<uint8_t> data = packet->pack();
+		assert(!data.empty());
+
+		send(socket, reinterpret_cast<const char*>(data.data()), data.size(), 0);
+	}
+
+	void Server::sendPacket(client_id clientId, const Packet* packet)
+	{	
 		clientsMutex.lock();
 		SOCKET clientSocket = clients[clientId].socket;
 		clientsMutex.unlock();
 
-		std::vector<uint8_t> data = packet->pack();
-		assert(!data.empty());
-
-		send(clientSocket, reinterpret_cast<const char*>(data.data()), data.size(), 0);
+		sendPacketSock(clientSocket, packet);
 	}
 
 	void Server::broadcast(const Packet* packet)
 	{
-		clientsMutex.lock();
-		for (const auto& clientPair : clients)
+		std::vector<SOCKET> clientSockets(clients.size());
+
+		// first gather the sockets and only then send data
+		// this avoids long blocking that IO operations have
 		{
-			const ClientInfo& clientInfo = clientPair.second;
-			sendPacket(clientInfo.id, packet);
+			std::lock_guard<std::mutex> lock(clientsMutex);
+			for (const auto& [id, clientInfo] : clients)
+			{
+				clientSockets.push_back(clientInfo.socket);
+			}
 		}
-		clientsMutex.unlock();
+		
+		// Now send all of the packets without locking clients
+		for (auto socket : clientSockets)
+		{
+			sendPacketSock(socket, packet);
+		}
 	}
 }

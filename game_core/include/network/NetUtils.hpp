@@ -5,6 +5,7 @@
 #include <ws2tcpip.h>
 #include <memory>
 #include "packet.hpp"
+#include "event.hpp"
 
 namespace Net
 {

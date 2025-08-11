@@ -1,6 +1,7 @@
 #pragma once
 
-#include "eventType.hpp"
+#include "EventType.hpp"
+#include "Packet.hpp"
 
 namespace royale
 {
@@ -24,6 +25,7 @@ namespace royale
 
 		// Each event can be applied to a game 
 		virtual void apply(Game& game) = 0;
+		virtual std::unique_ptr<Net::Packet> getPacket() const = 0;
 
 		EventType getEventType() const
 		{

@@ -1,10 +1,14 @@
 #pragma once
 
 #include "Packet.hpp"
-#include "server.hpp"
 
 namespace Net
 {
+	// Predefinition of server class
+	// this way packet handler can store unique instructions for the 
+	// server to execute for the packet
+	class Server;
+
 	class PacketHandler
 	{
 	public:

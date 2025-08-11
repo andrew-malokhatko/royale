@@ -8,9 +8,9 @@ namespace royale
 		mElixirManager.startGenerating();
 	}
 
-	void Game::processEvents(std::vector<Event*>& events)
+	void Game::processEvents(const std::vector<std::unique_ptr<Event>>& events)
 	{
-		for (Event* event : events)
+		for (auto& event : events)
 		{
 			event->apply(*this);
 		}

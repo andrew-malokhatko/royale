@@ -19,8 +19,11 @@ add_library(game_core
     src/network/client.cpp
     src/network/server.cpp
     src/network/NetUtils.cpp
+
     src/network/packets/CardPlacedPacket.cpp
- "src/network/packets/PacketHandlerRegistry.cpp" "src/network/packets/CardPlacedPacketHandler.cpp")
+    src/network/packets/PacketHandlerRegistry.cpp
+    src/network/packets/CardPlacedPacketHandler.cpp
+)
 
 target_include_directories(game_core
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include

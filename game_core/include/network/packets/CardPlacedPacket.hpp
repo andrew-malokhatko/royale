@@ -24,7 +24,7 @@ namespace Net
 		~CardPlacedPacket() = default;
 
 		PacketType getType() const override;
-		royale::CardPlacedEvent getEvent() const;
+		std::unique_ptr<royale::Event> getEvent() const;
 
 		std::vector<uint8_t> pack() const override;
 		static CardPlacedPacket unpack(const std::vector<uint8_t>& buffer);

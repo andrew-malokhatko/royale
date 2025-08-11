@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game.hpp"
+#include <memory>
 
 namespace royale
 {
@@ -26,7 +27,7 @@ namespace royale
 		/*
 		* This function returns events generated during the update function.
 		*/
-		virtual std::vector<Event*> pollEvents() = 0;
+		virtual std::vector<std::unique_ptr<Event>> pollEvents() = 0;
 
 	};
 }

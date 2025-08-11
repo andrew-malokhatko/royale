@@ -6,7 +6,6 @@
 #include <thread>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include "Packet.hpp"
 #include "PacketHandlerRegistry.hpp"
 
 namespace Net
@@ -37,8 +36,7 @@ namespace Net
 
 		void listenForClients();
 		void handleClient(client_id clientId);
-		void sendPacket(client_id clientId, const Packet* packet);
-		void broadcast(const Packet* packet);
+		void sendPacketSock(SOCKET socket, const Packet* packet) const;
 
 	public:
 		Server();
@@ -47,5 +45,8 @@ namespace Net
 		void start(int port = 3490);
 		void stop();
 		bool isActive() const;
+
+		void broadcast(const Packet* packet);
+		void sendPacket(client_id clientId, const Packet* packet);
 	};
 }

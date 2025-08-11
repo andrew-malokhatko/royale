@@ -46,7 +46,7 @@ public:
 		int elixir = mElixir;
 		std::string elixirText = std::to_string(elixir);
 		Vector2 textPosition = {
-			mRec.x + mRec.width - elixirWidth / 2,
+			static_cast<float>(mRec.x + mRec.width - elixirWidth / 2),
 			mRec.y
 		};
 		DrawText(elixirText.data(), textPosition.x, textPosition.y, fontSize, UIColorScheme.ELIXIR_DIVISORS_COLOR);

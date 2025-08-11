@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cassert>
 #include "CardPlacedPacket.hpp"
+#include "event.hpp"
 
 namespace Net
 {
@@ -81,5 +82,6 @@ namespace Net
 		}
 
 		assert(false);
+		return nullptr;
 	}
 }

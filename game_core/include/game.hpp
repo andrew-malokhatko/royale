@@ -35,7 +35,7 @@ namespace royale
 		Game();
 		~Game() = default;
 		
-		void processEvents(std::vector<Event*>& events);
+		void processEvents(const std::vector<std::unique_ptr<Event>>& events);
 		void update(double dt);
 
 		void placeUnit(Unit* unit);

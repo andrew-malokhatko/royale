@@ -36,8 +36,8 @@ namespace Net
 		return packet;
 	}
 
-	royale::CardPlacedEvent CardPlacedPacket::getEvent() const
+	std::unique_ptr<royale::Event> CardPlacedPacket::getEvent() const
 	{
-		return royale::CardPlacedEvent{ royale::Vector2{mData.x, mData.y}, mData.card };
+		return std::make_unique<royale::CardPlacedEvent>(royale::Vector2{mData.x, mData.y}, mData.card);
 	}
 }

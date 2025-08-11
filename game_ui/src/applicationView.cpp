@@ -13,6 +13,7 @@ ApplicationView::ApplicationView(float resolutionX, float resolutionY, const cha
 	: mResolution{ resolutionX, resolutionY},
 	mWindowTitle{ windowTitle }
 {
+	SetTraceLogLevel(LOG_WARNING);
 	InitWindow(resolutionX, resolutionY, windowTitle);
 	SetTargetFPS(60);
 	TextureManager::LoadTextures();
@@ -37,6 +38,7 @@ ApplicationView::ApplicationView(float resolutionX, float resolutionY, const cha
 
 ApplicationView::~ApplicationView()
 {
+	delete mGameRenderer;
 	TextureManager::UnloadTextures();
 }
 
@@ -152,12 +154,12 @@ void ApplicationView::onCardDropped(UICard& card)
 		Vector2 coords = toFieldCoords(card.getCenter());
 		royale::Vector2 position = { coords.x, coords.y };
 
-		royale::Event* event = new royale::CardPlacedEvent(position, card.getCard());
-		mEvents.push_back(event);
+		auto event = std::make_unique<royale::CardPlacedEvent>(position, card.getCard());
+		mEvents.push_back(std::move(event));
 	}
 }
 
-std::vector<royale::Event*>	ApplicationView::pollEvents()
+std::vector<std::unique_ptr<royale::Event>>	ApplicationView::pollEvents()
 {	
 	return std::move(mEvents);
 }
@@ -182,7 +184,7 @@ bool ApplicationView::isOnField(Vector2 position)
 
 Vector2 ApplicationView::toFieldCoords(int x, int y)
 {
-	Vector2 position = { static_cast<double>(x), static_cast<double>(y) };
+	Vector2 position = { static_cast<float>(x), static_cast<float>(y) };
 	return toFieldCoords(position);
 }
 

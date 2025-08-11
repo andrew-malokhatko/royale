@@ -6,13 +6,7 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <thread>
-
-int main()
-{
-	Net::Client client = Net::Client();
-
-	client.startConnection();
-}
+#include <cassert>
 
 namespace Net
 {
@@ -79,44 +73,63 @@ namespace Net
 			return;
 		}
 
-		//TODO
-		//
-		//
-		//		CHANGE JOIN TO DETACH !!!!!
-		//		CURRENT VERSION WORKS ONLY INDEPENDENTLY 
-		//
-		//
-
-		mReceiveThread = std::thread(&Client::receivePacket, this);
-		mReceiveThread.join();
+		mConnected = true;
+		mReceiveThread = std::thread(&Client::receivePackets, this);
 	}
 
 	void Client::endConnection()
 	{
 		mConnected = false;
 		closesocket(mSocket);
+
+		assert(mReceiveThread.joinable());
+		mReceiveThread.join();
 	}
 
-	void Client::sendPacket(int packetId)
+	void Client::sendPacket(const Packet* packet)
 	{
-		// send packets to the server
-		//  ...
-		// 	...
-		// 	...
-		//	...
-	 }
+		std::vector<uint8_t> data = packet->pack();
+		assert(!data.empty());
 
-	void Client::receivePacket()
+		send(mSocket, reinterpret_cast<const char*>(data.data()), data.size(), 0);
+	}
+
+	void Client::receivePackets()
 	{
-		// receive and deserialize packets from the server
-		//  ...
-		// 	...
-		// 	...
-		//	...
+		while (isConnected())
+		{
+			std::vector<uint8_t> data(4096);
+
+			int bytesReceived = recv(mSocket, reinterpret_cast<char*>(data.data()), data.size(), 0);
+			if (bytesReceived <= 0)
+			{
+				continue;
+			}
+			data.resize(bytesReceived);
+
+			auto packet = packetFromBytes(data);
+
+			packetsMutex.lock();
+			incomingPackets.push_back(std::move(packet));
+			packetsMutex.unlock();
+		}
+	}
+
+	std::vector<std::unique_ptr<Packet>> Client::getIncomingPackets()
+	{
+		std::lock_guard<std::mutex> lock(packetsMutex);
+		return std::move(incomingPackets);
 	}
 
 	bool Client::isConnected()
 	{
-		return mConnected;
+		return mConnected.load();
+	}
+
+	void Client::sendEvent(const royale::Event* event)
+	{
+		auto packet = event->getPacket();
+
+		sendPacket(packet.get());
 	}
 }
