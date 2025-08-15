@@ -1,0 +1,21 @@
+{
+  "name": "x_bow",
+
+  "appear": {
+    "seconds": 0.7,
+    "strategy": "base"
+  },
+
+  "health": {
+    "health": 140,
+    "strategy": "base"
+  },
+
+  "attack": {
+    "damage": 20,
+    "speed": 2,
+    "range": 1,
+    "target": "any",
+    "strategy": "arrow"
+  }
+}

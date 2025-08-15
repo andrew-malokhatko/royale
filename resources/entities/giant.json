@@ -1,0 +1,26 @@
+{
+  "name": "giant",
+
+  "appear": {
+    "seconds": 1.5,
+    "strategy": "base"
+  },
+
+  "movement": {
+    "speed": 2,
+    "strategy": "ground"
+  },
+
+  "health": {
+    "health": 1000,
+    "strategy": "base"
+  },
+
+  "attack": {
+    "damage": 50,
+    "speed": 1,
+    "range": 1,
+    "target": "buildings",
+    "strategy": "melee"
+  }
+}

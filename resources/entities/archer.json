@@ -1,0 +1,26 @@
+{
+  "name": "archer",
+
+  "appear": {
+    "seconds": 1,
+    "strategy": "base"
+  },
+
+  "movement": {
+    "speed": 3,
+    "strategy": "ground"
+  },
+
+  "health": {
+    "health": 100,
+    "strategy": "base"
+  },
+
+  "attack": {
+    "damage": 50,
+    "speed": 2.5,
+    "range": 4,
+    "target": "any",
+    "strategy": "arrow"
+  }
+}

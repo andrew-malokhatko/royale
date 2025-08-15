@@ -1,0 +1,15 @@
+{
+  "name": "bomber",
+  "rarity": "common",
+  "placement": "troop",
+  "cost": 2,
+  "entities": [
+    {
+      "entity_name": "bomber",
+      "position": {
+        "x":  0.0,
+        "y":  0.0
+      }
+    }
+  ]
+}

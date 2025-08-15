@@ -1,0 +1,38 @@
+#include "HealthComponent.hpp"
+#include "StrategyFactory.hpp"
+
+namespace royale
+{
+	HealthComponent::HealthComponent(int health, int maxHealth, HealthStrategy* healthStrategy)
+		:
+		mHealth{ health },
+		mMaxHealth { maxHealth },
+		mStrategy { healthStrategy }
+	{
+	}
+
+	HealthComponent::~HealthComponent()
+	{
+		//delete mStrategy;
+	}
+
+	void HealthComponent::update(GameObject& gameObject)
+	{
+		// impl
+	}
+
+	std::unique_ptr<Component> HealthComponent::clone() const
+	{
+		HealthComponent copy = { mHealth, mMaxHealth, mStrategy};
+		return std::make_unique<HealthComponent>(copy);
+	}
+
+	std::unique_ptr<HealthComponent> HealthComponent::fromJson(json& data)
+	{
+		int health = data["health"];
+		int maxHealth = health; 
+		HealthStrategy* healthStrategy = StrategyFactory::fromString<HealthStrategy>(data["strategy"]);
+
+		return std::move(std::make_unique<HealthComponent>(health, maxHealth, healthStrategy));
+	}
+}

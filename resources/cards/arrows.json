@@ -1,0 +1,15 @@
+{
+  "name": "arrows",
+  "rarity": "common",
+  "placement": "all",
+  "cost": 3,
+  "entities": [
+    {
+      "entity_name": "arrows",
+      "position": {
+        "x":  0.0,
+        "y":  0.0
+      }
+    }
+  ]
+}

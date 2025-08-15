@@ -1,4 +1,7 @@
 #include "game.hpp"
+#include "Card.hpp"
+#include "CardData.hpp"
+#include "EntityData.hpp"
 #include <iostream>
 
 namespace royale
@@ -6,6 +9,16 @@ namespace royale
 	Game::Game()
 	{
 		mElixirManager.startGenerating();
+	}
+
+	Game::~Game()
+	{
+		for (auto entity : mEntities)
+		{
+			delete entity;
+		}
+
+		mEntities.clear();
 	}
 
 	void Game::processEvents(const std::vector<std::unique_ptr<Event>>& events)
@@ -24,29 +37,40 @@ namespace royale
 		mElixirManager.generateElixir(dt);
 	}
 
-	void Game::placeUnit(Unit* unit)
+	void Game::placeCard(CardType cardType, Vector2 position)
 	{
-		Vector2 position = unit->getPosition();
+		//Vector2 position = unit->getPosition();
+
+		const Card& card = CARD_DATA.at(cardType);
+
+		for (const EntitySpawnInfo& spawnInfo : card.getEntitySpawnInfo())
+		{
+			Vector2 entityPos = {
+				position.x + spawnInfo.offset.x,
+				position.y + spawnInfo.offset.y,
+			};
+
+			Entity* entity = new Entity(spawnInfo.type, entityPos, *this);
+			mEntities.push_back(entity);
+		}
 
 		std::cout << "Placed unit at: " << position.x << " - " << position.y << "\n";
-
-		units.push_back(unit);
 	}
 
-	const std::vector<Unit*>& Game::getUnits() const
+	const std::vector<Entity*>& Game::getEntities() const
 	{
-		return units;
+		return mEntities;
 	}
 
-	const std::array<Card, Config::HAND_SIZE> Game::getCards() const
+	const std::array<CardType, Config::HAND_SIZE> Game::getCards() const
 	{
 		return mCardManager.getHand();
 	}
 
-	const std::array<Tower, Config::TOWER_COUNT>& Game::getTowers() const
-	{
-		return mTowerManager.getTowers();
-	}
+	//const std::array<Tower, Config::TOWER_COUNT>& Game::getTowers() const
+	//{
+	//	return mTowerManager.getTowers();
+	//}
 
 	double Game::getElixir() const
 	{

@@ -2,7 +2,6 @@
 
 #include "Packet.hpp"
 #include "cardPlacedEvent.hpp"
-#include "card.hpp"
 
 namespace Net
 {
@@ -11,7 +10,7 @@ namespace Net
 	{
 		double x{};
 		double y{};
-		royale::Card card{};
+		royale::CardType card{};
 	};
 #pragma pack(pop)
 

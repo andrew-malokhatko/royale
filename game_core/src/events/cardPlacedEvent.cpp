@@ -1,11 +1,10 @@
 #include "cardPlacedEvent.hpp"
 #include "CardPlacedPacket.hpp"
 #include "game.hpp"
-#include "unit.hpp"
 
 namespace royale
 {
-	CardPlacedEvent::CardPlacedEvent(Vector2 position, Card card)
+	CardPlacedEvent::CardPlacedEvent(Vector2 position, CardType card)
 		: Event(EventType::CardPlaced),
 		mPosition{position},
 		mCard{card}
@@ -14,9 +13,7 @@ namespace royale
 
 	void CardPlacedEvent::apply(Game& game)
 	{
-		Unit* knight = new Unit(mCard, mPosition);
-
-		game.placeUnit(knight);
+		game.placeCard(mCard, mPosition);
 	}
 
 	std::unique_ptr<Net::Packet> CardPlacedEvent::getPacket() const
@@ -29,7 +26,7 @@ namespace royale
 		return mPosition;
 	}
 
-	Card CardPlacedEvent::getCard() const
+	CardType CardPlacedEvent::getCard() const
 	{
 		return mCard;
 	}

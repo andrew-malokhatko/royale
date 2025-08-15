@@ -2,7 +2,7 @@
 
 #include "event.hpp"
 #include "vector2.hpp"
-#include "card.hpp"
+#include "CardType.hpp"
 
 
 namespace royale
@@ -10,14 +10,14 @@ namespace royale
 	class CardPlacedEvent : public Event
 	{
 		Vector2 mPosition;
-		Card mCard;
+		CardType mCard;
 
 	public:
-		CardPlacedEvent(Vector2 position, Card card);
+		CardPlacedEvent(Vector2 position, CardType card);
 		void apply(Game& game) override;
 		std::unique_ptr<Net::Packet> getPacket() const override;
 
 		Vector2 getPosition() const;
-		Card getCard() const;
+		CardType getCard() const;
 	};
 }

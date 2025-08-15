@@ -11,22 +11,27 @@ class ApplicationView : public royale::View
 {
 	Vector2 mResolution;
 	Rectangle mGameBounds;
-	Rectangle mControlPanel {};
-	int mTileSize {};
 	const char* mWindowTitle;
 
+	int mTileSize {};
+	Rectangle mControlPanel {};
 	ElixirBar mElixirBar {};
-	std::array<UICard, royale::Config::HAND_SIZE> mCards {};
-	royale::GameRenderer* mGameRenderer {};
+
+	GameRenderer mGameRenderer {};
+	TextureManager mTextureManager {};
+
+	std::array<UICard, royale::Config::HAND_SIZE> mCards;
 	std::vector<std::unique_ptr<royale::Event>> mEvents {};
 
+private:
 	bool isOnField(int x, int y);
 	bool isOnField(Vector2 position);
 	Vector2 toFieldCoords(Vector2 position);
 	Vector2 toFieldCoords(int x, int y);
 
+private:
+	std::array<UICard, royale::Config::HAND_SIZE> initCards(const royale::Game& game);
 	void drawGhost(const UICard& card);
-
 	void onCardDropped(UICard& card);
 
 public:

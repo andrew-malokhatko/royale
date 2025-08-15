@@ -1,12 +1,14 @@
 #pragma once
 
 #include "gameObject.hpp"
+#include "game.hpp"
 
 namespace royale
 {
-	GameObject::GameObject(Vector2 position, Vector2 size) :
+	GameObject::GameObject(Vector2 position, Vector2 size, Game& context) :
 		mPosition {position},
-		mSize {size}
+		mSize {size},
+		mContext{context}
 	{
 	}
 
@@ -32,5 +34,18 @@ namespace royale
 			other.mPosition.x < mPosition.x + mSize.x &&
 			mPosition.y < other.mPosition.y + other.mSize.y &&
 			other.mPosition.y < mPosition.y + mSize.y;
+	}
+
+	void GameObject::update()
+	{
+		for (auto& component : mComponents)
+		{
+			component->update(*this);
+		}
+	}
+
+	Game& GameObject::getContext()
+	{
+		return mContext;
 	}
 }

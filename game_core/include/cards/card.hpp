@@ -1,45 +1,56 @@
 #pragma once
 
-#include <cstdint>
+
+#include <nlohmann/json.hpp>
+#include <vector>
+#include "vector2.hpp"
+#include "CardType.hpp"
+#include "EntityType.hpp"
+#include "Rarity.hpp"
+#include "TargetType.hpp"
+#include "ResourceType.hpp"
+#include "PlacementType.hpp"
+
 
 namespace royale
 {
-	enum class Card : uint8_t
+	//
+	//	Stores information about entity(ies) a card can spawn, as well as offset from the placement position(s)
+	//
+	struct EntitySpawnInfo
 	{
-		// Units
-		None,
-		Bomber,
-		Knight,
-		Giant,
-		Goblins,
-		Golem,
-		Prince,
-		Princess,
-
-		// Spells
-		Arrows,
-
-		// Structures
-		XBow,
-	};
-		
-	enum class CardType : uint8_t
-	{
-		Unit,
-		Spell,
-		Structure,
+		EntityType type;
+		Vector2 offset;
 	};
 
-	static constexpr int toIndex(Card card)
+	//
+	//	Stores general information about card (Type, rarity, cost)
+	//	But also instructions on construction (entities)
+	//
+	class Card
 	{
-		return static_cast<int>(card);
-	}
+		CardType mType {};
+		Rarity mRarity{};
+		PlacementType mPlacement{};
+		int mCost{};
 
-	static constexpr int toIndex(CardType cardType)
-	{
-		return static_cast<int>(cardType);
-	}
-	 
+		std::vector<EntitySpawnInfo> mEntitySpawnInfo{};
+			
+	public:
 
-	static constexpr int CARD_COUNT = 10;
+		bool operator ==(const Card& other)
+		{
+			return other.mType == mType;
+		}
+
+		Card() = default;
+		Card(CardType type, Rarity rarity, PlacementType placement, int cost, std::vector<EntitySpawnInfo> entities);
+
+		CardType getCard() const;
+		Rarity getRarity() const;
+		PlacementType getPlacement() const;
+		int getCost() const;
+
+		const std::vector<EntitySpawnInfo> getEntitySpawnInfo() const;
+	};
 }

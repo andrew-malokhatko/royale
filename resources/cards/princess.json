@@ -1,0 +1,15 @@
+{
+  "name": "princess",
+  "rarity": "legendary",
+  "placement": "troop",
+  "cost": 3,
+  "entities": [
+    {
+      "entity_name": "princess",
+      "position": {
+        "x":  0.0,
+        "y":  0.0
+      }
+    }
+  ]
+}

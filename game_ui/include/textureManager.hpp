@@ -1,57 +1,31 @@
 #pragma once
 
-#include <array>
-#include "card.hpp"
+#include <unordered_map>
+#include "CardType.hpp"
 #include "raylib.h"
 
 
 class TextureManager
 {
-public:
-	inline static std::array<Texture2D, royale::CARD_COUNT> textures {};
+	inline static std::unordered_map<royale::CardType, Texture2D> textures{};
+	inline static bool initialized = false;
+	inline static size_t instances = 0;
 
-	static void LoadTextures()
-	{
-		textures[toIndex(royale::Card::None)] = LoadTexture("cards/none.png");
-		textures[toIndex(royale::Card::Arrows)] = LoadTexture("cards/arrows.png");
-		textures[toIndex(royale::Card::Bomber)] = LoadTexture("cards/bomber.png");
-		textures[toIndex(royale::Card::Knight)] = LoadTexture("cards/knight.png");
-		textures[toIndex(royale::Card::Giant)] = LoadTexture("cards/giant.png");
-		textures[toIndex(royale::Card::Goblins)] = LoadTexture("cards/goblins.png");
-		textures[toIndex(royale::Card::Golem)] = LoadTexture("cards/golem.png");
-		textures[toIndex(royale::Card::Prince)] = LoadTexture("cards/prince.png");
-		textures[toIndex(royale::Card::Princess)] = LoadTexture("cards/princess.png");
-		textures[toIndex(royale::Card::XBow)] = LoadTexture("cards/x_bow.png");
-	}
-	
-	static void UnloadTextures()
-	{
-		for (Texture2D& texture : textures)
-		{
-			UnloadTexture(texture);
-		}
-	}
+private:
+	void UnloadTextures();
+
+public:
+	TextureManager();
+	~TextureManager();
+
+	void LoadTextures();
 
 	// resizes the cards ignoring the aspect ratio
-	static void ResizeCards(int width, int height)
-	{
-		for (Texture2D& texture : textures)
-		{
-			Image image = LoadImageFromTexture(texture);
+	void ResizeCards(int width, int height);
+	const Texture2D& GetTexture(royale::CardType card);
 
-			ImageResize(&image, width, height);
 
-			UnloadTexture(texture);
-			texture = LoadTextureFromImage(image);
 
-			UnloadImage(image);
-		}
-	}
-
-	static const Texture2D& GetTexture(royale::Card card)
-	{
-		return textures[toIndex(card)];
-	}
 
 #if 0
 	// resizes the cards keeping the aspect ratio
@@ -87,16 +61,4 @@ public:
 		}
 	}
 #endif
-
-	//static TextureManager* getInstance()
-	//{
-	//	if (mTextureManagerInstance)
-	//	{
-	//		return mTextureManagerInstance;
-	//	}
-
-	//	mTextureManagerInstance = new TextureManager();
-
-	//	return mTextureManagerInstance;
-	//}
 };

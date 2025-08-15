@@ -3,9 +3,7 @@
 #include <array>
 #include <vector>
 #include "vector2.hpp"
-#include "unit.hpp"
-#include "spell.hpp"
-#include "structure.hpp"
+#include "Entity.hpp"
 #include "event.hpp"
 #include "cardManager.hpp"
 #include "elixirManager.hpp"
@@ -18,36 +16,27 @@ namespace royale
 	{
 	private:
 
-		std::vector<Unit*> units{};
-		std::vector<Spell*> spell{};
-		std::vector<Structure*> structure{};
+		std::vector<Entity*> mEntities{};
 
 		CardManager mCardManager{};
 		ElixirManager mElixirManager{};
-		TowerManager mTowerManager{};
-		// UnitManager
-		// SpellManager ???
-		// Maybe more
-		//
-
 
 	public:
 		Game();
-		~Game() = default;
+		~Game();
 		
 		void processEvents(const std::vector<std::unique_ptr<Event>>& events);
 		void update(double dt);
 
-		void placeUnit(Unit* unit);
+		void placeCard(CardType card, Vector2 position);
 
-		const std::vector<Unit*>& getUnits() const;
-		// std::vector<Spell*>& getSpells() const;
-		// const std::vector<Structure*>& getStructures() const;
-
-		const std::array<Card, Config::HAND_SIZE> getCards() const;
-		const std::array<Tower, Config::TOWER_COUNT>& getTowers() const;
+		const std::vector<Entity*>& getEntities() const;
+		const std::array<CardType, Config::HAND_SIZE> getCards() const;
 		double getElixir() const;
 
 		Vector2 getFieldSize() const;
+
+
+		//const std::array<Tower, Config::TOWER_COUNT>& getTowers() const;
 	};
 }

@@ -1,8 +1,9 @@
 #pragma once
 
 #include <array>
-#include "card.hpp"
+#include "CardType.hpp"
 #include "config.hpp"
+//#include "CardData.hpp"
 
 namespace royale
 {
@@ -12,13 +13,13 @@ namespace royale
 	class CardManager
 	{
 		// First Game::CARD_NUMBER cards are available to be played and can be retrieved with getHand()
-		std::array<Card, Config::DECK_SIZE> mDeck {};
+		std::array<CardType, Config::DECK_SIZE> mDeck{};
 
 	public:
 		CardManager();
 
-		const std::array<Card, Config::HAND_SIZE > getHand() const;
-		Card getNextCard() const;
-		void drawCard(Card card);
+		const std::array<CardType, Config::HAND_SIZE> getHand() const;
+		CardType getNextCard() const;
+		void drawCard(CardType card);
 	};
 }

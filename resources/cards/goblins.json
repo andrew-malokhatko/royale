@@ -1,0 +1,37 @@
+{
+  "name": "goblins",
+  "rarity": "common",
+  "placement": "troop",
+  "cost": 3,
+  "entities": [
+    {
+      "entity_name": "goblin",
+      "position": {
+        "x": -0.75,
+        "y": -0.75
+      }
+    },
+    {
+      "entity_name": "goblin",
+      "position": {
+        "x": -0.75,
+        "y": 0.75
+      }
+    },
+    {
+      "entity_name": "goblin",
+      "position": {
+        "x": 0.75,
+        "y": 0.75
+      }
+    },
+    {
+      "entity_name": "goblin",
+      "position": {
+        "x": 0.75,
+        "y": -0.75
+      }
+    }
+  ]
+}
+  

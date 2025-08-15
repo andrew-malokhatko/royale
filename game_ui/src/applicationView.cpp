@@ -1,6 +1,5 @@
 #include "applicationView.hpp"
 #include "raylib.h"
-#include "unit.hpp"
 #include "card.hpp"
 #include "cardPlacedEvent.hpp"
 #include "textureManager.hpp"
@@ -9,6 +8,28 @@
 #include <array>
 #include <cassert>
 
+std::array<UICard, royale::Config::HAND_SIZE> ApplicationView::initCards(const royale::Game& game)
+{
+	std::array<UICard, royale::Config::HAND_SIZE> cards;
+	auto cardTypes = game.getCards();
+
+	int i = 0;
+	for (UICard& card : cards)
+	{
+		card.setDropCallback([this](UICard& card) {
+			this->onCardDropped(card);
+			});
+
+		royale::CardType cardType = cardTypes[i];
+
+		card.setCard(cardType);
+		card.setTexture(mTextureManager.GetTexture(cardType));
+		i++;
+	}
+
+	return cards;
+}
+
 ApplicationView::ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game)
 	: mResolution{ resolutionX, resolutionY},
 	mWindowTitle{ windowTitle }
@@ -16,30 +37,16 @@ ApplicationView::ApplicationView(float resolutionX, float resolutionY, const cha
 	SetTraceLogLevel(LOG_WARNING);
 	InitWindow(resolutionX, resolutionY, windowTitle);
 	SetTargetFPS(60);
-	TextureManager::LoadTextures();
 
-	mGameRenderer = new royale::GameRenderer();
+	mTextureManager.LoadTextures();
+	mCards = initCards(game);
+
 	resize(mResolution.x, mResolution.y, game);
-	mEvents.reserve(10);
-
-	// remove to somewhere else
-	int i = 0;
-	for (royale::Card unitType : game.getCards())
-	{
-		mCards[i].setDropCallback([this](UICard& card) {
-			this->onCardDropped(card);
-		});
-
-		mCards[i].setCard(unitType);
-		i++;
-	}
 }
 
 
 ApplicationView::~ApplicationView()
 {
-	delete mGameRenderer;
-	TextureManager::UnloadTextures();
 }
 
 // TODO:
@@ -69,7 +76,7 @@ void ApplicationView::resize(float x, float y, const royale::Game& game)
 	float cardWidth = mGameBounds.width / cardNumber;
 	float cardHeight = mControlPanel.height - mGameBounds.y * 2;
 
-	TextureManager::ResizeCards(cardWidth, cardHeight);
+	//mTextureManager.ResizeCards(cardWidth, cardHeight);
 
 	for (int i = 0; i < cardNumber; i++)
 	{
@@ -78,6 +85,7 @@ void ApplicationView::resize(float x, float y, const royale::Game& game)
 		float cardX = mControlPanel.x + i * cardWidth + ((i + 1 / cardNumber) * (cardWidth / cardNumber));
 		float cardY = mControlPanel.y + mGameBounds.y;
 
+		card.resizeTexture(cardWidth, cardHeight);
 		card.setPosition({ cardX, cardY });
 		card.setDefaultPosition({ cardX, cardY });
 		card.setSize({ cardWidth, cardHeight });
@@ -97,7 +105,7 @@ void ApplicationView::drawGhost(const UICard& card)
 void ApplicationView::render(const royale::Game& game)
 {
 	RenderTexture2D gameTexture = LoadRenderTexture(mGameBounds.width, mGameBounds.height);
-	mGameRenderer->render(game, gameTexture);
+	mGameRenderer.render(game, gameTexture);
 
 	BeginDrawing();
 		ClearBackground(UIColorScheme.BACKGROUND_COLOR);

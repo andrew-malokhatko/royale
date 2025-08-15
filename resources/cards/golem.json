@@ -1,0 +1,15 @@
+{
+  "name": "golem",
+  "rarity": "epic",
+  "placement": "troop",
+  "cost": 8,
+  "entities": [
+    {
+      "entity_name": "golem",
+      "position": {
+        "x":  0.0,
+        "y":  0.0
+      }
+    }
+  ]
+}

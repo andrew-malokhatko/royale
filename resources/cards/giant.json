@@ -1,0 +1,16 @@
+{
+  "name": "giant",
+  "rarity": "common",
+  "placement": "troop",
+  "cost": 5,
+  "entities": [
+    {
+      "entity_name": "giant",
+      "position": {
+        "x":  0.0,
+        "y":  0.0
+      }
+    }
+  ]
+}
+  

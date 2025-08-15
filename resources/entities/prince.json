@@ -1,0 +1,26 @@
+{
+  "name": "prince",
+
+  "appear": {
+    "seconds": 1,
+    "strategy": "base"
+  },
+
+  "movement": {
+    "speed": 4.5,
+    "strategy": "accelerate"
+  },
+
+  "health": {
+    "health": 520,
+    "strategy": "base"
+  },
+
+  "attack": {
+    "damage": 100,
+    "speed": 0.9,
+    "range": 1,
+    "target": "any",
+    "strategy": "melee"
+  }
+}
