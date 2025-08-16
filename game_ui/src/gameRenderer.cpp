@@ -56,19 +56,15 @@ void GameRenderer::render(const royale::Game& game, RenderTexture2D& target)
 		DrawRectangle(pos.x, pos.y, size.x, size.y, color);
 	}
 
-	// draw structures
-
-	// draw spells
-
 	// draw towers
-	//auto towers = game.getTowers();
-	//for (Tower& tower : towers)
-	//{
-	//	Vector2 towerPos{ tower.getPosition().x * tileSize.x, tower.getPosition().y * tileSize.y };
-	//	Vector2 towerSize{ tower.getSize().x * tileSize.x, tower.getSize().y * tileSize.y };
+	const auto& towers = game.getTowers();
+	for (const auto& tower : towers)
+	{
+		royale::Vector2 towerPos{ tower.getPosition().x * tileSize.x, tower.getPosition().y * tileSize.y };
+		royale::Vector2 towerSize{ tower.getSize().x * tileSize.x, tower.getSize().y * tileSize.y };
 
-	//	DrawRectangle(towerPos.x, towerPos.y, towerSize.x, towerSize.y, TowerColor);
-	//}
+		DrawRectangle(towerPos.x, towerPos.y, towerSize.x, towerSize.y, TowerColor);
+	}
 
 	EndTextureMode();
 }

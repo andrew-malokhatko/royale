@@ -4,7 +4,8 @@ project (game_ui)
 add_library(game_ui
     src/gameRenderer.cpp
     src/applicationView.cpp
- "src/textureManager.cpp")
+    src/textureManager.cpp
+)
 
 # Adding Raylib
 include(FetchContent)

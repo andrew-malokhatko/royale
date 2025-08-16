@@ -17,7 +17,7 @@ class Application
 
 	Net::Client mClient{};
 
-	bool multiplayer = true;
+	bool multiplayer = false;
 	bool running = true;
 
 public:

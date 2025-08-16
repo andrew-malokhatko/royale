@@ -19,7 +19,7 @@ add_library(game_core
     src/events/event.cpp
     src/events/cardPlacedEvent.cpp
 
-    src/game/towerManager.cpp
+    src/game/TowerManager.cpp
     
 
     src/network/client.cpp

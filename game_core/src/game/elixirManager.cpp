@@ -1,5 +1,6 @@
 #include "elixirManager.hpp"
 #include "config.hpp"
+#include <cassert>
 
 namespace royale
 {
@@ -37,5 +38,11 @@ namespace royale
 	double ElixirManager::getElixir() const
 	{
 		return mElixir;
+	}
+
+	void ElixirManager::spendElixir(int amount)
+	{
+		assert(mElixir >= amount);
+		mElixir -= amount;
 	}
 }

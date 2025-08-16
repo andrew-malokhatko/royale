@@ -26,14 +26,18 @@ namespace royale
 		virtual ~GameObject() = default;
 		GameObject(Vector2 position, Vector2 size, Game& context);
 
-		const Vector2& getPosition();
-		const Vector2& getSize();
+		const Vector2& getPosition() const;
+		const Vector2& getSize() const;
 
-		bool collides(Vector2 point);
-		bool collides(GameObject other);
+		bool collides(Vector2 point) const;
+		bool collides(GameObject other) const;
 
 		void update();
 		Game& getContext();
+
+		GameObject(GameObject&& other);
+		GameObject& operator=(GameObject&& other) noexcept;
+
 
 		void addComponent(std::unique_ptr<Component> component)
 		{

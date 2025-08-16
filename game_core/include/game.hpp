@@ -7,7 +7,7 @@
 #include "event.hpp"
 #include "cardManager.hpp"
 #include "elixirManager.hpp"
-#include "towerManager.hpp"
+#include "TowerManager.hpp"
 #include "config.hpp"
 
 namespace royale
@@ -20,6 +20,7 @@ namespace royale
 
 		CardManager mCardManager{};
 		ElixirManager mElixirManager{};
+		TowerManager mTowerManager{};
 
 	public:
 		Game();
@@ -31,12 +32,10 @@ namespace royale
 		void placeCard(CardType card, Vector2 position);
 
 		const std::vector<Entity*>& getEntities() const;
+		const std::vector<Tower>& getTowers() const;
+
 		const std::array<CardType, Config::HAND_SIZE> getCards() const;
 		double getElixir() const;
-
 		Vector2 getFieldSize() const;
-
-
-		//const std::array<Tower, Config::TOWER_COUNT>& getTowers() const;
 	};
 }

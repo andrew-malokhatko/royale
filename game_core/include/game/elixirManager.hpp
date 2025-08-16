@@ -18,6 +18,8 @@ namespace royale
 
 		void setGenerationSpeed(double speed);
 		void generateElixir(double dt);
+
 		double getElixir() const;
+		void spendElixir(int amount);
 	};
 }

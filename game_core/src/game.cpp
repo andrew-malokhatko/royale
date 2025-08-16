@@ -9,6 +9,7 @@ namespace royale
 	Game::Game()
 	{
 		mElixirManager.startGenerating();
+		mTowerManager.placeTowers(*this);
 	}
 
 	Game::~Game()
@@ -42,6 +43,12 @@ namespace royale
 		//Vector2 position = unit->getPosition();
 
 		const Card& card = CARD_DATA.at(cardType);
+		
+		if (card.getCost() > mElixirManager.getElixir())
+		{
+			return;
+		}
+		mElixirManager.spendElixir(card.getCost());
 
 		for (const EntitySpawnInfo& spawnInfo : card.getEntitySpawnInfo())
 		{
@@ -62,15 +69,16 @@ namespace royale
 		return mEntities;
 	}
 
+	const std::vector<Tower>& Game::getTowers() const
+	{
+		//return std::vector<Tower>{};
+		return mTowerManager.getTowers();
+	}
+
 	const std::array<CardType, Config::HAND_SIZE> Game::getCards() const
 	{
 		return mCardManager.getHand();
 	}
-
-	//const std::array<Tower, Config::TOWER_COUNT>& Game::getTowers() const
-	//{
-	//	return mTowerManager.getTowers();
-	//}
 
 	double Game::getElixir() const
 	{
