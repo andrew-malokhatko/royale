@@ -4,12 +4,9 @@
 
 namespace royale
 {
-	class AccelerationMovementStrategy : public MovementStrategy
+	class AccelerateMovementStrategy : public MovementStrategy
 	{
 	public:
-		void move(GameObject& gameObject) override
-		{
-			// impl
-		}
+		void move(GameObject& gameObject, MovementComponent& comp) override;
 	};
 }

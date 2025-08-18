@@ -7,9 +7,6 @@ namespace royale
 	class ArrowAttackStrategy : public AttackStrategy
 	{
 	public:
-		void attack(GameObject& gameObject) override
-		{
-			// impl
-		}
+		void attack(GameObject& gameObject, AttackComponent& comp) override;
 	};
 }

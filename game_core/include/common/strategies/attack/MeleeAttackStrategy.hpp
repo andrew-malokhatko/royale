@@ -7,9 +7,6 @@ namespace royale
 	class MeleeAttackStrategy : public AttackStrategy
 	{
 	public:
-		void attack(GameObject& gameObject) override
-		{
-			// impl
-		}
+		void attack(GameObject& gameObject, AttackComponent& comp) override;
 	};
 }

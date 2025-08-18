@@ -23,22 +23,28 @@ namespace royale
 		Vector2 mSize;
 
 	public:
-		GameObject() = default;
-		virtual ~GameObject() = default;
+		//GameObject() = default;
 		GameObject(Vector2 position, Vector2 size, GameContext& context);
+		GameObject(GameObject&& other) noexcept;
+		virtual ~GameObject() = default;
 
 		const Vector2& getPosition() const;
 		const Vector2& getSize() const;
+		void setPosition(const Vector2& position);
+		void setSize(const Vector2& size);
 
+		Vector2 getCenter() const;
 		bool collides(Vector2 point) const;
-		bool collides(GameObject other) const;
+		bool collides(const GameObject& other) const;
+		double getDistance(Vector2 point) const;
+		double getDistance(const GameObject& other) const;
 
 		void update();
 		GameContext& getContext();
 
-		GameObject(GameObject&& other);
 		GameObject& operator=(GameObject&& other) noexcept;
 
+		// Components
 
 		void addComponent(std::unique_ptr<Component> component)
 		{
@@ -50,8 +56,7 @@ namespace royale
 		{
 			for (auto& component : mComponents)
 			{
-				//Component* ptr = dynamic_cast<T*>(component.get());
-				Component* ptr = nullptr;
+				T* ptr = dynamic_cast<T*>(component.get());
 				if (ptr != nullptr)
 				{
 					return *ptr;

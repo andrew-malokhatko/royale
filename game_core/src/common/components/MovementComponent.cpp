@@ -17,7 +17,17 @@ namespace royale
 
 	void MovementComponent::update(GameObject& gameObject)
 	{
-		// impl
+		mStrategy->move(gameObject, *this);
+	}
+
+	double MovementComponent::getSpeed() const
+	{
+		return mSpeed;
+	}
+
+	void MovementComponent::setSpeed(double speed)
+	{
+		mSpeed = speed;
 	}
 
 	std::unique_ptr<Component> MovementComponent::clone() const

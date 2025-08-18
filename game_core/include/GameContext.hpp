@@ -9,8 +9,11 @@ namespace royale
 {
 	class GameContext
 	{
+
+	public:
+
 		// Tower API
-		virtual const std::vector<Tower>& getTowers() const = 0;
+		virtual std::vector<Tower>& getTowers() = 0;
 		
 		//	Entity API 
 		virtual const std::vector<Entity*>& getEntities() const = 0;

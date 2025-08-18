@@ -21,6 +21,9 @@ namespace royale
 		void update(GameObject& gameObject) override;
 		std::unique_ptr<Component> clone() const override;
 
+		double getSpeed() const;
+		void setSpeed(double speed);
+
 		static std::unique_ptr<MovementComponent> fromJson(json& data);
 	};
 }

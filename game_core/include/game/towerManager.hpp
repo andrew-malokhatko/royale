@@ -16,6 +16,9 @@ namespace royale
 
 		void placeTowers(GameContext& context);
 		void resetTowers();
+
 		const std::vector<Tower>& getTowers() const;
+		std::vector<Tower>& getTowers();
+
 	};
 }

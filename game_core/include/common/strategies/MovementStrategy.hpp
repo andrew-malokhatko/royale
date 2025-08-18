@@ -4,11 +4,15 @@
 
 namespace royale
 {
+	// forward decl
+	class MovementComponent;
+
 	class MovementStrategy
 	{
+	public:
 		//
 		//	Algorithm that updates object's position
 		//
-		virtual void move(GameObject& gameObject) = 0;
+		virtual void move(GameObject& gameObject, MovementComponent& comp) = 0;
 	};
 }

@@ -7,9 +7,6 @@ namespace royale
 	class BaseHealthStrategy : public HealthStrategy
 	{
 	public:
-		void update(GameObject& gameObject) override
-		{
-			// impl
-		}
+		void update(GameObject& gameObject, HealthComponent& comp) override;
 	};
 }

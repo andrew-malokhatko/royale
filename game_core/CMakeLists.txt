@@ -36,8 +36,13 @@ add_library(game_core
     src/common/entities/entity.cpp
     src/common/entities/EntityData.cpp
     src/cards/CardData.cpp
-    src/common/strategies/GroundMovementStrategy.cpp
-    )
+
+    src/common/strategies/movement/GroundMovementStrategy.cpp
+    src/common/strategies/health/BaseHealthStrategy.cpp
+    src/common/strategies/attack/ArrowAttackStrategy.cpp
+    src/common/strategies/attack/MeleeAttackStrategy.cpp
+    src/common/strategies/movement/AccelerateMovementStrategy.cpp
+)
 
 target_include_directories(game_core
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include

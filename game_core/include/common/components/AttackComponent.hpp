@@ -12,6 +12,7 @@ namespace royale
 
 	class AttackComponent : public Component
 	{
+	public:
 		int mDamage;
 		double mSpeed;
 		double mRange;
@@ -20,7 +21,6 @@ namespace royale
 		TargetType mTargetType;
 		AttackStrategy* mStrategy;
 
-	public:
 		AttackComponent(int damage, double speed, double range, TargetType targetType, AttackStrategy* attackStrategy);
 		~AttackComponent();
 

@@ -27,7 +27,9 @@ namespace royale
 		Game();
 
 		const std::vector<Entity*>& getEntities() const override;
-		const std::vector<Tower>& getTowers() const override;
+		std::vector<Tower>& getTowers() override;
+
+		const std::vector<Tower>& getTowers() const;
 
 		//	Game Model
 		void processEvents(const std::vector<std::unique_ptr<Event>>& events);

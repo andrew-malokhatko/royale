@@ -18,7 +18,7 @@ namespace royale
 
 	void HealthComponent::update(GameObject& gameObject)
 	{
-		// impl
+		mStrategy->update(gameObject, *this);
 	}
 
 	std::unique_ptr<Component> HealthComponent::clone() const

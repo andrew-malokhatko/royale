@@ -36,4 +36,9 @@ namespace royale
 	{
 		return mTowers;
 	}
+
+	std::vector<Tower>& TowerManager::getTowers()
+	{
+		return mTowers;
+	}
 }

@@ -21,7 +21,7 @@ namespace royale
 
 	void AttackComponent::update(GameObject& gameObject)
 	{
-		//mStrategy.attack();
+		mStrategy->attack(gameObject, *this);
 	}
 
 	std::unique_ptr<Component> AttackComponent::clone() const

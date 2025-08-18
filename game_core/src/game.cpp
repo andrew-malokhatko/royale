@@ -35,11 +35,12 @@ namespace royale
 	{
 		const Card& card = CARD_DATA.at(cardType);
 		
-		if (card.getCost() > mElixirManager.getElixir())
-		{
-			return;
-		}
-		mElixirManager.spendElixir(card.getCost());
+		// UNCOMMENT AS NEEDED
+		//if (card.getCost() > mElixirManager.getElixir())
+		//{
+		//	return;
+		//}
+		//mElixirManager.spendElixir(card.getCost());
 
 		for (const EntitySpawnInfo& spawnInfo : card.getEntitySpawnInfo())
 		{
@@ -57,6 +58,11 @@ namespace royale
 	const std::vector<Entity*>& Game::getEntities() const
 	{
 		return mEntityManager.getEntities();
+	}
+
+	std::vector<Tower>& Game::getTowers()
+	{
+		return mTowerManager.getTowers();
 	}
 
 	const std::vector<Tower>& Game::getTowers() const

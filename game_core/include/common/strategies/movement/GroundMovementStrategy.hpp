@@ -7,6 +7,6 @@ namespace royale
 	class GroundMovementStrategy : public MovementStrategy
 	{
 	public:
-		void move(GameObject& gameObject) override;
+		void move(GameObject& gameObject, MovementComponent& comp) override;
 	};
 }

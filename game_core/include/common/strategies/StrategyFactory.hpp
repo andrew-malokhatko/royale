@@ -45,7 +45,7 @@ namespace royale
 		static MovementStrategy* fromString(const std::string& str)
 		{
 			if (str == "ground")			return new GroundMovementStrategy();
-			if (str == "accelerate")		return new AccelerationMovementStrategy();
+			if (str == "accelerate")		return new AccelerateMovementStrategy();
 
 			throw std::invalid_argument("Invalid MovementStrategy string: " + str);
 		}
