@@ -5,7 +5,7 @@
 
 namespace royale
 {
-	GameObject::GameObject(Vector2 position, Vector2 size, Game& context) :
+	GameObject::GameObject(Vector2 position, Vector2 size, GameContext& context) :
 		mPosition{ position },
 		mSize{ size },
 		mContext{ context }
@@ -44,7 +44,7 @@ namespace royale
 		}
 	}
 
-	Game& GameObject::getContext()
+	GameContext& GameObject::getContext()
 	{
 		return mContext;
 	}
@@ -69,5 +69,4 @@ namespace royale
 
 		return *this;
 	}
-
 }

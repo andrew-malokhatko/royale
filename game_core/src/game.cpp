@@ -12,16 +12,6 @@ namespace royale
 		mTowerManager.placeTowers(*this);
 	}
 
-	Game::~Game()
-	{
-		for (auto entity : mEntities)
-		{
-			delete entity;
-		}
-
-		mEntities.clear();
-	}
-
 	void Game::processEvents(const std::vector<std::unique_ptr<Event>>& events)
 	{
 		for (auto& event : events)
@@ -33,15 +23,16 @@ namespace royale
 	// expects dt in seconds 
 	void Game::update(double dt)
 	{
-		dt = dt * Config::GAME_SPEED;
+		mDeltaTime = dt * Config::GAME_SPEED;
 		
+		mEntityManager.update();
+		//mTowerManager.udpate();
+
 		mElixirManager.generateElixir(dt);
 	}
 
 	void Game::placeCard(CardType cardType, Vector2 position)
 	{
-		//Vector2 position = unit->getPosition();
-
 		const Card& card = CARD_DATA.at(cardType);
 		
 		if (card.getCost() > mElixirManager.getElixir())
@@ -57,8 +48,7 @@ namespace royale
 				position.y + spawnInfo.offset.y,
 			};
 
-			Entity* entity = new Entity(spawnInfo.type, entityPos, *this);
-			mEntities.push_back(entity);
+			mEntityManager.placeEntity(spawnInfo.type, entityPos, *this);
 		}
 
 		std::cout << "Placed unit at: " << position.x << " - " << position.y << "\n";
@@ -66,13 +56,17 @@ namespace royale
 
 	const std::vector<Entity*>& Game::getEntities() const
 	{
-		return mEntities;
+		return mEntityManager.getEntities();
 	}
 
 	const std::vector<Tower>& Game::getTowers() const
 	{
-		//return std::vector<Tower>{};
 		return mTowerManager.getTowers();
+	}
+
+	double Game::getDeltaTime() const
+	{
+		return mDeltaTime;
 	}
 
 	const std::array<CardType, Config::HAND_SIZE> Game::getCards() const
@@ -83,6 +77,21 @@ namespace royale
 	double Game::getElixir() const
 	{
 		return mElixirManager.getElixir();
+	}
+
+	void Game::spendElixir(double elixir)
+	{
+		mElixirManager.spendElixir(elixir);
+	}
+
+	void Game::removeEntity(Entity* entity)
+	{
+		mEntityManager.removeEntity(entity);
+	}
+
+	void Game::placeEntity(EntityType entityType, Vector2 position, GameContext& context)
+	{
+		mEntityManager.placeEntity(entityType, position, context);
 	}
 
 	Vector2 Game::getFieldSize() const

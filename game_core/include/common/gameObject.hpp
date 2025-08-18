@@ -6,15 +6,16 @@
 #include "vector2.hpp"
 #include "Component.hpp"
 
+
 namespace royale
 {
 	// forward declare the game
 	// this allows to pass Game as a context to the GameObject
-	class Game;
+	class GameContext;
 
 	class GameObject
 	{
-		Game& mContext;
+		GameContext& mContext;
 		std::vector<std::unique_ptr<Component>> mComponents;
 
 	protected:
@@ -24,7 +25,7 @@ namespace royale
 	public:
 		GameObject() = default;
 		virtual ~GameObject() = default;
-		GameObject(Vector2 position, Vector2 size, Game& context);
+		GameObject(Vector2 position, Vector2 size, GameContext& context);
 
 		const Vector2& getPosition() const;
 		const Vector2& getSize() const;
@@ -33,7 +34,7 @@ namespace royale
 		bool collides(GameObject other) const;
 
 		void update();
-		Game& getContext();
+		GameContext& getContext();
 
 		GameObject(GameObject&& other);
 		GameObject& operator=(GameObject&& other) noexcept;
@@ -59,19 +60,5 @@ namespace royale
 
 			throw std::exception("Component not found");
 		}
-
-		//template<typename T> requires std::is_base_of_v<Component, T>
-		//bool hasComponent()
-		//{
-		//	for (auto component : mComponents)
-		//	{
-		//		auto target = dynamic_cast<T*>(component);
-		//		if (target != nullptr)
-		//		{
-		//			return true;
-		//		}
-		//	}
-		//	return false;
-		//}
 	};
 }

@@ -2,7 +2,7 @@
 
 namespace royale
 {
-	void TowerManager::placeTowers(Game& context)
+	void TowerManager::placeTowers(GameContext& context)
 	{
 		Tower leftArcherTowerTop{ Config::LEFT_TOWER_POSITION, Config::ARCHER_TOWER_SIZE, 1, 1, context };
 		Tower rightArcherTowerTop{ Config::RIGHT_TOWER_POSITION, Config::ARCHER_TOWER_SIZE, 1, 1, context };

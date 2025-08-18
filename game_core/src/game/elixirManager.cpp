@@ -40,7 +40,7 @@ namespace royale
 		return mElixir;
 	}
 
-	void ElixirManager::spendElixir(int amount)
+	void ElixirManager::spendElixir(double amount)
 	{
 		assert(mElixir >= amount);
 		mElixir -= amount;

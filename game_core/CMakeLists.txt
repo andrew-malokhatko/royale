@@ -5,7 +5,6 @@ FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download
 FetchContent_MakeAvailable(json)
 
 add_library(game_core
-
     src/game.cpp
 
     src/cards/Card.cpp
@@ -13,6 +12,7 @@ add_library(game_core
     src/game/clock.cpp
     src/game/elixirManager.cpp
     src/game/cardManager.cpp
+    src/game/EntityManager.cpp
 
     src/common/gameObject.cpp
 
@@ -36,7 +36,8 @@ add_library(game_core
     src/common/entities/entity.cpp
     src/common/entities/EntityData.cpp
     src/cards/CardData.cpp
-  )
+    src/common/strategies/GroundMovementStrategy.cpp
+    )
 
 target_include_directories(game_core
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include

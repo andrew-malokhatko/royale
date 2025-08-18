@@ -20,6 +20,6 @@ namespace royale
 		void generateElixir(double dt);
 
 		double getElixir() const;
-		void spendElixir(int amount);
+		void spendElixir(double amount);
 	};
 }

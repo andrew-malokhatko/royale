@@ -1,6 +1,7 @@
 #pragma once
 
-#include "tower.hpp"
+#include "GameContext.hpp"
+#include "Tower.hpp"
 #include "config.hpp"
 #include <vector>
 
@@ -13,7 +14,7 @@ namespace royale
 	public:
 		TowerManager() = default;
 
-		void placeTowers(Game& context);
+		void placeTowers(GameContext& context);
 		void resetTowers();
 		const std::vector<Tower>& getTowers() const;
 	};

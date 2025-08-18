@@ -2,7 +2,7 @@
 
 namespace royale
 {
-	Tower::Tower(const Vector2& position, const Vector2& size, double fireRate, int damage, Game& context)
+	Tower::Tower(const Vector2& position, const Vector2& size, double fireRate, int damage, GameContext& context)
 		:
 		GameObject(position, size, context),
 		mFireRate{fireRate},
