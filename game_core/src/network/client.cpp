@@ -79,11 +79,13 @@ namespace Net
 
 	void Client::endConnection()
 	{
+		if (mConnected && mReceiveThread.joinable())
+		{
+			mReceiveThread.join();
+		}
+
 		mConnected = false;
 		closesocket(mSocket);
-
-		assert(mReceiveThread.joinable());
-		mReceiveThread.join();
 	}
 
 	void Client::sendPacket(const Packet* packet)
