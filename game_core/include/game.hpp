@@ -2,6 +2,7 @@
 
 #include <array>
 #include <vector>
+#include <ranges>
 #include "vector2.hpp"
 
 #include "event.hpp"
@@ -23,13 +24,16 @@ namespace royale
 
 		double mDeltaTime{};
 
+		std::vector<GameObject*> mToBeDeleted{};
+
 	public:
 		Game();
 
-		const std::vector<Entity*>& getEntities() const override;
-		std::vector<Tower>& getTowers() override;
+		const std::unordered_map<GameObjectId, Tower>& getTowers() const override;
+		std::unordered_map<GameObjectId, Tower>& getTowers() override;
 
-		const std::vector<Tower>& getTowers() const;
+		const std::unordered_map<GameObjectId, Entity>& getEntities() const override;
+		std::unordered_map<GameObjectId, Entity>& getEntities() override;
 
 		//	Game Model
 		void processEvents(const std::vector<std::unique_ptr<Event>>& events);
@@ -43,7 +47,7 @@ namespace royale
 		double getDeltaTime() const override;
 		double getElixir() const override;
 		void spendElixir(double elixir) override;
-		void removeEntity(Entity* entity) override;
+		void removeEntity(GameObjectId id) override;
 		void placeEntity(EntityType entityType, Vector2 position, GameContext& context) override;
 	};
 }

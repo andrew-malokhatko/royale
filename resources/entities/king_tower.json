@@ -1,0 +1,8 @@
+{
+  "name": "king_tower",
+
+  "health": {
+    "health": 3000,
+    "strategy": "base"
+  }
+}

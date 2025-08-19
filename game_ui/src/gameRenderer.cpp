@@ -43,22 +43,22 @@ void GameRenderer::render(const royale::Game& game, RenderTexture2D& target)
 	}
 	
 	// draw entities
-	const std::vector<royale::Entity*>& entities = game.getEntities();
-	for (const auto entity : entities)
+	const auto& entities = game.getEntities();
+	for (const auto& [id, entity] : entities)
 	{
-		royale::Vector2 pos = entity->getPosition();
-		royale::Vector2 size = entity->getSize();
+		royale::Vector2 pos = entity.getPosition();
+		royale::Vector2 size = entity.getSize();
 
 		pos.scale(tileSize);
 		size.scale(tileSize);
 
-		Color color = entityColors.at(entity->getType());
+		Color color = entityColors.at(entity.getType());
 		DrawRectangle(pos.x, pos.y, size.x, size.y, color);
 	}
 
 	// draw towers
 	const auto& towers = game.getTowers();
-	for (const auto& tower : towers)
+	for (const auto& [id, tower] : towers)
 	{
 		royale::Vector2 towerPos{ tower.getPosition().x * tileSize.x, tower.getPosition().y * tileSize.y };
 		royale::Vector2 towerSize{ tower.getSize().x * tileSize.x, tower.getSize().y * tileSize.y };

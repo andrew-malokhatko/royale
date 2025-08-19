@@ -15,6 +15,11 @@ namespace royale
 		auto& attackComp = gameObject.getComponent<AttackComponent>();
 		auto* target = attackComp.mTarget;
 
+		if (!target)
+		{
+			return;
+		}
+
 		if (gameObject.getDistance(*target) <= attackComp.mRange ||
 			gameObject.collides(*target))
 		{

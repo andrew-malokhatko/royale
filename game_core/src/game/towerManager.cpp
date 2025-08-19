@@ -1,30 +1,31 @@
 #include "TowerManager.hpp"
+#include "HealthComponent.hpp"
 
 namespace royale
 {
 	void TowerManager::placeTowers(GameContext& context)
 	{
-		Tower leftArcherTowerTop{ Config::LEFT_TOWER_POSITION, Config::ARCHER_TOWER_SIZE, 1, 1, context };
-		Tower rightArcherTowerTop{ Config::RIGHT_TOWER_POSITION, Config::ARCHER_TOWER_SIZE, 1, 1, context };
-		Tower kingTowerTop{ Config::KING_TOWER_POSITION, Config::KING_TOWER_SIZE, 2, 1, context };
+		Tower leftArcherTowerTop{ EntityType::ArcherTower, Config::LEFT_TOWER_POSITION, Config::ARCHER_TOWER_SIZE, context };
+		Tower rightArcherTowerTop{ EntityType::ArcherTower, Config::RIGHT_TOWER_POSITION, Config::ARCHER_TOWER_SIZE, context };
+		Tower kingTowerTop{ EntityType::KingTower, Config::KING_TOWER_POSITION, Config::KING_TOWER_SIZE, context };
 
 		Vector2 leftTowerBottomVec{ Config::LEFT_TOWER_POSITION.x, Config::FIELD_HEIGHT - Config::LEFT_TOWER_POSITION.y - Config::ARCHER_TOWER_SIZE.y };
 		Vector2 rightTowerBottomVec{ Config::RIGHT_TOWER_POSITION.x, Config::FIELD_HEIGHT - Config::RIGHT_TOWER_POSITION.y - Config::ARCHER_TOWER_SIZE.y };
 		Vector2 kingTowerBottomVec{ Config::KING_TOWER_POSITION.x, Config::FIELD_HEIGHT - Config::KING_TOWER_POSITION.y - Config::KING_TOWER_SIZE.y };
 
-		Tower leftArcherTowerBottom{ leftTowerBottomVec, Config::ARCHER_TOWER_SIZE, 1, 1, context };
-		Tower rightArcherTowerBottom{ rightTowerBottomVec, Config::ARCHER_TOWER_SIZE, 1, 1, context };
-		Tower kingTowerBottom{ kingTowerBottomVec, Config::KING_TOWER_SIZE, 2, 1, context };
+		Tower leftArcherTowerBottom{ EntityType::ArcherTower, leftTowerBottomVec, Config::ARCHER_TOWER_SIZE, context };
+		Tower rightArcherTowerBottom{ EntityType::ArcherTower, rightTowerBottomVec, Config::ARCHER_TOWER_SIZE, context };
+		Tower kingTowerBottom{ EntityType::KingTower, kingTowerBottomVec, Config::KING_TOWER_SIZE, context };
 
 		static_assert(Config::TOWER_COUNT == 6);
 
-		mTowers.emplace_back(std::move(leftArcherTowerTop));
-		mTowers.emplace_back(std::move(rightArcherTowerTop));
-		mTowers.emplace_back(std::move(kingTowerTop));
+		mTowers.emplace(leftArcherTowerTop.getId(), std::move(leftArcherTowerTop));
+		mTowers.emplace(rightArcherTowerTop.getId(), std::move(rightArcherTowerTop));
+		mTowers.emplace(kingTowerTop.getId(), std::move(kingTowerTop));
 
-		mTowers.emplace_back(std::move(leftArcherTowerBottom));
-		mTowers.emplace_back(std::move(rightArcherTowerBottom));
-		mTowers.emplace_back(std::move(kingTowerBottom));
+		mTowers.emplace(leftArcherTowerBottom.getId(), std::move(leftArcherTowerBottom));
+		mTowers.emplace(rightArcherTowerBottom.getId(), std::move(rightArcherTowerBottom));
+		mTowers.emplace(kingTowerBottom.getId(), std::move(kingTowerBottom));
 	}
 
 	void TowerManager::resetTowers()
@@ -32,13 +33,51 @@ namespace royale
 		mTowers.clear();
 	}
 
-	const std::vector<Tower>& TowerManager::getTowers() const
+	const Tower* TowerManager::getTowerById(GameObjectId id) const
+	{
+		if (mTowers.contains(id))
+		{
+			return &mTowers.at(id);
+		}
+		return nullptr;
+	}
+
+	Tower* TowerManager::getTowerById(GameObjectId id)
+	{
+		if (mTowers.contains(id))
+		{
+			return &mTowers.at(id);
+		}
+		return nullptr;
+	}
+
+	const std::unordered_map<GameObjectId, Tower>& TowerManager::getTowers() const
 	{
 		return mTowers;
 	}
 
-	std::vector<Tower>& TowerManager::getTowers()
+	std::unordered_map<GameObjectId, Tower>& TowerManager::getTowers()
 	{
 		return mTowers;
 	}
+
+	void TowerManager::removeTower(GameObjectId towerId)
+	{
+		mTowers.erase(towerId);
+	}
+
+	void TowerManager::update()
+	{
+
+		for (auto& [id, tower] : mTowers)
+		{
+			tower.update();
+		}
+
+	}
+
+	//std::pair<TowerManager::tower_const_iterator, TowerManager::tower_const_iterator> TowerManager::getAllTowers() const
+	//{
+	//	return {mTowers.begin(), mTowers.end()};
+	//}
 }

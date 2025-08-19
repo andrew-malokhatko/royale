@@ -1,22 +1,28 @@
-#include "tower.hpp"
+#include "Tower.hpp"
+#include "EntityData.hpp"
+
 
 namespace royale
 {
-	Tower::Tower(const Vector2& position, const Vector2& size, double fireRate, int damage, GameContext& context)
+	Tower::Tower(EntityType type, const Vector2& position, const Vector2& size, GameContext& context)
 		:
-		GameObject(position, size, context),
-		mFireRate{fireRate},
-		mDamage {damage}
+		GameObject(position, size, context)
 	{
+		const EntityData& data = ENTITY_DATA.at(type);
+
+		// costruct the entity from preloaded components
+		for (const auto& component : data.components)
+		{
+			auto componentInstance = component->clone();
+			addComponent(std::move(componentInstance));
+		}
 	}
 
 	Tower::Tower(Tower&& other) noexcept
 		:
 		GameObject(std::move(other)),
 		mEnabled(other.mEnabled),
-		mDestroyed(other.mDestroyed),
-		mFireRate(other.mFireRate),
-		mDamage(other.mDamage)
+		mDestroyed(other.mDestroyed)
 	{
 	}
 
@@ -29,8 +35,6 @@ namespace royale
 
 			mEnabled = other.mEnabled;
 			mDestroyed = other.mDestroyed;
-			mFireRate = other.mFireRate;
-			mDamage = other.mDamage;
 		}
 		return *this;
 	}

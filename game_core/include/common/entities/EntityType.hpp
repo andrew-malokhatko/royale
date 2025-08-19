@@ -17,6 +17,9 @@ namespace royale
 		Arrows,
 		XBow,
 
+		ArcherTower,
+		KingTower,
+
 		COUNT
 	};
 }

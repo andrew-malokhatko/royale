@@ -5,40 +5,50 @@
 
 namespace royale
 {
-	EntityManager::~EntityManager()
+	const std::unordered_map<GameObjectId, Entity>& EntityManager::getEntities() const
 	{
-		for (Entity* entity : mEntities)
-		{
-			delete entity;
-		}
-		mEntities.clear();
+		return mEntities;
 	}
 
-	const std::vector<Entity*>& EntityManager::getEntities() const
+	std::unordered_map<GameObjectId, Entity>& EntityManager::getEntities()
 	{
 		return mEntities;
 	}
 
 	void EntityManager::placeEntity(EntityType entityType, Vector2 position, GameContext& context)
 	{
-		Entity* entity = new Entity(entityType, position, context);
-		mEntities.push_back(entity);
+		Entity entity = Entity(entityType, position, context);
+		mEntities.emplace(entity.getId(), std::move(entity));
 	}
 
-	void EntityManager::removeEntity(Entity* entity)
+	void EntityManager::removeEntity(GameObjectId id)
 	{
-		auto it = std::find(mEntities.begin(), mEntities.end(), entity);
-		if (it != mEntities.end())
+		mEntities.erase(id);
+	}
+
+	const Entity* EntityManager::getEntityById(GameObjectId id) const
+	{
+		if (mEntities.contains(id))
 		{
-			mEntities.erase(it);
+			return &mEntities.at(id);
 		}
+		return nullptr;
+	}
+
+	Entity* EntityManager::getEntityById(GameObjectId id)
+	{
+		if (mEntities.contains(id))
+		{
+			return &mEntities.at(id);
+		}
+		return nullptr;
 	}
 
 	void EntityManager::update()
 	{
-		for (Entity* entity : mEntities)
+		for (auto& [id, entity] : mEntities)
 		{
-			entity->update();
+			entity.update();
 		}
 	}
 }

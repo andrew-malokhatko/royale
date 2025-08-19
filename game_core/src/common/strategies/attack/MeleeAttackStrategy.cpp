@@ -12,7 +12,7 @@ namespace royale
 		comp.mTarget = nullptr;
 		double minDistance = DBL_MAX;
 
-		for (auto& tower : towers)
+		for (auto& [id, tower] : towers)
 		{
 			double distance = gameObject.getDistance(tower);
 

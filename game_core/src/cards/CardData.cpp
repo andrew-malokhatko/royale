@@ -26,7 +26,7 @@ namespace royale
 		paths[CardType::Arrows] = "arrows";
 		paths[CardType::XBow] = "x_bow";
 
-		assert(paths.size() == static_cast<size_t>(EntityType::COUNT));
+		assert(paths.size() == static_cast<size_t>(CardType::COUNT));
 		return paths;
 	}
 
@@ -84,9 +84,4 @@ namespace royale
 
 		return result;
 	}
-
-	// function definitions
-	const std::unordered_map<CardType, std::string_view> STRING_FROM_CARD = initStringFromCard();
-	const std::unordered_map<std::string_view, CardType> CARD_FROM_STRING = initCardFromString();
-	const std::unordered_map<CardType, Card> CARD_DATA = loadCardData();
 }

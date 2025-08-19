@@ -2,24 +2,26 @@
 
 #include "GameContext.hpp"
 #include "Entity.hpp"
-#include <vector>
+#include <unordered_map>
 
 namespace royale
 {
 	class EntityManager
 	{
-		std::vector<Entity*> mEntities{};
+		std::unordered_map<GameObjectId, Entity> mEntities{};
 
 	public:
-
 		EntityManager() = default;
-		~EntityManager();
 
-		const std::vector<Entity*>& getEntities() const;
+		const std::unordered_map<GameObjectId, Entity>& getEntities() const;
+		std::unordered_map<GameObjectId, Entity>& getEntities();
 
 		void placeEntity(EntityType entityType, Vector2 position, GameContext& context);
-		void removeEntity(Entity* entity);
+		void removeEntity(GameObjectId id);
 
+		const Entity* getEntityById(GameObjectId id) const;
+		Entity* getEntityById(GameObjectId id);
+		
 		void update();
 	};
 }

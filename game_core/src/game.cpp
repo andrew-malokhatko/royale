@@ -26,7 +26,18 @@ namespace royale
 		mDeltaTime = dt * Config::GAME_SPEED;
 		
 		mEntityManager.update();
-		//mTowerManager.udpate();
+		mTowerManager.update();
+
+		// delete objects that were scheduled for deletion
+		for (auto* gameObject : mToBeDeleted)
+		{
+			GameObjectId id = gameObject->getId();
+
+			// either of 1 function triggers
+			mEntityManager.removeEntity(id);
+			mTowerManager.removeTower(id);
+		}
+		mToBeDeleted.clear();
 
 		mElixirManager.generateElixir(dt);
 	}
@@ -55,19 +66,24 @@ namespace royale
 		std::cout << "Placed unit at: " << position.x << " - " << position.y << "\n";
 	}
 
-	const std::vector<Entity*>& Game::getEntities() const
+	const std::unordered_map<GameObjectId, Tower>& Game::getTowers() const
+	{
+		return mTowerManager.getTowers();
+	}
+
+	std::unordered_map<GameObjectId, Tower>& Game::getTowers()
+	{
+		return mTowerManager.getTowers();
+	}
+
+	const std::unordered_map<GameObjectId, Entity>& Game::getEntities() const
 	{
 		return mEntityManager.getEntities();
 	}
 
-	std::vector<Tower>& Game::getTowers()
+	std::unordered_map<GameObjectId, Entity>& Game::getEntities()
 	{
-		return mTowerManager.getTowers();
-	}
-
-	const std::vector<Tower>& Game::getTowers() const
-	{
-		return mTowerManager.getTowers();
+		return mEntityManager.getEntities();
 	}
 
 	double Game::getDeltaTime() const
@@ -90,9 +106,22 @@ namespace royale
 		mElixirManager.spendElixir(elixir);
 	}
 
-	void Game::removeEntity(Entity* entity)
+	// schedule the deletion
+	void Game::removeEntity(GameObjectId id)
 	{
-		mEntityManager.removeEntity(entity);
+		auto* e = mEntityManager.getEntityById(id);
+		auto* t = mTowerManager.getTowerById(id);
+
+		assert(e == nullptr || t == nullptr);
+
+		if (e)
+		{
+			mToBeDeleted.push_back(e);
+		}
+		else if (t)
+		{
+			mToBeDeleted.push_back(t);
+		}
 	}
 
 	void Game::placeEntity(EntityType entityType, Vector2 position, GameContext& context)

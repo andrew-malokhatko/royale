@@ -13,6 +13,8 @@ namespace royale
 	class AttackComponent : public Component
 	{
 	public:
+		double timeSinceLastAttack = 0.0; // private
+
 		int mDamage;
 		double mSpeed;
 		double mRange;

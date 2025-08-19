@@ -19,7 +19,7 @@
   "attack": {
     "damage": 50,
     "speed": 2.5,
-    "range": 4,
+    "range": 2,
     "target": "any",
     "strategy": "arrow"
   }

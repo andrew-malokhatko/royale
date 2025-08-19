@@ -1,0 +1,8 @@
+{
+	"name": "archer_tower",
+	
+	"health": {
+		"health": 1920,
+		"strategy": "base"
+	}
+}

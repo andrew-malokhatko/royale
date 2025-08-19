@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gameObject.hpp"
+#include "GameObject.hpp"
 #include "game.hpp"
 
 namespace royale
@@ -8,7 +8,8 @@ namespace royale
 	GameObject::GameObject(Vector2 position, Vector2 size, GameContext& context) :
 		mPosition{ position },
 		mSize{ size },
-		mContext{ context }
+		mContext{ context },
+		ID{ ++IdGenerator }
 	{
 	}
 
@@ -32,6 +33,11 @@ namespace royale
 	{
 		mSize.x = size.x;
 		mSize.y = size.y;
+	}
+
+	GameObjectId GameObject::getId() const
+	{
+		return ID;
 	}
 
 	Vector2 GameObject::getCenter() const
@@ -90,6 +96,7 @@ namespace royale
 		mContext{ other.mContext },
 		mPosition{ std::move(other.mPosition) },
 		mSize{ std::move(other.mSize) },
+		ID{ std::move(other.ID) },
 		mComponents {std::move(other.mComponents) }
 	{
 	}

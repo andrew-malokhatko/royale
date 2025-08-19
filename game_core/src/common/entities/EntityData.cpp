@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <cassert>
+#include "CardData.hpp"
 
 // components
 #include "AttackComponent.hpp"
@@ -18,6 +19,7 @@ namespace royale
 	{
 		std::unordered_map<EntityType, std::string> paths = {};
 
+		// entities
 		paths[EntityType::None] = "none";
 		paths[EntityType::Archer] = "archer";
 		paths[EntityType::Goblin] = "goblin";
@@ -29,6 +31,10 @@ namespace royale
 		paths[EntityType::Princess] = "princess";
 		paths[EntityType::Arrows] = "arrows";
 		paths[EntityType::XBow] = "x_bow";
+
+		// towers
+		paths[EntityType::ArcherTower] = "archer_tower";
+		paths[EntityType::KingTower] = "king_tower";
 
 		assert(paths.size() == static_cast<size_t>(EntityType::COUNT));
 		return paths;
@@ -79,8 +85,38 @@ namespace royale
 		return result;
 	}
 
+	/*
+	* Move in to archer_tower, but now it just kills itself
+	* 
+	//"attack": {
+	//	"damage": 50,
+	//	"speed": 2,
+	//	"range": 5,
+	//	"target": "any",
+	//	"strategy": "arrow"
+	//}
+
+
+	// Same with king tower
+
+	  //"attack": {
+	  //  "damage": 70,
+	  //  "speed": 1.5,
+	  //  "range": 6,
+	  //  "target": "any",
+	  //  "strategy": "arrow"
+	  //}
+	
+	
+	*/
+
 	// function definitions
 	const std::unordered_map<EntityType, std::string> STRING_FROM_ENTITY = initStringFromEntity();
 	const std::unordered_map<std::string, EntityType> ENTITY_FROM_STRING = initEntityFromString();
 	const std::unordered_map<EntityType, EntityData> ENTITY_DATA = loadEntityData();
+
+	// function definitions
+	const std::unordered_map<CardType, std::string_view> STRING_FROM_CARD = initStringFromCard();
+	const std::unordered_map<std::string_view, CardType> CARD_FROM_STRING = initCardFromString();
+	const std::unordered_map<CardType, Card> CARD_DATA = loadCardData();
 }

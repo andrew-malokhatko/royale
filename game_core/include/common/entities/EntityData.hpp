@@ -2,7 +2,6 @@
 
 #include "EntityType.hpp"
 #include "Component.hpp"
-
 #include <unordered_map>
 #include <string>
 #include <memory>

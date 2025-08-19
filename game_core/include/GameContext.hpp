@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <unordered_map>
 #include "Tower.hpp"
 #include "vector2.hpp"
 #include "Entity.hpp"
@@ -12,13 +12,15 @@ namespace royale
 
 	public:
 
-		// Tower API
-		virtual std::vector<Tower>& getTowers() = 0;
+		virtual const std::unordered_map<GameObjectId, Tower>& getTowers() const = 0;
+		virtual std::unordered_map<GameObjectId, Tower>& getTowers() = 0;
+
+		virtual const std::unordered_map<GameObjectId, Entity>& getEntities() const = 0;
+		virtual std::unordered_map<GameObjectId, Entity>& getEntities() = 0;
 		
 		//	Entity API 
-		virtual const std::vector<Entity*>& getEntities() const = 0;
 		virtual void placeEntity(EntityType entityType, Vector2 position, GameContext& context) = 0;
-		virtual void removeEntity(Entity* entity) = 0;
+		virtual void removeEntity(GameObjectId id) = 0;
 
 		// Elixir API
 		virtual double getElixir() const = 0;

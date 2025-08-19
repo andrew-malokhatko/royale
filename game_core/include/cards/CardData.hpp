@@ -6,6 +6,10 @@
 
 namespace royale
 {
+	std::unordered_map<CardType, std::string_view> initStringFromCard() noexcept;
+	std::unordered_map<std::string_view, CardType> initCardFromString() noexcept;
+	std::unordered_map<CardType, Card> loadCardData() noexcept;
+
 	//
 	//	Converts CardType to string (also indicates filepath to the card)
 	//

@@ -13,8 +13,13 @@ namespace royale
 	// this allows to pass Game as a context to the GameObject
 	class GameContext;
 
+	using GameObjectId = size_t;
+
 	class GameObject
 	{
+		inline static GameObjectId IdGenerator = 0;
+
+		const GameObjectId ID;
 		GameContext& mContext;
 		std::vector<std::unique_ptr<Component>> mComponents;
 
@@ -32,6 +37,8 @@ namespace royale
 		const Vector2& getSize() const;
 		void setPosition(const Vector2& position);
 		void setSize(const Vector2& size);
+
+		GameObjectId getId() const;
 
 		Vector2 getCenter() const;
 		bool collides(Vector2 point) const;

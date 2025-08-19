@@ -22,6 +22,10 @@ namespace royale
 		void update(GameObject& gameObject) override;
 		std::unique_ptr<Component> clone() const override;
 
+		void takeDamage(int damage);
+		void heal(int health);
+		double getHealth() const;
+
 		static std::unique_ptr<HealthComponent> fromJson(json& data);
 	};
 }
