@@ -41,6 +41,8 @@ ApplicationView::ApplicationView(float resolutionX, float resolutionY, const cha
 	mTextureManager.LoadTextures();
 	mCards = initCards(game);
 
+	mGameRenderer.LoadTextures();
+
 	resize(mResolution.x, mResolution.y, game);
 }
 

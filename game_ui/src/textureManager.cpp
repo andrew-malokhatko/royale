@@ -19,7 +19,7 @@ void TextureManager::LoadTextures()
 {
 	for (auto& [card, str] : royale::STRING_FROM_CARD)
 	{
-		std::string fileName = std::format("assets/{}.png", str);
+		std::string fileName = std::format("assets/cards/{}.png", str);
 		textures[card] = LoadTexture(fileName.c_str());
 	}
 }

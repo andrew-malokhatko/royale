@@ -5,6 +5,8 @@ add_library(game_ui
     src/gameRenderer.cpp
     src/applicationView.cpp
     src/textureManager.cpp
+    src/EntityTextureManager.cpp
+    src/EntityTexture.cpp
 )
 
 # Adding Raylib

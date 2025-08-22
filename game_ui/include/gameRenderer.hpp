@@ -4,12 +4,15 @@
 #include "raylib.h"
 #include "game.hpp"
 #include "EntityType.hpp"
+#include "EntityTextureManager.hpp"
 
 
 class GameRenderer
 {
 	const Color BACKGROUND_COLOR = WHITE;
 	const Color TowerColor = LIGHTGRAY;
+	
+	EntityTextureManager mTextureManager{};
 
 	const std::unordered_map<royale::EntityType, Color> entityColors =
 	{
@@ -26,9 +29,12 @@ class GameRenderer
 		{royale::EntityType::XBow, YELLOW}
 	};
 
+	//void drawEntity(royale::Entity* entity);
+
 public:
-	GameRenderer();
-	~GameRenderer();
+	GameRenderer() = default;
+
+	void LoadTextures();
 
 	void render(const royale::Game& game, RenderTexture2D& target);
 };
