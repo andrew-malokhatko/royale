@@ -11,9 +11,9 @@ namespace royale
 	{
 		assert(Config::DECK_SIZE <= static_cast<size_t>(CardType::COUNT));
 
-		for (size_t i = 1; i < Config::DECK_SIZE; ++i)
+		for (size_t i = 0; i < Config::DECK_SIZE; ++i)
 		{
-			mDeck[i] = static_cast<CardType>(i);
+			mDeck[i] = static_cast<CardType>(i + 1);
 		}
 	}
 
@@ -40,23 +40,18 @@ namespace royale
 
 	void CardManager::drawCard(CardType card)
 	{
-		assert(std::find(mDeck.begin(), mDeck.begin() + Config::HAND_SIZE, card) != mDeck.end());
+		auto it = std::find(mDeck.begin(), mDeck.begin() + Config::HAND_SIZE, card);
+		assert(it != mDeck.begin() + Config::HAND_SIZE);
 
-		for (int i = 0; i < Config::HAND_SIZE; i++)
-		{
-			if (mDeck[i] == card)
-			{
-				mDeck[i] = mDeck[Config::HAND_SIZE];
-			}
-		}
+		*it = mDeck[Config::HAND_SIZE];
 
 		// Move the deck 1 left
-		for (int i = Config::DECK_SIZE - 1; i >= Config::HAND_SIZE; i--)
+		for (int i = Config::HAND_SIZE; i < Config::DECK_SIZE - 1; ++i)
 		{
-			mDeck[i - 1] = mDeck[i];
+			mDeck[i] = mDeck[i + 1];
 		}
 
-		// Move drawn unit to the back
+		//// Move drawn unit to the back
 		mDeck[Config::DECK_SIZE - 1] = card;
 	}
 }

@@ -68,7 +68,6 @@ public:
 	{
 		Image image = LoadImageFromTexture(mTexture);
 		ImageResize(&image, width, height);
-		UnloadTexture(mTexture);
 		mTexture = LoadTextureFromImage(image);
 		UnloadImage(image);
 	}

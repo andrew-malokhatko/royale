@@ -51,7 +51,7 @@ void GameRenderer::render(const royale::Game& game, RenderTexture2D& target)
 		DrawRectangle(pos.x, pos.y, size.x, size.y, color);
 
 		const Texture2D& texture = mTextureManager.getTexture(entity.getType());
-		Rectangle src = { 0, 0, (float)texture.width, -(float)texture.height };
+		Rectangle src = { 0, 0, (float)texture.width, (float)texture.height };
 		Rectangle dst = { pos.x - size.x / 2, pos.y - size.y / 2, size.x * 2, size.y * 2 };
 		DrawTexturePro(texture, src, dst, { 0,0 }, 0.0f, WHITE);
 	}

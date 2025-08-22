@@ -149,6 +149,24 @@ void ApplicationView::update(const royale::Game& game)
 		card.handleInput();
 	}
 
+	auto cards = game.getCards();
+	for (size_t i = 0; i < cards.size(); ++i)
+	{
+		auto card = cards[i];
+		auto& uiCard = mCards[i];
+
+		if (uiCard.getCard() != card)
+		{
+			uiCard.setCard(card);
+			uiCard.setTexture(mTextureManager.GetTexture(card));
+
+			float cardWidth = mGameBounds.width / cards.size();
+			float cardHeight = mControlPanel.height - mGameBounds.y * 2;
+
+			uiCard.resizeTexture(cardWidth, cardHeight);
+		}
+	}
+
 	mElixirBar.setElixir(game.getElixir());
 }
 

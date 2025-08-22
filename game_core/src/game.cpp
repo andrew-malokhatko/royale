@@ -53,6 +53,8 @@ namespace royale
 		//}
 		//mElixirManager.spendElixir(card.getCost());
 
+		mCardManager.drawCard(cardType);
+
 		for (const EntitySpawnInfo& spawnInfo : card.getEntitySpawnInfo())
 		{
 			Vector2 entityPos = {
