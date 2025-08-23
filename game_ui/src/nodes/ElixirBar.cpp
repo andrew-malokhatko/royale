@@ -1,28 +1,16 @@
-#pragma once
+#include "ElixirBar.hpp"
 
-#include "UIElement.hpp"
-#include "colorScheme.hpp"
-#include "config.hpp"
-#include <string>
-
-class ElixirBar : public UIElement
+namespace ui
 {
-	const int fontSize = 28;
-	double mMaxElixir = royale::Config::MAX_ELIXIR;
-	double mElixir {};
-
-public:
-
-	ElixirBar() = default;
-
-	ElixirBar(Rectangle rec, double maxElixir, double elixir = 0)
-		:UIElement(rec),
+	ElixirBar::ElixirBar(Rectangle rec, double maxElixir, double elixir)
+		:
+		Node(rec),
 		mMaxElixir{ maxElixir },
 		mElixir{ elixir }
 	{
 	}
 
-	void draw() const override
+	void ElixirBar::draw() const
 	{
 		// draw background
 		DrawRectangleRec(mRec, UIColorScheme.ELIXIR_BAR_COLOR);
@@ -52,8 +40,13 @@ public:
 		DrawText(elixirText.data(), textPosition.x, textPosition.y, fontSize, UIColorScheme.ELIXIR_DIVISORS_COLOR);
 	}
 
-	void setElixir(double elixir)
+	void ElixirBar::resize(int width, int height)
+	{
+		setSize({ static_cast<float>(width), static_cast<float>(height) });
+	}
+
+	void ElixirBar::setElixir(double elixir)
 	{
 		mElixir = elixir;
 	}
-};
+}

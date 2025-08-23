@@ -7,6 +7,16 @@ add_library(game_ui
     src/textureManager.cpp
     src/EntityTextureManager.cpp
     src/EntityTexture.cpp
+
+    src/nodes/Node.cpp
+    src/nodes/Card.cpp
+    src/nodes/CardHolder.cpp
+    src/nodes/ElixirBar.cpp
+
+    src/scenes/Scene.cpp
+    src/scenes/GameScene.cpp
+
+    src/events/MouseEvent.cpp
 )
 
 # Adding Raylib
@@ -29,4 +39,7 @@ target_link_libraries(game_ui
 
 target_include_directories(game_ui
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/events
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/nodes
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/scenes
 )
