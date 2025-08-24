@@ -1,19 +1,38 @@
 #include "Card.hpp"
+#include "textureManager.hpp"
 
 namespace ui
 {
-	// Card implememntaiton
+	void Card::loadTexture()
+	{
+		auto& textureManager = TextureManager::getInstance();
+		const auto& texture = textureManager.getTexture(mCard);
+
+		Image image = LoadImageFromTexture(texture);
+		ImageResize(&image, mRec.width, mRec.height);
+
+		UnloadTexture(mTexture);
+		mTexture = LoadTextureFromImage(image);
+
+		UnloadImage(image);
+	}
 
 	Card::Card(royale::CardType card, Rectangle rectangle)
 		:
-		Node{rectangle},
+		Node{ rectangle },
 		mCard{ card }
 	{
 	}
 
+	Card::~Card()
+	{
+		UnloadTexture(mTexture);
+	}
+
 	void Card::draw() const
 	{
-		DrawRectangleRec(mRec, BLUE);
+		DrawTexture(mTexture, mRec.x, mRec.y, WHITE);
+		//DrawRectangleRec(mRec, BLUE);
 	}
 
 	void Card::resize(int width, int height)
@@ -22,9 +41,8 @@ namespace ui
 			static_cast<float>(width),
 			static_cast<float>(height)
 			});
-		
 
-		// request new texture
+		loadTexture();
 	}
 
 	//void Card::update()

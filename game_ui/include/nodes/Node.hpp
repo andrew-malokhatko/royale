@@ -31,6 +31,7 @@ namespace ui
 
 	public:
 		Node(Rectangle rec, bool visible = true, bool enabled = true);
+		virtual ~Node() = default;
 
 		virtual void update() {};
 		virtual void draw() const = 0;

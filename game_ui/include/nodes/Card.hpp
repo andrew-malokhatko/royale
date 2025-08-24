@@ -4,7 +4,7 @@
 #include "Node.hpp"
 #include "colorScheme.hpp"
 #include "CardType.hpp"
-#include "textureManager.hpp"
+
 
 namespace ui
 {
@@ -12,14 +12,20 @@ namespace ui
 	{
 		royale::CardType mCard{};
 
+		Texture2D mTexture{};
+
 		//std::function<void(Card&)> dropCallback;
 
 		bool mSelected{};
 		bool mDragged{};
 
+	private:
+		void loadTexture();
+
 	public:
 		Card() = default;
 		Card(royale::CardType card, Rectangle rectangle);
+		~Card();
 
 		void draw() const override;
 		void resize(int width, int height) override;
