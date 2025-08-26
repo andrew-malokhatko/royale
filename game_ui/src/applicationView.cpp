@@ -117,8 +117,9 @@ void ApplicationView::render(const royale::Game& game)
 
 	//// unload the texture, free the memory
 	//UnloadRenderTexture(gameTexture);
-
+	BeginDrawing();
 	mCurScene->draw();
+	EndDrawing();
 }
 
 void ApplicationView::update(const royale::Game& game)

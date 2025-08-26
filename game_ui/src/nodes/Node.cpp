@@ -1,4 +1,6 @@
 #include "Node.hpp"
+#include "rlgl.h"
+
 namespace ui
 {
 	Node::Node(Rectangle rectangle, bool visible, bool enabled)
@@ -8,6 +10,41 @@ namespace ui
 		mVisible{ visible },
 		mEnabled{ enabled }
 	{
+	}
+
+	void Node::draw() const
+	{
+		rlPushMatrix();
+		rlTranslatef(mRec.x, mRec.y, 0.0f);
+
+		drawSelf();
+
+		for (const Node* child : mChildren)
+		{
+			child->draw();
+		}
+
+		rlPopMatrix();
+	}
+
+	void Node::resize(int width, int height)
+	{
+		resizeSelf(width, height);
+
+		//for (Node* child : mChildren)
+		//{
+		//	child->resize(width, height);
+		//}
+	}
+
+	void Node::update()
+	{
+		updateSelf();
+
+		for (Node* child : mChildren)
+		{
+			child->update();
+		}
 	}
 
 	void Node::addChild(Node* node)

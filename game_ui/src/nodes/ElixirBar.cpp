@@ -10,24 +10,22 @@ namespace ui
 	{
 	}
 
-	void ElixirBar::draw() const
+	void ElixirBar::drawSelf() const
 	{
 		// draw background
-		DrawRectangleRec(mRec, UIColorScheme.ELIXIR_BAR_COLOR);
+		DrawRectangle(0, 0, mRec.width, mRec.height, UIColorScheme.ELIXIR_BAR_COLOR);
 
 		// draw elixir
-		Rectangle elixirRec = mRec;
-		elixirRec.width *= mElixir / mMaxElixir;
-		DrawRectangleRec(elixirRec, UIColorScheme.ELIXIR_COLOR);
+		float full = (mElixir / mMaxElixir);
+		float elixirWidth = mRec.width * full;
+		DrawRectangle(0, 0, elixirWidth, mRec.height, UIColorScheme.ELIXIR_COLOR);
 
 		// draw separators
-		double elixirWidth = mRec.width / mMaxElixir;
-		double startY = mRec.y;
-		double endY = startY + mRec.height;
+		float dropWidth = mRec.width / mMaxElixir;
 		for (int i = 1; i < mMaxElixir; i++)
 		{
-			int posX = mRec.x + elixirWidth * i;
-			DrawLine(posX, startY, posX, endY, UIColorScheme.ELIXIR_DIVISORS_COLOR);
+			int posX = dropWidth * i;
+			DrawLine(posX, 0, posX, mRec.height, UIColorScheme.ELIXIR_DIVISORS_COLOR);
 		}
 
 		// draw elixir number(text)
@@ -40,7 +38,7 @@ namespace ui
 		DrawText(elixirText.data(), textPosition.x, textPosition.y, fontSize, UIColorScheme.ELIXIR_DIVISORS_COLOR);
 	}
 
-	void ElixirBar::resize(int width, int height)
+	void ElixirBar::resizeSelf(int width, int height)
 	{
 		setSize({ static_cast<float>(width), static_cast<float>(height) });
 	}

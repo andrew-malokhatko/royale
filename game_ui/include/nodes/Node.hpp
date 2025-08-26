@@ -33,9 +33,13 @@ namespace ui
 		Node(Rectangle rec, bool visible = true, bool enabled = true);
 		virtual ~Node() = default;
 
-		virtual void update() {};
-		virtual void draw() const = 0;
-		virtual void resize(int width, int height) = 0;
+		void draw() const;
+		virtual void resize(int width, int height);
+		virtual void update();
+
+		virtual void drawSelf() const = 0;
+		virtual void resizeSelf(int width, int height) = 0;
+		virtual void updateSelf() {};
 
 		void setOnClickCallback(std::function<void()> callback) { clickCallback = callback; };
 		void setOnReleaseCallback(std::function<void()> callback) { releaseCallback = callback; };

@@ -17,12 +17,9 @@ namespace ui
 		return cards;
 	}
 
-	// TODO
-	// TEMP
 	Card initNextCard(const royale::Game& game)
 	{
-		auto cardTypes = game.getCards();
-		return Card{ cardTypes[0], Rectangle {0, 0, 0, 0}};
+		return Card{ game.getNextCard(), Rectangle {0, 0, 0, 0}};
 	}
 
 	CardHolder::CardHolder(Rectangle rectangle, const royale::Game& game)
@@ -31,23 +28,21 @@ namespace ui
 		mCards{initCards(game)},
 		mNextCard{initNextCard(game)}
 	{
+		for (Card& card: mCards)
+		{
+			addChild(&card);
+		}
+		addChild(&mNextCard);
+
 		resize(rectangle.width, rectangle.height);
 	}
 
-	void CardHolder::draw() const
+	void CardHolder::drawSelf() const
 	{
-		// draw self
-		DrawRectangleRec(mRec, GRAY);
-
-		for (const Card& card : mCards)
-		{
-			card.draw();
-		}
-
-		mNextCard.draw();
+		DrawRectangle(0, 0, mRec.width, mRec.height, GRAY);
 	}
 	  
-	void CardHolder::resize(int width, int height)
+	void CardHolder::resizeSelf(int width, int height)
 	{
 		// constants in percentages (not ideal, but fast and easy to understand)
 		static const Vector2 FirstCardPos = { 0.15, 0.05 };
@@ -58,11 +53,11 @@ namespace ui
 
 		setSize({ static_cast<float>(width), static_cast<float>(height) });
 
-		mNextCard.setPosition({ NextCardPos.x * width,  NextCardPos.y * height + mRec.y});
+		mNextCard.setPosition({ NextCardPos.x * width,  NextCardPos.y * height});
 		mNextCard.resize(NextCardSize.x * width, NextCardSize.y * height);
 
-		float offsetX = FirstCardPos.x * width + mRec.x;
-		float cardY = FirstCardPos.y * height + mRec.y;
+		float offsetX = FirstCardPos.x * width;
+		float cardY = FirstCardPos.y * height;
 		for (size_t i = 0; i < mCards.size(); ++i)
 		{
 			Card& card = mCards[i];

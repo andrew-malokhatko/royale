@@ -2,9 +2,8 @@ project (game_ui)
 
 
 add_library(game_ui
-    src/gameRenderer.cpp
     src/applicationView.cpp
-    src/textureManager.cpp
+    src/TextureManager.cpp
     src/EntityTextureManager.cpp
     src/EntityTexture.cpp
 
@@ -12,6 +11,7 @@ add_library(game_ui
     src/nodes/Card.cpp
     src/nodes/CardHolder.cpp
     src/nodes/ElixirBar.cpp
+    src/nodes/GameNode.cpp
 
     src/scenes/Scene.cpp
     src/scenes/GameScene.cpp

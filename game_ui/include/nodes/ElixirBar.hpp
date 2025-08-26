@@ -18,8 +18,8 @@ namespace ui
 		ElixirBar() = default;
 		ElixirBar(Rectangle rec, double maxElixir, double elixir = 0);
 
-		void draw() const override;
-		void resize(int x, int y) override;
+		void drawSelf() const override;
+		void resizeSelf(int x, int y) override;
 
 		void setElixir(double elixir);
 		double getElixir() const;

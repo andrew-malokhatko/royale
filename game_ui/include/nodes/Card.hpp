@@ -27,8 +27,8 @@ namespace ui
 		Card(royale::CardType card, Rectangle rectangle);
 		~Card();
 
-		void draw() const override;
-		void resize(int width, int height) override;
+		void drawSelf() const override;
+		void resizeSelf(int width, int height) override;
 
 		/*void update() override;
 		void onClick() override;

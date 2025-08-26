@@ -29,13 +29,13 @@ namespace ui
 		UnloadTexture(mTexture);
 	}
 
-	void Card::draw() const
+	void Card::drawSelf() const
 	{
-		DrawTexture(mTexture, mRec.x, mRec.y, WHITE);
+		DrawTexture(mTexture, 0, 0, WHITE);
 		//DrawRectangleRec(mRec, BLUE);
 	}
 
-	void Card::resize(int width, int height)
+	void Card::resizeSelf(int width, int height)
 	{
 		setSize({
 			static_cast<float>(width),

@@ -15,7 +15,7 @@ namespace ui
 	public:
 		CardHolder(Rectangle rec, const royale::Game& game);
 
-		void draw() const override;
-		void resize(int width, int height) override;
+		void drawSelf() const override;
+		void resizeSelf(int width, int height) override;
 	};
 }
