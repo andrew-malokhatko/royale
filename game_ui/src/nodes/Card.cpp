@@ -31,8 +31,15 @@ namespace ui
 
 	void Card::drawSelf() const
 	{
-		DrawTexture(mTexture, 0, 0, WHITE);
-		//DrawRectangleRec(mRec, BLUE);
+		if (mSelected && !mDragged)
+		{
+			float forward = mRec.height / 10;
+			DrawTexture(mTexture, 0, -forward, WHITE);
+		}
+		else
+		{
+			DrawTexture(mTexture, 0, 0, WHITE);
+		}
 	}
 
 	void Card::resizeSelf(int width, int height)
@@ -43,6 +50,35 @@ namespace ui
 			});
 
 		loadTexture();
+	}
+
+	void Card::select()
+	{
+		mSelected = true;
+	}
+
+	void Card::deselect()
+	{
+		mSelected = false;
+	}
+
+	void Card::startDrag()
+	{
+		mDragged = true;
+	}
+	void Card::stopDrag()
+	{
+		mDragged = false;
+	}
+
+	bool Card::isDragged() const
+	{
+		return mDragged;
+	}
+
+	bool Card::isSelected() const
+	{
+		return mSelected;
 	}
 
 	//void Card::update()

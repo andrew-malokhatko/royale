@@ -14,7 +14,9 @@ namespace ui
 		}
 
 
-		// generates events and forwards them to children
-		void handleInput();
+		//
+		//	Generates events from input and passes them to children
+		//
+		virtual void handleInput() = 0;
 	};
 }

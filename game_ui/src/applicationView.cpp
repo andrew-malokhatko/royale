@@ -149,6 +149,9 @@ void ApplicationView::update(const royale::Game& game)
 	//}
 
 	//mElixirBar.setElixir(game.getElixir());
+
+	mCurScene->handleInput();
+	mCurScene->update();
 }
 
 std::vector<std::unique_ptr<royale::Event>>	ApplicationView::pollEvents()

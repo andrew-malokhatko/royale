@@ -10,12 +10,17 @@ namespace ui
 	{	
 		std::vector<Card> mCards;
 		Card mNextCard;
-		NodeId selectedCard = -1;
+		Card* selectedCard = nullptr;
+		Vector2 selectedCardPos{};
 
 	public:
 		CardHolder(Rectangle rec, const royale::Game& game);
 
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;
+		void updateSelf() override;
+
+		void handleClick(MouseClickEvent mouseClick) override;
+		void handleMove(MouseMoveEvent mouseMove) override;
 	};
 }

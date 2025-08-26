@@ -30,6 +30,15 @@ namespace ui
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;
 
+		void select();
+		void deselect();
+
+		void startDrag();
+		void stopDrag();
+
+		bool isDragged() const;
+		bool isSelected() const;
+
 		/*void update() override;
 		void onClick() override;
 		void onRelease() override;*/

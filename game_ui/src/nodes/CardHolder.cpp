@@ -19,16 +19,16 @@ namespace ui
 
 	Card initNextCard(const royale::Game& game)
 	{
-		return Card{ game.getNextCard(), Rectangle {0, 0, 0, 0}};
+		return Card{ game.getNextCard(), Rectangle {0, 0, 0, 0} };
 	}
 
 	CardHolder::CardHolder(Rectangle rectangle, const royale::Game& game)
 		:
-		Node{rectangle},
-		mCards{initCards(game)},
-		mNextCard{initNextCard(game)}
+		Node{ rectangle },
+		mCards{ initCards(game) },
+		mNextCard{ initNextCard(game) }
 	{
-		for (Card& card: mCards)
+		for (Card& card : mCards)
 		{
 			addChild(&card);
 		}
@@ -41,7 +41,7 @@ namespace ui
 	{
 		DrawRectangle(0, 0, mRec.width, mRec.height, GRAY);
 	}
-	  
+
 	void CardHolder::resizeSelf(int width, int height)
 	{
 		// constants in percentages (not ideal, but fast and easy to understand)
@@ -53,7 +53,7 @@ namespace ui
 
 		setSize({ static_cast<float>(width), static_cast<float>(height) });
 
-		mNextCard.setPosition({ NextCardPos.x * width,  NextCardPos.y * height});
+		mNextCard.setPosition({ NextCardPos.x * width,  NextCardPos.y * height });
 		mNextCard.resize(NextCardSize.x * width, NextCardSize.y * height);
 
 		float offsetX = FirstCardPos.x * width;
@@ -68,18 +68,55 @@ namespace ui
 		}
 	}
 
+	// Deselect card (bad solution)
+	// Requires refactoring
+	void CardHolder::updateSelf()
+	{
+		if (selectedCard && IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+		{
+			selectedCard->stopDrag();
+			selectedCard->setPosition(selectedCardPos);
+		}
+	}
 
-	//void CardHolder::update()
-	//{
-	//	for (Card& card : mCards)
-	//	{
-	//		card.update();
-	//	}
-	//}
+	void CardHolder::handleClick(MouseClickEvent mouseClick)
+	{
+		Vector2 mouse = { mouseClick.x, mouseClick.y };
+
+		mouse.x -= mRec.x;
+		mouse.y -= mRec.y;
+
+		for (Card& card : mCards)
+		{
+			if (card.collides(mouse))
+			{
+				selectedCard = &card;
+				selectedCard->select();
+				selectedCard->startDrag();
+				selectedCardPos = selectedCard->getPosition();
+				continue;
+			}
+			
+			card.deselect();
+		}
+	}
+
+	void CardHolder::handleMove(MouseMoveEvent mouseMove)
+	{
+		mouseMove.x -= mRec.x;
+		mouseMove.y -= mRec.y;
+
+		if (selectedCard && selectedCard->isDragged())
+		{
+			float x = static_cast<float>(mouseMove.x);
+			float y = static_cast<float>(mouseMove.y);
+			selectedCard->setCenter({x, y});
+		}
+	}
 
 	//void CardHolder::onClick()
 	//{
-	//	
+	//		
 	//}
 
 	//void CardHolder::onRelease()

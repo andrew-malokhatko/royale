@@ -4,6 +4,11 @@
 #include <vector>
 #include <functional>
 
+#include "MouseClickEvent.hpp"
+#include "MouseReleaseEvent.hpp"
+#include "MouseHoverEvent.hpp"
+#include "MouseMoveEvent.hpp"
+
 namespace ui
 {
 	using NodeId = size_t;
@@ -17,6 +22,7 @@ namespace ui
 		std::function<void()> clickCallback{};
 		std::function<void()> releaseCallback{};
 		std::function<void()> hoverCallback{};
+		std::function<void()> moveCallback{};
 
 	protected:
 		bool mVisible = true;
@@ -25,21 +31,27 @@ namespace ui
 		Rectangle mRec{};
 		std::vector<Node*> mChildren;
 
-		virtual void onClick() { if (clickCallback) clickCallback(); };
-		virtual void onRelease() { if (releaseCallback) releaseCallback(); };
-		virtual void onHover() { if (hoverCallback) hoverCallback(); };
+		virtual void drawSelf() const = 0;
+		virtual void resizeSelf(int width, int height) = 0;
+		virtual void updateSelf() {};
+
+		virtual void handleClick(MouseClickEvent) { if (clickCallback) clickCallback(); };
+		virtual void handleRelease(MouseReleaseEvent) { if (releaseCallback) releaseCallback(); };
+		virtual void handleHover(MouseHoverEvent) { if (hoverCallback) hoverCallback(); };
+		virtual void handleMove(MouseMoveEvent) { if (moveCallback) moveCallback(); };
+
+		void onClick(MouseClickEvent mouseEvent);
+		void onRelease(MouseReleaseEvent mouseEvent);
+		void onHover(MouseHoverEvent mouseEvent);
+		void onMove(MouseMoveEvent mouseEvent);
 
 	public:
 		Node(Rectangle rec, bool visible = true, bool enabled = true);
 		virtual ~Node() = default;
 
 		void draw() const;
-		virtual void resize(int width, int height);
-		virtual void update();
-
-		virtual void drawSelf() const = 0;
-		virtual void resizeSelf(int width, int height) = 0;
-		virtual void updateSelf() {};
+		void resize(int width, int height);
+		void update();
 
 		void setOnClickCallback(std::function<void()> callback) { clickCallback = callback; };
 		void setOnReleaseCallback(std::function<void()> callback) { releaseCallback = callback; };
@@ -50,7 +62,9 @@ namespace ui
 		
 		void setPosition(Vector2 position);
 		void setSize(Vector2 size);
+		void setCenter(Vector2 center);
 
+		NodeId getId() const;
 		Vector2 getPosition() const;
 		Vector2 getSize() const;
 		Vector2 getCenter() const;

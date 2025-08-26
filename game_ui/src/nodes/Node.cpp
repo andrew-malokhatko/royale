@@ -12,6 +12,62 @@ namespace ui
 	{
 	}
 
+
+	void Node::onClick(MouseClickEvent mouseEvent)
+	{
+		if (collides({static_cast<float>(mouseEvent.x), static_cast<float>(mouseEvent.y) }))
+			handleClick(mouseEvent);
+		
+		mouseEvent.x -= mRec.x;
+		mouseEvent.y -= mRec.y;
+
+		for (Node* child : mChildren)
+		{
+			child->onClick(mouseEvent);
+		}
+	}
+
+	void Node::onRelease(MouseReleaseEvent mouseEvent)
+	{
+		if (collides({ static_cast<float>(mouseEvent.x), static_cast<float>(mouseEvent.y) }))
+			handleRelease(mouseEvent);
+
+		mouseEvent.x -= mRec.x;
+		mouseEvent.y -= mRec.y;
+
+		for (Node* child : mChildren)
+		{
+			child->onRelease(mouseEvent);
+		}
+	}
+
+	void Node::onHover(MouseHoverEvent mouseEvent)
+	{
+		if (collides({ static_cast<float>(mouseEvent.x), static_cast<float>(mouseEvent.y) }))
+			handleHover(mouseEvent);
+
+		mouseEvent.x -= mRec.x;
+		mouseEvent.y -= mRec.y;
+
+		for (Node* child: mChildren)
+		{
+			child->onHover(mouseEvent);
+		}
+	}
+
+	void Node::onMove(MouseMoveEvent mouseEvent)
+	{
+		handleMove(mouseEvent);
+
+		mouseEvent.x -= mRec.x;
+		mouseEvent.y -= mRec.y;
+
+		for (Node* child : mChildren)
+		{
+			child->onMove(mouseEvent);
+		}
+	}
+
 	void Node::draw() const
 	{
 		rlPushMatrix();
@@ -66,6 +122,11 @@ namespace ui
 		}
 	}
 
+	NodeId Node::getId() const
+	{
+		return mId;
+	}
+
 	Vector2 Node::getPosition() const
 	{
 		return { mRec.x, mRec.y };
@@ -91,6 +152,12 @@ namespace ui
 	{
 		mRec.width = size.x;
 		mRec.height = size.y;
+	}
+
+	void Node::setCenter(Vector2 center)
+	{
+		mRec.x = center.x - mRec.width / 2;
+		mRec.y = center.y - mRec.height / 2;
 	}
 
 	bool Node::isEnabled() const
