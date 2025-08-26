@@ -40,6 +40,7 @@ namespace royale
 		void update(double dt);
 		void placeCard(CardType card, Vector2 position);
 		const std::array<CardType, Config::HAND_SIZE> getCards() const;
+		const CardType getNextCard() const;
 		Vector2 getFieldSize() const;
 
 
