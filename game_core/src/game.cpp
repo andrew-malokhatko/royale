@@ -98,6 +98,11 @@ namespace royale
 		return mCardManager.getHand();
 	}
 
+	const CardType Game:: getNextCard() const
+	{
+		return mCardManager.getNextCard();
+	}
+
 	double Game::getElixir() const
 	{
 		return mElixirManager.getElixir();
