@@ -31,11 +31,8 @@ namespace ui
 		// draw elixir number(text)
 		int elixir = mElixir;
 		std::string elixirText = std::to_string(elixir);
-		Vector2 textPosition = {
-			static_cast<float>(mRec.x + mRec.width - elixirWidth / 2),
-			mRec.y
-		};
-		DrawText(elixirText.data(), textPosition.x, textPosition.y, fontSize, UIColorScheme.ELIXIR_DIVISORS_COLOR);
+		float textX = mRec.width - dropWidth / 2;
+		DrawText(elixirText.data(), textX, 0, fontSize, UIColorScheme.ELIXIR_DIVISORS_COLOR);
 	}
 
 	void ElixirBar::resizeSelf(int width, int height)
