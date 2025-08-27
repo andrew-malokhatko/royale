@@ -26,8 +26,7 @@ namespace ui
 		:
 		Node{ rectangle },
 		mCards{ initCards(game) },
-		mNextCard{ initNextCard(game) },
-		mGame{ game }
+		mNextCard{ initNextCard(game) }
 	{
 		for (Card& card : mCards)
 		{
@@ -92,9 +91,12 @@ namespace ui
 				selectedCard = nullptr;
 			}
 		}
+	}
 
+	void CardHolder::updateState(const royale::Game & game)
+	{
 		// Update cards
-		auto handCardTypes = mGame.getCards();
+		auto handCardTypes = game.getCards();
 		for (size_t i = 0; i < handCardTypes.size(); ++i)
 		{
 			auto cardType = handCardTypes[i];
@@ -106,7 +108,8 @@ namespace ui
 			}
 		}
 
-		auto nextCardType = mGame.getNextCard();
+		// Update next card
+		auto nextCardType = game.getNextCard();
 		if (mNextCard.getCardType() != nextCardType)
 		{
 			mNextCard.setCard(nextCardType);

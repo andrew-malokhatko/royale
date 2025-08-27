@@ -14,7 +14,6 @@ namespace ui
 		Card* selectedCard = nullptr;
 		Vector2 selectedCardPos{};
 
-		const royale::Game& mGame;
 		std::function<bool(void)> onCardDropped;
 
 	public:
@@ -23,6 +22,7 @@ namespace ui
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;
 		void updateSelf() override;
+		void updateState(const royale::Game& game);
 
 		void handleClick(MouseClickEvent mouseClick) override;
 		void handleMove(MouseMoveEvent mouseMove) override;

@@ -2,24 +2,35 @@
 
 namespace ui
 {
-	//void Scene::handleInput()
-	//{
-	//	if (!isEnabled())
-	//		return;
+	void Scene::handleInput()
+	{
+		static Vector2 prevMouse = { 0, 0 };
 
-	//	if (CheckCollisionPointRec(GetMousePosition(), mRec))
-	//	{
-	//		onHover();
+		Vector2 mouse = GetMousePosition();
+		int mouseX = mouse.x;
+		int mouseY = mouse.y;
 
-	//		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-	//		{
-	//			onClick();
-	//		}
+		if (mouse.x != prevMouse.x ||
+			mouse.y != prevMouse.y)
+		{
+			onMove(MouseMoveEvent{ mouseX, mouseY });
+		}
 
-	//		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-	//		{
-	//			onRelease();
-	//		}
-	//	}
-	//}
+		if (this->collides(mouse))
+		{
+			onHover(MouseHoverEvent{ mouseX, mouseY });
+
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+			{
+				onClick(MouseClickEvent{ mouseX, mouseY });
+			}
+
+			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+			{
+				onRelease(MouseReleaseEvent{ mouseX, mouseY });
+			}
+		}
+
+		prevMouse = mouse;
+	}
 }

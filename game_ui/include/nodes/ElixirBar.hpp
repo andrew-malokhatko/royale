@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
+#include "game.hpp"
 #include "colorScheme.hpp"
 #include <string>
 #include "config.hpp"
@@ -20,6 +21,7 @@ namespace ui
 
 		void drawSelf() const override;
 		void resizeSelf(int x, int y) override;
+		void updateState(const royale::Game& game);
 
 		void setElixir(double elixir);
 		double getElixir() const;

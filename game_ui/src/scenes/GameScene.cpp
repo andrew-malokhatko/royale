@@ -72,35 +72,9 @@ namespace ui
 		mGameNode.resize(GameNodeSize.x * width, GameNodeSize.y * height);
 	}
 
-	void GameScene::handleInput()
+	void GameScene::updateSelf()
 	{
-		static Vector2 prevMouse = { 0, 0 };
-
-		Vector2 mouse = GetMousePosition();
-		int mouseX = mouse.x;
-		int mouseY = mouse.y;
-
-		if (mouse.x != prevMouse.x ||
-			mouse.y != prevMouse.y)
-		{
-			onMove(MouseMoveEvent{ mouseX, mouseY });
-		}
-
-		if (this->collides(mouse))
-		{
-			onHover(MouseHoverEvent{ mouseX, mouseY });
-
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-			{
-				onClick(MouseClickEvent{ mouseX, mouseY });
-			}
-
-			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-			{
-				onRelease(MouseReleaseEvent{ mouseX, mouseY });
-			}
-		}
-
-		prevMouse = mouse;
+		mCardHolder.updateState(mGame);
+		mElixirBar.updateState(mGame);
 	}
 }

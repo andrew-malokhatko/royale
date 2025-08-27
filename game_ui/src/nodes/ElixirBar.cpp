@@ -40,6 +40,11 @@ namespace ui
 		setSize({ static_cast<float>(width), static_cast<float>(height) });
 	}
 
+	void ElixirBar::updateState(const royale::Game& game)
+	{
+		mElixir = game.getElixir();
+	}
+
 	void ElixirBar::setElixir(double elixir)
 	{
 		mElixir = elixir;
