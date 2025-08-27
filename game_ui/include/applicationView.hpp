@@ -15,17 +15,6 @@ class ApplicationView : public royale::View
 	std::unique_ptr<ui::Scene> mCurScene;
 	std::unordered_map<ui::NodeId, std::unique_ptr<ui::Scene>> mScenes{};
 
-private:
-	/*bool isOnField(int x, int y);
-	bool isOnField(Vector2 position);
-	Vector2 toFieldCoords(Vector2 position);
-	Vector2 toFieldCoords(int x, int y);*/
-
-private:
-	//std::array<UICard, royale::Config::HAND_SIZE> initCards(const royale::Game& game);
-	//void drawGhost(const UICard& card);
-	//void onCardDropped(UICard& card);
-
 public:
 	ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game);
 
