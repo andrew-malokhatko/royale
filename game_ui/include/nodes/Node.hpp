@@ -63,6 +63,7 @@ namespace ui
 		void setPosition(Vector2 position);
 		void setSize(Vector2 size);
 		void setCenter(Vector2 center);
+		void setVisible(bool visible);
 
 		NodeId getId() const;
 		Vector2 getPosition() const;

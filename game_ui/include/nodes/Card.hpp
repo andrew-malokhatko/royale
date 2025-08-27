@@ -14,8 +14,6 @@ namespace ui
 
 		Texture2D mTexture{};
 
-		//std::function<void(Card&)> dropCallback;
-
 		bool mSelected{};
 		bool mDragged{};
 
@@ -38,9 +36,5 @@ namespace ui
 
 		bool isDragged() const;
 		bool isSelected() const;
-
-		/*void update() override;
-		void onClick() override;
-		void onRelease() override;*/
 	};
 }

@@ -12,11 +12,13 @@ namespace ui
 		mGame{ game },
 		mCardHolder(Rectangle{ 0, 0, 0, 0 }, game),
 		mElixirBar(Rectangle{ 0, 0, 0, 0 }, royale::Config::MAX_ELIXIR, 0.0),
-		mGameNode(Rectangle{ 0, 0, 0, 0 }, game)
+		mGameNode(Rectangle{ 0, 0, 0, 0 }, game),
+		mGhostCard(mCardHolder, mGameNode)
 	{
 		addChild(&mElixirBar);
 		addChild(&mGameNode);
 		addChild(&mCardHolder);
+		addChild(&mGhostCard);
 
 		resize(rectangle.width, rectangle.height);
 	}

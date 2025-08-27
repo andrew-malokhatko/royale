@@ -6,10 +6,11 @@
 #include "EntityType.hpp"
 #include "EntityTextureManager.hpp"
 #include "Node.hpp"
+#include "IGameResolution.hpp"
 
 namespace ui
 {
-	class GameNode : public Node
+	class GameNode : public Node, public IGameResolution
 	{
 		EntityTextureManager mTextureManager{};
 		const royale::Game& mGame;
@@ -35,5 +36,8 @@ namespace ui
 
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;
+
+		Rectangle getViewPort()  override;
+		Vector2 getLayout() override;
 	};
 }

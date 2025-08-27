@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Card.hpp"
+#include "ISelectedCard.hpp"
 #include "game.hpp"
 #include <vector>
 
 namespace ui
 {
-	class CardHolder : public Node
+	class CardHolder : public Node, public ISelectedCard
 	{	
 		std::vector<Card> mCards;
 		Card mNextCard;
@@ -15,12 +15,16 @@ namespace ui
 
 	public:
 		CardHolder(Rectangle rec, const royale::Game& game);
-
+		 
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;
 		void updateSelf() override;
 
 		void handleClick(MouseClickEvent mouseClick) override;
 		void handleMove(MouseMoveEvent mouseMove) override;
+
+		const Card* getSelectedCard() override;
+		void hideSelectedCard() override;
+		void showSelectedCard() override;
 	};
 }

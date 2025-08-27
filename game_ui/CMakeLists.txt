@@ -12,12 +12,13 @@ add_library(game_ui
     src/nodes/CardHolder.cpp
     src/nodes/ElixirBar.cpp
     src/nodes/GameNode.cpp
+    src/nodes/GhostCard.cpp
 
     src/scenes/Scene.cpp
     src/scenes/GameScene.cpp
 
     src/events/MouseEvent.cpp
-)
+    )
 
 # Adding Raylib
 include(FetchContent)

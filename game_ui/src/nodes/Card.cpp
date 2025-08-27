@@ -80,30 +80,4 @@ namespace ui
 	{
 		return mSelected;
 	}
-
-	//void Card::update()
-	//{
-	//	if (mDragged)
-	//	{
-	//		Vector2 mousePos = GetMousePosition();
-	//		setPosition(mousePos);
-	//	}
-	//}
-
-	//void Card::onClick()
-	//{
-
-	//	mSelected = true;
-	//	mDragged = true;
-
-	//	Node::onClick();
-	//}
-
-	//void Card::onRelease()
-	//{
-
-	//	mDragged = false;
-
-	//	Node::onRelease();
-	//}
 }

@@ -75,13 +75,14 @@ namespace ui
 		if (selectedCard && IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 		{
 			selectedCard->stopDrag();
+			selectedCard->setVisible(true);
 			selectedCard->setPosition(selectedCardPos);
 		}
 	}
 
 	void CardHolder::handleClick(MouseClickEvent mouseClick)
 	{
-		Vector2 mouse = { mouseClick.x, mouseClick.y };
+		Vector2 mouse = { static_cast<float>(mouseClick.x), static_cast<float>(mouseClick.y) };
 
 		mouse.x -= mRec.x;
 		mouse.y -= mRec.y;
@@ -110,17 +111,22 @@ namespace ui
 		{
 			float x = static_cast<float>(mouseMove.x);
 			float y = static_cast<float>(mouseMove.y);
-			selectedCard->setCenter({x, y});
+			selectedCard->setCenter({ x, y });
 		}
 	}
 
-	//void CardHolder::onClick()
-	//{
-	//		
-	//}
+	const Card* CardHolder::getSelectedCard()
+	{
+		return selectedCard;
+	}
 
-	//void CardHolder::onRelease()
-	//{
-	//	
-	//}
+	void CardHolder::hideSelectedCard()
+	{
+		selectedCard->setVisible(false);
+	}
+
+	void CardHolder::showSelectedCard()
+	{
+		selectedCard->setVisible(true);
+	}
 }

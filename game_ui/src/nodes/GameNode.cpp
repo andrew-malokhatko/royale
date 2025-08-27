@@ -79,4 +79,16 @@ namespace ui
 
 		setSize({ static_cast<float>(finalWidth), static_cast<float>(finalHeight) });
 	}
+
+
+	Rectangle GameNode::getViewPort()
+	{
+		return mRec;
+	}
+
+	Vector2 GameNode::getLayout()
+	{
+		auto vec = mGame.getFieldSize();
+		return { static_cast<float>(vec.x), static_cast<float>(vec.y) };
+	}
 }

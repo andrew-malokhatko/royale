@@ -5,6 +5,7 @@
 #include "ElixirBar.hpp"
 #include "CardHolder.hpp"
 #include "GameNode.hpp"
+#include "GhostCard.hpp"
 
 namespace ui
 {
@@ -15,6 +16,7 @@ namespace ui
 		CardHolder mCardHolder;
 		ElixirBar mElixirBar;
 		GameNode mGameNode;
+		GhostCard mGhostCard;
 
 	public:
 		GameScene(Rectangle rectangle, const royale::Game& game);

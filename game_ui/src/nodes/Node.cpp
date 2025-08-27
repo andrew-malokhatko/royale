@@ -73,7 +73,8 @@ namespace ui
 		rlPushMatrix();
 		rlTranslatef(mRec.x, mRec.y, 0.0f);
 
-		drawSelf();
+		if (isVisible())
+			drawSelf();
 
 		for (const Node* child : mChildren)
 		{
@@ -158,6 +159,11 @@ namespace ui
 	{
 		mRec.x = center.x - mRec.width / 2;
 		mRec.y = center.y - mRec.height / 2;
+	}
+
+	void Node::setVisible(bool visible)
+	{
+		mVisible = visible;
 	}
 
 	bool Node::isEnabled() const
