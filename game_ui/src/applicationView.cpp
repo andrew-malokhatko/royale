@@ -156,9 +156,7 @@ void ApplicationView::update(const royale::Game& game)
 
 std::vector<std::unique_ptr<royale::Event>>	ApplicationView::pollEvents()
 {
-	std::vector<std::unique_ptr<royale::Event>>vec{};
-	return vec;
-	//return std::move(mEvents);
+	return mCurScene->pollEvents();
 }
 
 // TODO

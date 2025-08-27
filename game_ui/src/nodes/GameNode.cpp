@@ -91,4 +91,18 @@ namespace ui
 		auto vec = mGame.getFieldSize();
 		return { static_cast<float>(vec.x), static_cast<float>(vec.y) };
 	}
+
+	Vector2 GameNode::getTileFromPos(Vector2 pos)
+	{
+		Rectangle viewport = getViewPort();
+		Vector2 gameSize = getLayout();
+
+		Vector2 tileSize = { viewport.width / gameSize.x, viewport.height / gameSize.y };
+		Vector2 relativeMousePos = { pos.x - viewport.x, pos.y - viewport.y };
+
+		int ghostX = relativeMousePos.x / tileSize.x;
+		int ghostY = relativeMousePos.y / tileSize.y;
+
+		return { static_cast<float>(ghostX), static_cast<float>(ghostY) };
+	}
 }

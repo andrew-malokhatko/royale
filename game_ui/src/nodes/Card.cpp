@@ -29,6 +29,17 @@ namespace ui
 		UnloadTexture(mTexture);
 	}
 
+	void Card::setCard(royale::CardType card)
+	{
+		mCard = card;
+		loadTexture();
+	}
+
+	royale::CardType Card::getCardType() const
+	{
+		return mCard;
+	}
+
 	void Card::drawSelf() const
 	{
 		if (mSelected && !mDragged)

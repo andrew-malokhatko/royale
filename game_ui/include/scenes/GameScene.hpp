@@ -18,6 +18,8 @@ namespace ui
 		GameNode mGameNode;
 		GhostCard mGhostCard;
 
+		bool placeCard();
+
 	public:
 		GameScene(Rectangle rectangle, const royale::Game& game);
 		 

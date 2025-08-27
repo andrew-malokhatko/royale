@@ -3,6 +3,7 @@
 #include "ISelectedCard.hpp"
 #include "game.hpp"
 #include <vector>
+#include <functional>
 
 namespace ui
 {
@@ -12,6 +13,9 @@ namespace ui
 		Card mNextCard;
 		Card* selectedCard = nullptr;
 		Vector2 selectedCardPos{};
+
+		const royale::Game& mGame;
+		std::function<bool(void)> onCardDropped;
 
 	public:
 		CardHolder(Rectangle rec, const royale::Game& game);
@@ -26,5 +30,7 @@ namespace ui
 		const Card* getSelectedCard() override;
 		void hideSelectedCard() override;
 		void showSelectedCard() override;
+
+		void setCardDroppedCallback(std::function<bool(void)> dropCallback);
 	};
 }

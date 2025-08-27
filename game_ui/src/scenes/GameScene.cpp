@@ -3,9 +3,32 @@
 #include "MouseClickEvent.hpp"
 #include "MouseReleaseEvent.hpp"
 #include "MouseHoverEvent.hpp"
+#include "CardPlacedEvent.hpp"
+#include <cassert>
 
 namespace ui
 {
+	bool GameScene::placeCard()
+	{
+		const Card* selectedCard = mCardHolder.getSelectedCard();
+		assert(selectedCard);
+
+		Vector2 mousePos = GetMousePosition();
+		Vector2 fieldSize = mGameNode.getLayout();
+		Vector2 cardGamePos = mGameNode.getTileFromPos(mousePos);
+
+		royale::Vector2 royaleCardPos = { cardGamePos.x, cardGamePos.y };
+		royale::CardType cardType = selectedCard->getCardType();
+
+		// Check if card was placed inside the game bounds
+		if (royaleCardPos.x < 0 || royaleCardPos.x > fieldSize.x ||
+			royaleCardPos.y < 0 || royaleCardPos.y > fieldSize.y)
+			return false;
+
+		mGameEvents.push_back(std::make_unique<royale::CardPlacedEvent>(royaleCardPos, cardType));
+		return true;
+	}
+
 	GameScene::GameScene(Rectangle rectangle, const royale::Game& game)
 		:
 		Scene(rectangle),
@@ -19,6 +42,8 @@ namespace ui
 		addChild(&mGameNode);
 		addChild(&mCardHolder);
 		addChild(&mGhostCard);
+
+        mCardHolder.setCardDroppedCallback([this]() -> bool { return placeCard(); });
 
 		resize(rectangle.width, rectangle.height);
 	}

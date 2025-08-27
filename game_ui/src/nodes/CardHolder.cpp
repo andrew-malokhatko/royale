@@ -26,7 +26,8 @@ namespace ui
 		:
 		Node{ rectangle },
 		mCards{ initCards(game) },
-		mNextCard{ initNextCard(game) }
+		mNextCard{ initNextCard(game) },
+		mGame{ game }
 	{
 		for (Card& card : mCards)
 		{
@@ -74,9 +75,41 @@ namespace ui
 	{
 		if (selectedCard && IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 		{
+			// call callback function before the selectedCard is set to nullptr
+			bool cardPlaced{};
+			if (onCardDropped)
+			{
+				cardPlaced = onCardDropped();
+			}
+
 			selectedCard->stopDrag();
 			selectedCard->setVisible(true);
 			selectedCard->setPosition(selectedCardPos);
+
+			if (cardPlaced)
+			{
+				selectedCard->deselect();
+				selectedCard = nullptr;
+			}
+		}
+
+		// Update cards
+		auto handCardTypes = mGame.getCards();
+		for (size_t i = 0; i < handCardTypes.size(); ++i)
+		{
+			auto cardType = handCardTypes[i];
+			auto& card = mCards[i];
+
+			if (card.getCardType() != cardType)
+			{
+				card.setCard(cardType);
+			}
+		}
+
+		auto nextCardType = mGame.getNextCard();
+		if (mNextCard.getCardType() != nextCardType)
+		{
+			mNextCard.setCard(nextCardType);
 		}
 	}
 
@@ -128,5 +161,10 @@ namespace ui
 	void CardHolder::showSelectedCard()
 	{
 		selectedCard->setVisible(true);
+	}
+
+	void CardHolder::setCardDroppedCallback(std::function<bool(void)> dropCallback)
+	{
+		onCardDropped = dropCallback;
 	}
 }

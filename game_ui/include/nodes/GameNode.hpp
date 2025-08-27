@@ -39,5 +39,7 @@ namespace ui
 
 		Rectangle getViewPort()  override;
 		Vector2 getLayout() override;
+
+		Vector2 getTileFromPos(Vector2 pos);
 	};
 }
