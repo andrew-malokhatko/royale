@@ -1,5 +1,5 @@
 #include "Card.hpp"
-#include "textureManager.hpp"
+#include "TextureManager.hpp"
 
 namespace ui
 {

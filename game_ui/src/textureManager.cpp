@@ -1,4 +1,4 @@
-#include "textureManager.hpp"
+#include "TextureManager.hpp"
 #include "CardData.hpp"
 
 namespace ui

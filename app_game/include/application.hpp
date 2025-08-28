@@ -2,7 +2,7 @@
 
 #include "game.hpp"
 #include "clock.hpp"
-#include "view.hpp"
+#include "View.hpp"
 #include "client.hpp"
 
 class Application

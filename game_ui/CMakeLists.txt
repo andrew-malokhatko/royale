@@ -16,8 +16,6 @@ add_library(game_ui
 
     src/scenes/Scene.cpp
     src/scenes/GameScene.cpp
-
-    src/events/MouseEvent.cpp
     )
 
 # Adding Raylib

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "view.hpp"
+#include "View.hpp"
 #include "Scene.hpp"
 #include <memory>
 #include <vector>

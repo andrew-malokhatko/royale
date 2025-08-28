@@ -2,7 +2,7 @@
 
 #include "Node.hpp"
 #include "game.hpp"
-#include "colorScheme.hpp"
+#include "ColorScheme.hpp"
 #include <string>
 #include "config.hpp"
 
