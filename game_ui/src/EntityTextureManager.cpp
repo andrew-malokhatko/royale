@@ -3,8 +3,7 @@
 #include <string>
 #include <format>
 
-
-void EntityTextureManager::LoadTextures()
+EntityTextureManager::EntityTextureManager()
 {
 	mTextures.reserve(royale::ENTITY_DATA.size());
 
@@ -22,13 +21,14 @@ void EntityTextureManager::LoadTextures()
 	}
 }
 
-void EntityTextureManager::resize(int width, int height)
-{
-	for (auto& [entity, texture] : mTextures)
-	{
-		texture.resize(width, height);
-	}
-}
+//
+//void EntityTextureManager::resize(int width, int height)
+//{
+//	for (auto& [entity, texture] : mTextures)
+//	{
+//		texture.resize(width, height);
+//	}
+//}
 
 const Texture2D& EntityTextureManager::getTexture(royale::EntityType type, bool forward) const
 {

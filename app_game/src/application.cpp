@@ -1,5 +1,5 @@
 #include "application.hpp"
-#include "applicationView.hpp"
+#include "ApplicationView.hpp"
 #include "Utils.hpp"
 #include <memory>
 
