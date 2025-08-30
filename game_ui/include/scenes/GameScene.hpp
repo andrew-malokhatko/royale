@@ -21,7 +21,7 @@ namespace ui
 		bool placeCard();
 
 	public:
-		GameScene(Rectangle rectangle, const royale::Game& game);
+		GameScene(Rectangle rectangle, SceneManager& sceneManager, const royale::Game& game);
 		 
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;

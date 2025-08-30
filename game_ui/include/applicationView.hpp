@@ -2,22 +2,31 @@
 
 #include "View.hpp"
 #include "Scene.hpp"
+#include "SceneManager.hpp"
 #include <memory>
 #include <vector>
 #include <unordered_map>
 
 
-class ApplicationView : public royale::View
+
+class ApplicationView : public royale::View, public ui::SceneManager
 {
 	Vector2 mResolution;
 	const char* mWindowTitle;
 
-	std::unique_ptr<ui::Scene> mCurScene;
-	std::unordered_map<ui::NodeId, std::unique_ptr<ui::Scene>> mScenes{};
+	std::shared_ptr<ui::Scene> mCurScene;
+	std::unordered_map<std::string, std::shared_ptr<ui::Scene>> mScenes{};
+
+private:
+	void loadScene(const std::string& name, std::shared_ptr<ui::Scene> scene);
 
 public:
 	ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game);
 
+	//API for ui::SceneManager
+	void setScene(const std::string& name) override;
+
+	// API for royale::View
 	void resize(float x, float y, const royale::Game& game) override;
 	void update(const royale::Game& game) override;
 	void render(const royale::Game& game) override;

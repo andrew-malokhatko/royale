@@ -29,9 +29,9 @@ namespace ui
 		return true;
 	}
 
-	GameScene::GameScene(Rectangle rectangle, const royale::Game& game)
+	GameScene::GameScene(Rectangle rectangle, SceneManager& sceneManager, const royale::Game& game)
 		:
-		Scene(rectangle),
+		Scene(rectangle, sceneManager),
 		mGame{ game },
 		mCardHolder(Rectangle{ 0, 0, 0, 0 }, game),
 		mElixirBar(Rectangle{ 0, 0, 0, 0 }, royale::Config::MAX_ELIXIR, 0.0),

@@ -2,7 +2,7 @@ project (game_ui)
 
 
 add_library(game_ui
-    src/applicationView.cpp
+    "src/ApplicationView.cpp"
     src/TextureManager.cpp
     src/EntityTextureManager.cpp
     src/EntityTexture.cpp
@@ -16,7 +16,12 @@ add_library(game_ui
 
     src/scenes/Scene.cpp
     src/scenes/GameScene.cpp
-    )
+    src/scenes/MainScene.cpp
+
+    src/components/Button.cpp
+    src/components/TextureComponent.cpp
+    
+)
 
 # Adding Raylib
 include(FetchContent)

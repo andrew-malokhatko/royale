@@ -1,5 +1,7 @@
-#include "applicationView.hpp"
+#include "ApplicationView.hpp"
 #include "GameScene.hpp"
+#include "MainScene.hpp"
+#include <cassert>
 
 
 ApplicationView::ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game)
@@ -10,7 +12,29 @@ ApplicationView::ApplicationView(float resolutionX, float resolutionY, const cha
 	InitWindow(resolutionX, resolutionY, windowTitle);
 
 	Rectangle resolutionRect = { 0, 0, mResolution.x, mResolution.y };
-	mCurScene = std::make_unique<ui::GameScene>(resolutionRect, game);
+
+	loadScene("main", std::make_shared<ui::MainScene>(resolutionRect, *this));
+	loadScene("game", std::make_shared<ui::GameScene>(resolutionRect, *this, game));
+
+	//mCurScene = std::make_unique<ui::GameScene>(resolutionRect, game);
+	//mCurScene = std::make_unique<ui::MainScene>(resolutionRect);
+
+	setScene("main");
+}
+
+void ApplicationView::loadScene(const std::string& name, std::shared_ptr<ui::Scene> scene)
+{
+	mScenes[name] = scene;
+}
+
+void ApplicationView::setScene(const std::string& name)
+{
+	mCurScene->onSceneLeave();
+
+	assert(mScenes.contains(name));
+	mCurScene = mScenes.at(name);
+
+	mCurScene->onSceneLoad();
 }
 
 void ApplicationView::resize(float x, float y, const royale::Game& game)
