@@ -37,6 +37,7 @@ namespace ui
 		}
 
 		// draw entities
+		static const float textureScale = 2.0;
 		const auto& entities = mGame.getEntities();
 		for (const auto& [id, entity] : entities)
 		{
@@ -45,14 +46,21 @@ namespace ui
 
 			pos.scale(tileSize);
 			size.scale(tileSize);
-
+		
+			// DEBUG
 			Color color = entityColors.at(entity.getType());
 			DrawRectangle(pos.x, pos.y, size.x, size.y, color);
 
+			float dstX = static_cast<float>(pos.x - size.x / textureScale);
+			float dstY = static_cast<float>(pos.y - size.x / textureScale);
+			float dstWidth = static_cast<float>(size.x * textureScale);
+			float dstHeight = static_cast<float>(size.y * textureScale);
+
 			const Texture2D& texture = mTextureManager.getTexture(entity.getType());
-			Rectangle src = { 0, 0, (float)texture.width, (float)texture.height };
-			Rectangle dst = { pos.x - size.x / 2, pos.y - size.y / 2, size.x * 2, size.y * 2 };
-			DrawTexturePro(texture, src, dst, { 0,0 }, 0.0f, WHITE);
+			Rectangle src = { 0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height) };
+			Rectangle dst = { dstX, dstY, dstWidth, dstHeight };
+
+			DrawTexturePro(texture, src, dst, { 0, 0 }, 0.0f, WHITE);
 		}
 
 		// draw towers

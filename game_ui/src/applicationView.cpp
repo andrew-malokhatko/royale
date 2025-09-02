@@ -29,7 +29,8 @@ void ApplicationView::loadScene(const std::string& name, std::shared_ptr<ui::Sce
 
 void ApplicationView::setScene(const std::string& name)
 {
-	mCurScene->onSceneLeave();
+	if (mCurScene)
+		mCurScene->onSceneLeave();
 
 	assert(mScenes.contains(name));
 	mCurScene = mScenes.at(name);
