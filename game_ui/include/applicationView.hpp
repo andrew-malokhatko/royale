@@ -3,6 +3,7 @@
 #include "View.hpp"
 #include "Scene.hpp"
 #include "SceneManager.hpp"
+#include "client.hpp"
 #include <memory>
 #include <vector>
 #include <unordered_map>
@@ -21,7 +22,7 @@ private:
 	void loadScene(const std::string& name, std::shared_ptr<ui::Scene> scene);
 
 public:
-	ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game);
+	ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game, Net::Client& client);
 
 	//API for ui::SceneManager
 	void setScene(const std::string& name) override;

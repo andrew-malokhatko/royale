@@ -8,7 +8,7 @@ namespace ui
 	void MainScene::findGame()
 	{
 		std::cout << "Find game button triggered" << "\n";
-		mSceneManager.setScene("game");
+		mSceneManager.setScene("search");
 	}
 
     MainScene::MainScene(Rectangle rectangle, SceneManager& sceneManager)

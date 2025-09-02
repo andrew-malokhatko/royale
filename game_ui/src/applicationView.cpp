@@ -1,10 +1,11 @@
 #include "ApplicationView.hpp"
 #include "GameScene.hpp"
 #include "MainScene.hpp"
+#include "SearchScene.hpp"
 #include <cassert>
 
 
-ApplicationView::ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game)
+ApplicationView::ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game, Net::Client& client)
 	:
 	mResolution{ resolutionX, resolutionY },
 	mWindowTitle{ windowTitle }
@@ -15,6 +16,7 @@ ApplicationView::ApplicationView(float resolutionX, float resolutionY, const cha
 
 	loadScene("main", std::make_shared<ui::MainScene>(resolutionRect, *this));
 	loadScene("game", std::make_shared<ui::GameScene>(resolutionRect, *this, game));
+	loadScene("search", std::make_shared<ui::SearchScene>(resolutionRect, client, *this));
 
 	//mCurScene = std::make_unique<ui::GameScene>(resolutionRect, game);
 	//mCurScene = std::make_unique<ui::MainScene>(resolutionRect);

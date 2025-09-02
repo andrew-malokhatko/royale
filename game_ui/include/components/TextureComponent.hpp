@@ -8,11 +8,12 @@ namespace ui
 {
 	class TextureComponent : public Node
 	{
+	protected:
 		Texture2D mTexture;
 
 	public:
 		TextureComponent(Rectangle rec, std::string textureName);
-		~TextureComponent();
+		virtual ~TextureComponent();
 
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;

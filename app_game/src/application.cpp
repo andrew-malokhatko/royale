@@ -5,7 +5,7 @@
 
 Application::Application()
 {
-	mView = new ApplicationView(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, mGame);
+	mView = new ApplicationView(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, mGame, mClient);
 	mClock.startClock();
 	mClient.startConnection();
 }
