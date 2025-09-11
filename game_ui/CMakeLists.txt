@@ -18,6 +18,7 @@ add_library(game_ui
     src/scenes/GameScene.cpp
     src/scenes/MainScene.cpp
     src/scenes/SearchScene.cpp
+    src/scenes/LoadingScene.cpp
 
     src/components/Button.cpp
     src/components/TextureComponent.cpp

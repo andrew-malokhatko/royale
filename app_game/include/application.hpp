@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include "game.hpp"
 #include "clock.hpp"
 #include "View.hpp"
@@ -18,7 +19,9 @@ class Application
 	Net::Client mClient{};
 
 	bool multiplayer = false;
-	bool running = true;
+	std::atomic<bool> running = true;
+
+	void intializeConnection();
 
 public:
 	Application();

@@ -13,7 +13,7 @@ namespace ui
 		Scene(rectangle, sceneManager),
 		mClient(client),
 		mStopSearchButton(Rectangle{ 0, 0, 0, 0 }, "Cancel", [this]() {stopSearch(); }),
-		mLoadingIcon(Rectangle{ 0, 0, 0, 0 }, "loading", 0.2),
+		mLoadingIcon(Rectangle{ 0, 0, 0, 0 }, "loading", 2.0),
 		mBackground{ mRec, "bg" }
 	{
 		addChild(&mBackground);
@@ -46,13 +46,12 @@ namespace ui
 
 	void SearchScene::onSceneLoad()
 	{
-		// possible move to separate thread
-		//mClient.startConnection();
+		// start matchmaking
 	}
 
 	void SearchScene::onSceneLeave()
 	{
-		mClient.endConnection();
+		// stop matchmaking
 	}
 }
 

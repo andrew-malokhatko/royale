@@ -7,7 +7,8 @@
 #include <memory>
 #include <vector>
 #include <unordered_map>
-
+#include <mutex>
+#include <future>
 
 
 class ApplicationView : public royale::View, public ui::SceneManager
@@ -17,6 +18,14 @@ class ApplicationView : public royale::View, public ui::SceneManager
 
 	std::shared_ptr<ui::Scene> mCurScene;
 	std::unordered_map<std::string, std::shared_ptr<ui::Scene>> mScenes{};
+
+	std::string mCurSceneName;
+	std::string loadingScene {};
+	std::string nextScene {};
+	
+	// prevent setScene while drawing
+	std::mutex drawMutex {};
+	//std::shared_future<bool> loadedAllScenes{};
 
 private:
 	void loadScene(const std::string& name, std::shared_ptr<ui::Scene> scene);
@@ -32,4 +41,6 @@ public:
 	void update(const royale::Game& game) override;
 	void render(const royale::Game& game) override;
 	std::vector<std::unique_ptr<royale::Event>> pollEvents() override;
+	void startWaiting() override;
+	void stopWaiting() override;
 };
