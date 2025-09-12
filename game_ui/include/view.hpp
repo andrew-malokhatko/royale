@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game.hpp"
+#include "Packet.hpp"
 #include <memory>
 
 namespace royale
@@ -28,6 +29,11 @@ namespace royale
 		* This function returns events generated during the update function.
 		*/
 		virtual std::vector<std::unique_ptr<Event>> pollEvents() = 0;
+
+		/*
+		* This function updates the UI based on received packets
+		*/
+		virtual void processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets) = 0;
 
 		/*
 		* This function starts watiting state (Usually a loading screen).

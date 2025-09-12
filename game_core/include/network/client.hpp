@@ -20,21 +20,22 @@ namespace Net
 		std::vector<std::unique_ptr<Packet>> incomingPackets{};
 		std::mutex packetsMutex{};
 
+		void receivePackets();
+		void sendPacket(const Packet* packet);
+
 	public:
 		Client();
 		~Client();
 
 		void startConnection(int port = 3490);
 		void endConnection();
-
-		//void sendEvent(Event* event);
-		void sendPacket(const Packet* packet);
-		void receivePackets();
+		
 		std::vector<std::unique_ptr<Packet>> getIncomingPackets();
+		bool isConnected() const;
 
-		bool isConnected();
-
-		// SEPARATE CLASS
+		// Packet API
 		void sendEvent(const royale::Event* event);
+		void findMatch();
+		void stopFindMatch();
 	};
 }

@@ -1,11 +1,13 @@
 #include "PacketHandlerRegistry.hpp"
 #include "CardPlacedPacketHandler.hpp"
+#include "MatchmakingPacketHandler.hpp"
 
 namespace Net
 {
 	PacketHandlerRegistry::PacketHandlerRegistry()
 	{
 		handlers[PacketType::CardPlacedPacket] = new CardPlacedPacketHandler();
+		handlers[PacketType::MatchmakingPacket] = new MatchmakingPacketHandler();
 	}
 
 	PacketHandlerRegistry::~PacketHandlerRegistry()
@@ -18,9 +20,9 @@ namespace Net
 		handlers.clear();
 	}
 
-	void PacketHandlerRegistry::handlePacket(const Packet* packet, Server& server)
+	void PacketHandlerRegistry::handlePacket(const Packet* packet, Server& server, ClientInfo& clientInfo)
 	{
 		PacketHandler* packetHandler = handlers[packet->getType()];
-		packetHandler->handle(packet, server);
+		packetHandler->handle(packet, server, clientInfo);
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Packet.hpp"
+#include "GamePacket.hpp"
 #include "cardPlacedEvent.hpp"
 
 namespace Net
@@ -14,7 +14,7 @@ namespace Net
 	};
 #pragma pack(pop)
 
-	class CardPlacedPacket : public Packet
+	class CardPlacedPacket : public GamePacket
 	{
 		CardPlacedPacketData mData {};
 
@@ -23,7 +23,7 @@ namespace Net
 		~CardPlacedPacket() = default;
 
 		PacketType getType() const override;
-		std::unique_ptr<royale::Event> getEvent() const;
+		std::unique_ptr<royale::Event> getEvent() const override;
 
 		std::vector<uint8_t> pack() const override;
 		static CardPlacedPacket unpack(const std::vector<uint8_t>& buffer);

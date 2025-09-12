@@ -1,12 +1,12 @@
 #include "server.hpp"
 
-
 #include "NetUtils.hpp"
 #include <thread>
 #include <string>
 #include <iostream>
 #include <cassert>
-#include <CardPlacedPacket.hpp>
+#include "CardPlacedPacket.hpp"
+#include "MatchmakingPacket.hpp"
 
 namespace Net
 {
@@ -156,10 +156,10 @@ namespace Net
 		while (isActive())
 		{
 			clientsMutex.lock();
-			const ClientInfo& clientInfo = clients[clientId];
+			ClientInfo& clientInfo = clients[clientId];
+			SOCKET clientSocket = clientInfo.socket;
 			clientsMutex.unlock();
 
-			SOCKET clientSocket = clientInfo.socket;
 			std::vector<uint8_t> data(4096); // 4 Kib
 
 			int bytesReceived = recv(clientSocket, reinterpret_cast<char*>(data.data()), data.size(), 0);
@@ -169,8 +169,9 @@ namespace Net
 			}
 			data.resize(bytesReceived);
 
+			std::lock_guard lock(clientsMutex);
 			auto packet = packetFromBytes(data);
-			packetHandler.handlePacket(packet.get(), *this);
+			packetHandler.handlePacket(packet.get(), *this, clientInfo);
 		}
 
 		// Do not forget to join the thread after it has finished the execution
@@ -204,7 +205,7 @@ namespace Net
 		// first gather the sockets and only then send data
 		// this avoids long blocking that IO operations have
 		{
-			std::lock_guard<std::mutex> lock(clientsMutex);
+			std::lock_guard lock(clientsMutex);
 			for (const auto& [id, clientInfo] : clients)
 			{
 				clientSockets.push_back(clientInfo.socket);
@@ -216,5 +217,34 @@ namespace Net
 		{
 			sendPacketSock(socket, packet);
 		}
+	}
+
+	void Server::findGame(client_id clientId)
+	{
+		std::lock_guard lock(clientsMutex);
+
+		assert(clients.contains(clientId));
+		queuedClients.insert(clientId);
+
+		if (queuedClients.size() >= 2)
+		{
+			auto matchPacket = std::make_unique<MatchmakingPacket>(MatchmakingEvent::START);
+
+			client_id player1 = *(queuedClients.begin());
+			client_id player2 = *(++queuedClients.begin());
+
+			sendPacket(player1, matchPacket.get());
+			sendPacket(player2, matchPacket.get());
+		}
+	}
+
+	void Server::stopFindGame(client_id clientId)
+	{
+		std::lock_guard lock(clientsMutex);
+
+		queuedClients.erase(clientId);
+
+		//auto matchPacket = std::make_unique<MatchmakingPacket>(MatchmakingEvent::STOP);
+		//sendPacket(clientId, matchPacket.get());
 	}
 }

@@ -7,7 +7,7 @@
 namespace Net
 {
 	
-	void CardPlacedPacketHandler::handle(const Packet* packet, Server& server)
+	void CardPlacedPacketHandler::handle(const Packet* packet, Server& server, ClientInfo& clientInfo)
 	{
 		// This is how you could cast the packet
 		// to process it on the server

@@ -76,6 +76,11 @@ std::vector<std::unique_ptr<royale::Event>>	ApplicationView::pollEvents()
 	return mCurScene->pollEvents();
 }
 
+void ApplicationView::processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets)
+{
+	mCurScene->processPackets(packets);
+}
+
 void ApplicationView::startWaiting()
 {
 	//nextScene = mCurSceneName;	// save the current scene

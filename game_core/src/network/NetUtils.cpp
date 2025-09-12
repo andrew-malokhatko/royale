@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cassert>
 #include "CardPlacedPacket.hpp"
+#include "MatchmakingPacket.hpp"
 #include "event.hpp"
 
 namespace Net
@@ -79,6 +80,9 @@ namespace Net
 		{
 		case PacketType::CardPlacedPacket:
 			return std::make_unique<CardPlacedPacket>(CardPlacedPacket::unpack(bytes));
+
+		case PacketType::MatchmakingPacket:
+			return std::make_unique<MatchmakingPacket>(MatchmakingPacket::unpack(bytes));
 		}
 
 		assert(false);

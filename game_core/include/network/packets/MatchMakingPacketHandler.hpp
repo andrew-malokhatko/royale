@@ -2,7 +2,7 @@
 
 namespace Net
 {
-    class CardPlacedPacketHandler : public PacketHandler
+    class MatchmakingPacketHandler : public PacketHandler
     {
     public:
         void handle(const Packet* packet, Server& server, ClientInfo& clientInfo) override;

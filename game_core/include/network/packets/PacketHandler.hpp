@@ -8,6 +8,7 @@ namespace Net
 	// this way packet handler can store unique instructions for the 
 	// server to execute for the packet
 	class Server;
+	struct ClientInfo;
 
 	class PacketHandler
 	{
@@ -16,6 +17,6 @@ namespace Net
 		//	This function handles the specific packet
 		//  It uses server to send responses to the packets or save some data
 		//
-		virtual void handle(const Packet* packet, Server& server) = 0;
+		virtual void handle(const Packet* packet, Server& server, ClientInfo& clientInfo) = 0;
 	};
 }

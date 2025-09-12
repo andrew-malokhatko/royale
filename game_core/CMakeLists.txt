@@ -29,6 +29,8 @@ add_library(game_core
     src/network/packets/CardPlacedPacket.cpp
     src/network/packets/PacketHandlerRegistry.cpp
     src/network/packets/CardPlacedPacketHandler.cpp
+    src/network/packets/MatchmakingPacket.cpp
+
     src/common/components/AttackComponent.cpp
     src/common/components/HealthComponent.cpp
     src/common/components/MovementComponent.cpp
@@ -42,7 +44,8 @@ add_library(game_core
     src/common/strategies/attack/ArrowAttackStrategy.cpp
     src/common/strategies/attack/MeleeAttackStrategy.cpp
     src/common/strategies/movement/AccelerateMovementStrategy.cpp
-)
+ 
+ "src/network/packets/MatchMakingPacketHandler.cpp")
 
 target_include_directories(game_core
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
