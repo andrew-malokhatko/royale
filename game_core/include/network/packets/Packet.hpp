@@ -29,6 +29,5 @@ namespace Net
 		virtual ~Packet() = default;
 		virtual std::vector<uint8_t> pack() const = 0;
 		virtual PacketType getType() const = 0;
-		virtual std::unique_ptr<royale::Event> getEvent() const = 0;
 	};
 }

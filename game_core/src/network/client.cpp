@@ -1,6 +1,7 @@
 #include "client.hpp"
 
 #include "NetUtils.hpp"
+#include "MatchmakingPacket.hpp"
 #include <string>
 #include <iostream>
 #include <winsock2.h>
@@ -123,7 +124,7 @@ namespace Net
 		return std::move(incomingPackets);
 	}
 
-	bool Client::isConnected()
+	bool Client::isConnected() const
 	{
 		return mConnected.load();
 	}
@@ -133,5 +134,17 @@ namespace Net
 		auto packet = event->getPacket();
 
 		sendPacket(packet.get());
+	}
+
+	void Client::findMatch()
+	{
+		auto matchPacket = std::make_unique<MatchmakingPacket>(MatchmakingEvent::START);
+		sendPacket(matchPacket.get());
+	}
+
+	void Client::stopFindMatch()
+	{
+		auto matchPacket = std::make_unique<MatchmakingPacket>(MatchmakingEvent::STOP);
+		sendPacket(matchPacket.get());
 	}
 }

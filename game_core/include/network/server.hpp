@@ -6,21 +6,14 @@
 #include <thread>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <set>
+#include "ClientInfo.hpp"
 #include "PacketHandlerRegistry.hpp"
 
 namespace Net
 {
 	class Server
 	{
-		using client_id = size_t;
-
-		struct ClientInfo
-		{
-			client_id id;
-			SOCKET socket;
-			sockaddr_storage address;
-		};
-
 		static constexpr int BACKLOG = 10;	// Maximum number of pending connections
 
 		int mServerSocket{};
@@ -30,10 +23,12 @@ namespace Net
 
 		std::unordered_map<client_id, ClientInfo> clients;
 		std::unordered_map<client_id, std::thread> clientThreads;
-		std::mutex clientsMutex;
+		std::set<client_id> queuedClients{};
+		std::recursive_mutex clientsMutex;
 
 		PacketHandlerRegistry packetHandler{};
 
+	private:
 		void listenForClients();
 		void handleClient(client_id clientId);
 		void sendPacketSock(SOCKET socket, const Packet* packet) const;
@@ -48,5 +43,8 @@ namespace Net
 
 		void broadcast(const Packet* packet);
 		void sendPacket(client_id clientId, const Packet* packet);
+
+		void findGame(client_id clientId);
+		void stopFindGame(client_id clientId);
 	};
 }

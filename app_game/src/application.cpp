@@ -61,9 +61,37 @@ void Application::update()
 
 		// receive packets from yourself and other clients
 		auto packets = mClient.getIncomingPackets();
-		auto events = eventsFromPackets(packets);
 
-		mGame.processEvents(events);
+		std::vector<std::unique_ptr<Net::GamePacket>> gamePackets;
+		std::vector<std::unique_ptr<Net::Packet>> UIPackets;
+
+		// sort packets
+		for (auto& packet : packets)
+		{
+			uint32_t mask = getPacketMask(packet->getType());
+
+			switch (mask)
+			{
+			case Net::pack::GameOffset:
+				{
+					auto* gp = static_cast<Net::GamePacket*>(packet.release());
+					gamePackets.emplace_back(gp);
+					break;
+				}
+
+			case Net::pack::UIOffset:
+				UIPackets.emplace_back(std::move(packet));
+				break;
+			}
+		}
+
+		auto gameEvents = eventsFromPackets(gamePackets);
+		mGame.processEvents(gameEvents);
+
+		mView->processPackets(UIPackets);
+		//
+		// Process UI Packets
+		//
 	}
 	else
 	{

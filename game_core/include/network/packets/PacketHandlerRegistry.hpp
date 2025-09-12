@@ -16,6 +16,6 @@ namespace Net
 		//
 		// This function matches handlers with corresponding packet types
 		//
-		void handlePacket(const Packet* packet, Server& server);
+		void handlePacket(const Packet* packet, Server& server, ClientInfo& clientInfo);
 	};
 }

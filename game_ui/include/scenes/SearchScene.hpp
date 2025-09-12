@@ -26,5 +26,7 @@ namespace ui
 
 		void onSceneLoad() override;
 		void onSceneLeave() override;
+
+		void processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets) override;
 	};
 }

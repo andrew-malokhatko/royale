@@ -41,6 +41,7 @@ public:
 	void update(const royale::Game& game) override;
 	void render(const royale::Game& game) override;
 	std::vector<std::unique_ptr<royale::Event>> pollEvents() override;
+	void processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets) override;
 	void startWaiting() override;
 	void stopWaiting() override;
 };

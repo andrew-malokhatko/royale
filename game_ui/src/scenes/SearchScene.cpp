@@ -1,10 +1,12 @@
 #include "SearchScene.hpp"
+#include "MatchmakingPacket.hpp"
 
 namespace ui
 {
 	void SearchScene::stopSearch()
 	{
 		// other logic is handled in onSceneLeave method (e.g client disconnect)
+		mClient.stopFindMatch();
 		mSceneManager.setScene("main");
 	}
 
@@ -46,12 +48,34 @@ namespace ui
 
 	void SearchScene::onSceneLoad()
 	{
-		// start matchmaking
+		mClient.findMatch();
 	}
 
 	void SearchScene::onSceneLeave()
 	{
-		// stop matchmaking
+		mClient.stopFindMatch();
+	}
+
+	void SearchScene::processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets)
+	{
+		for (const auto& packet : packets)
+		{
+			if (packet->getType() == Net::PacketType::MatchmakingPacket)
+			{
+				auto* matchPacket = static_cast<Net::MatchmakingPacket*>(packet.get());
+
+				Net::MatchmakingEvent packetEvent = matchPacket->getEvent();
+
+				if (packetEvent == Net::MatchmakingEvent::START)
+				{
+					mSceneManager.setScene("game");
+				}
+				else if (packetEvent == Net::MatchmakingEvent::STOP)
+				{
+					mSceneManager.setScene("main");
+				}
+			}
+		}
 	}
 }
 
