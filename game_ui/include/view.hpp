@@ -29,5 +29,14 @@ namespace royale
 		*/
 		virtual std::vector<std::unique_ptr<Event>> pollEvents() = 0;
 
+		/*
+		* This function starts watiting state (Usually a loading screen).
+		*/
+		virtual void startWaiting() = 0;
+
+		/*
+		* This function stops the waiting state (View behaves normally). 
+		*/
+		virtual void stopWaiting() = 0;
 	};
 }

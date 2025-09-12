@@ -3,26 +3,48 @@
 #include "Utils.hpp"
 #include <memory>
 
+// block until the connection is established
+void Application::intializeConnection()
+{
+	while (running && !mClient.isConnected())
+	{
+		mClient.startConnection();
+		multiplayer = true;
+	}
+}
+
 Application::Application()
 {
-	mView = new ApplicationView(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, mGame);
+	mView = new ApplicationView(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, mGame, mClient);
+	mView->startWaiting();	// display a loading screen until everything is unitalized
+
 	mClock.startClock();
-	mClient.startConnection();
+	std::thread([this]() {
+		intializeConnection();
+		mView->stopWaiting();	// restore the scene after the connection was established
+	}).detach();
 }
 
 Application::~Application()
 {
 	CloseWindow();
-} 
+	running = false;
+}
 
 void Application::update()
 {
+	if (WindowShouldClose())
+		running = false;
+
+	mView->update(mGame);
+
+	if (!running || !mClient.isConnected())
+		return;
+
 	// delta time seconds
 	double dt = mClock.getTimeSinceLastCall();
 
 	mGame.update(dt);
-	mView->update(mGame);
-
 
 	///
 	/// EXRACT THIS LOGIC TO SEPARAE FILE
@@ -46,11 +68,6 @@ void Application::update()
 	else
 	{
 		mGame.processEvents(clientEvents);
-	}
-
-	if (WindowShouldClose())
-	{
-		running = false;
 	}
 }
 
