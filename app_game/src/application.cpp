@@ -22,7 +22,7 @@ Application::Application()
 	std::thread([this]() {
 		intializeConnection();
 		mView->stopWaiting();	// restore the scene after the connection was established
-	}).detach();
+		}).detach();
 }
 
 Application::~Application()
@@ -36,32 +36,22 @@ void Application::update()
 	if (WindowShouldClose())
 		running = false;
 
-	mView->update(mGame);
+	if (running && mClient.isConnected())
+	{ 
+		// delta time seconds
+		double dt = mClock.getTimeSinceLastCall();
+		mGame.update(dt);
 
-	if (!running || !mClient.isConnected())
-		return;
-
-	// delta time seconds
-	double dt = mClock.getTimeSinceLastCall();
-
-	mGame.update(dt);
-
-	///
-	/// EXRACT THIS LOGIC TO SEPARAE FILE
-	/// 
-	auto clientEvents = mView->pollEvents();
-
-	if (multiplayer)
-	{
-		// send generated events to the server for validation etc.
+		///
+		/// EXRACT THIS LOGIC TO SEPARAE FILE
+		/// 
+		auto clientEvents = mView->pollEvents();
 		for (const auto& event : clientEvents)
 		{
 			mClient.sendEvent(event.get());
 		}
 
-		// receive packets from yourself and other clients
 		auto packets = mClient.getIncomingPackets();
-
 		std::vector<std::unique_ptr<net::GamePacket>> gamePackets;
 		std::vector<std::unique_ptr<net::Packet>> UIPackets;
 
@@ -73,12 +63,12 @@ void Application::update()
 			switch (mask)
 			{
 			case net::pack::GameOffset:
-				{
-					auto* gp = static_cast<net::GamePacket*>(packet.release());
-					gamePackets.emplace_back(gp);
-					break;
-				}
- 
+			{
+				auto* gp = static_cast<net::GamePacket*>(packet.release());
+				gamePackets.emplace_back(gp);
+				break;
+			}
+
 			case net::pack::UIOffset:
 				UIPackets.emplace_back(std::move(packet));
 				break;
@@ -90,10 +80,8 @@ void Application::update()
 
 		mView->processPackets(UIPackets);
 	}
-	else
-	{
-		mGame.processEvents(clientEvents);
-	}
+
+	mView->update(mGame);
 }
 
 void Application::draw()

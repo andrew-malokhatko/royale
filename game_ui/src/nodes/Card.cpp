@@ -5,10 +5,7 @@ namespace ui
 {
 	void Card::loadTexture()
 	{
-		auto& textureManager = TextureManager::getInstance();
-		const auto& texture = textureManager.getTexture(mCard);
-
-		Image image = LoadImageFromTexture(texture);
+		Image image = mTextureManager.GetImage(mCard);
 		ImageResize(&image, mRec.width, mRec.height);
 
 		UnloadTexture(mTexture);

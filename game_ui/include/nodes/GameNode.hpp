@@ -33,9 +33,11 @@ namespace ui
 
 	public:
 		GameNode(Rectangle rectangle, const royale::Game& game);
+		void onGameStart();
 
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;
+		void updateSelf() override;
 
 		Rectangle getViewPort()  override;
 		Vector2 getLayout() override;

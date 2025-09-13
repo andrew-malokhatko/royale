@@ -88,6 +88,20 @@ namespace ui
 		setSize({ static_cast<float>(finalWidth), static_cast<float>(finalHeight) });
 	}
 
+	void GameNode::updateSelf()
+	{
+		const auto& entities = mGame.getEntities();
+
+		std::vector<royale::EntityType> transformed;
+		transformed.reserve(entities.size());
+
+		std::transform(entities.begin(), entities.end(), std::back_inserter(transformed),
+			[](auto const& kv) {
+				return kv.second.getType();
+			});
+
+		mTextureManager.loadTextures(transformed);
+	}
 
 	Rectangle GameNode::getViewPort()
 	{

@@ -32,6 +32,21 @@ EntityTexture::EntityTexture(Texture2D&& texture)
 	texture.id = 0;
 }
 
+EntityTexture::EntityTexture(const Image& forward, const Image& back)
+	:
+	mForward(LoadTextureFromImage(forward)),
+	mBack(LoadTextureFromImage(back))
+{
+}
+
+EntityTexture::EntityTexture(const Image& image)
+{
+	Texture2D texture = LoadTextureFromImage(image);
+
+	mForward = texture;
+	mBack = texture;
+}
+
 EntityTexture::EntityTexture(EntityTexture&& entityTexture) noexcept
 	:
 	mForward{ std::move(entityTexture.mForward) },

@@ -3,7 +3,7 @@
 #include "Node.hpp"
 #include "colorScheme.hpp"
 #include "CardType.hpp"
-
+#include "TextureManager.hpp"
 
 namespace ui
 {
@@ -11,6 +11,7 @@ namespace ui
 	{
 		royale::CardType mCard{};
 
+		TextureManager mTextureManager{};
 		Texture2D mTexture{};
 
 		bool mSelected{};

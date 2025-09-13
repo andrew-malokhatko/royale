@@ -3,60 +3,50 @@
 
 namespace ui
 {
-
 	TextureManager::TextureManager()
 	{
-		LoadTextures();
+		if (InstanceCount == 0)
+			LoadImages();
+
+		InstanceCount++;
 	}
 
 	TextureManager::~TextureManager()
 	{
-		UnloadTextures();
+		InstanceCount--;
+
+		if (InstanceCount == 0)
+			UnloadImages();
 	}
 
-	void TextureManager::LoadTextures()
+	void TextureManager::LoadImages()
 	{
-		for (auto& [card, str] : royale::STRING_FROM_CARD)
+		LoadedImages = std::async(std::launch::async, []() {
+			for (auto& [card, str] : royale::STRING_FROM_CARD)
+			{
+				std::string fileName = std::format("assets/cards/{}.png", str);
+				Images[card] = LoadImage(fileName.c_str());
+			}
+		});
+	}
+
+	void TextureManager::UnloadImages()
+	{
+		assert(LoadedImages.valid());
+		LoadedImages.wait();
+
+		for (auto& [type, texture] : Images)
 		{
-			std::string fileName = std::format("assets/cards/{}.png", str);
-			mTextures[card] = LoadTexture(fileName.c_str());
+			UnloadImage(texture);
 		}
+		Images.clear();
 	}
 
-	void TextureManager::UnloadTextures()
+	Image TextureManager::GetImage(royale::CardType card)
 	{
-		for (auto& [type, texture] : mTextures)
-		{
-			UnloadTexture(texture);
-		}
-		mTextures.clear();
+		assert(LoadedImages.valid());
+		LoadedImages.wait();
+
+		return ImageCopy(Images.at(card));
 	}
-
-	const TextureManager& TextureManager::getInstance()
-	{
-		static TextureManager instance;
-		return instance;
-	}
-
-
-	//void TextureManager::ResizeCards(int width, int height)
-	//{
-	//	for (auto& [type, texture] : textures)
-	//	{
-	//		Image image = LoadImageFromTexture(texture);
-
-	//		ImageResize(&image, width, height);
-
-	//		UnloadTexture(texture);
-	//		texture = LoadTextureFromImage(image);
-
-	//		UnloadImage(image);
-	//	}
-	//}
-
-	const Texture2D& TextureManager::getTexture(royale::CardType card) const
-	{
-		return mTextures.at(card);
-	}
-
 }

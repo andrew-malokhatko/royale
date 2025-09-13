@@ -13,6 +13,9 @@ public:
 	EntityTexture(Texture2D&& forward, Texture2D&& back);
 	EntityTexture(Texture2D&& texture);
 
+	EntityTexture(const Image& forward, const Image& back);
+	EntityTexture(const Image& image);
+
 	EntityTexture(const EntityTexture& entityTexture) = delete;
 	EntityTexture& operator=(const EntityTexture& rhs) = delete;
 
