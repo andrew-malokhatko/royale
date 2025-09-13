@@ -12,7 +12,7 @@ namespace royale
 	class Event;
 }
 
-namespace Net
+namespace net
 {
 
 #pragma pack(push, 1)

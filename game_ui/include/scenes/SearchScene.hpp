@@ -9,7 +9,7 @@ namespace ui
 {
 	class SearchScene : public Scene
 	{
-		Net::Client& mClient;
+		net::Client& mClient;
 
 		Button mStopSearchButton;
 		LoadingIcon mLoadingIcon;
@@ -19,7 +19,7 @@ namespace ui
 		void stopSearch();
 
 	public:
-		SearchScene(Rectangle rectangle, Net::Client& client, SceneManager& sceneManager);
+		SearchScene(Rectangle rectangle, net::Client& client, SceneManager& sceneManager);
 
 		void drawSelf() const override;
 		void resizeSelf(int width, int height) override;
@@ -27,6 +27,6 @@ namespace ui
 		void onSceneLoad() override;
 		void onSceneLeave() override;
 
-		void processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets) override;
+		void processPackets(const std::vector<std::unique_ptr<net::Packet>>& packets) override;
 	};
 }

@@ -2,10 +2,11 @@
 
 #include <cstdint>
 
-namespace Net
+namespace net
 {
 	namespace pack
 	{
+		static constexpr uint32_t PacketMask =	0x0000000f;
 		static constexpr uint32_t OffsetMask =	0xfffffff0;
 		static constexpr uint32_t GameOffset =	0x00000010;
 		static constexpr uint32_t UIOffset =	0x00000100;

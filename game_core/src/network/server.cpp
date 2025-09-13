@@ -8,7 +8,7 @@
 #include "CardPlacedPacket.hpp"
 #include "MatchmakingPacket.hpp"
 
-namespace Net
+namespace net
 {
 	Server::Server()
 	{

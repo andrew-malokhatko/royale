@@ -2,6 +2,6 @@
 
 int main()
 {
-	Net::Server server = Net::Server();
+	net::Server server = net::Server();
 	server.start();
 }

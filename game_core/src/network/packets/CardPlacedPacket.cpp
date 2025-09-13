@@ -1,7 +1,7 @@
 #include "CardPlacedPacket.hpp"
 #include <cassert>
 
-namespace Net
+namespace net
 {
 	CardPlacedPacket::CardPlacedPacket(const royale::CardPlacedEvent& event)
 	{

@@ -16,7 +16,7 @@ class Application
 	royale::Game mGame {};
 	royale::View* mView {};
 
-	Net::Client mClient{};
+	net::Client mClient{};
 
 	bool multiplayer = false;
 	std::atomic<bool> running = true;

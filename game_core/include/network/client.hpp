@@ -8,7 +8,7 @@
 #include "Packet.hpp"
 #include "event.hpp"
 
-namespace Net
+namespace net
 {
 	class Client
 	{

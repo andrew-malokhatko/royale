@@ -3,7 +3,7 @@
 #include "GamePacket.hpp"
 #include "cardPlacedEvent.hpp"
 
-namespace Net
+namespace net
 {
 #pragma pack(push, 1)
 	struct CardPlacedPacketData : public PacketData

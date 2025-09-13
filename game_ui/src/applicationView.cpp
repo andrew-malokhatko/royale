@@ -6,7 +6,7 @@
 #include <cassert>
 #include <future>
 
-ApplicationView::ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game, Net::Client& client)
+ApplicationView::ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game, net::Client& client)
 	:
 	mResolution{ resolutionX, resolutionY },
 	mWindowTitle{ windowTitle }
@@ -76,7 +76,7 @@ std::vector<std::unique_ptr<royale::Event>>	ApplicationView::pollEvents()
 	return mCurScene->pollEvents();
 }
 
-void ApplicationView::processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets)
+void ApplicationView::processPackets(const std::vector<std::unique_ptr<net::Packet>>& packets)
 {
 	mCurScene->processPackets(packets);
 }

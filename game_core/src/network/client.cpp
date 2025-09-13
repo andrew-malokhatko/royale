@@ -9,7 +9,7 @@
 #include <thread>
 #include <cassert>
 
-namespace Net
+namespace net
 {
 	Client::Client()
 	{

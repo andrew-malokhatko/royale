@@ -2,7 +2,7 @@
 
 #include "Packet.hpp"
 
-namespace Net
+namespace net
 {
 	enum MatchmakingEvent
 	{

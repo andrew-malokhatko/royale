@@ -7,7 +7,7 @@
 #include "packet.hpp"
 #include "event.hpp"
 
-namespace Net
+namespace net
 {
 	void initWSA();
 

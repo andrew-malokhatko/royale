@@ -4,9 +4,8 @@
 #include "server.hpp"
 #include <cassert>
 
-namespace Net
+namespace net
 {
-	
 	void MatchmakingPacketHandler::handle(const Packet* packet, Server& server, ClientInfo& clientInfo)
 	{
 		const MatchmakingPacket* matchPacket = static_cast<const MatchmakingPacket*>(packet);

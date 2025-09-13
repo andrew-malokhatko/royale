@@ -16,9 +16,9 @@ namespace royale
 		game.placeCard(mCard, mPosition);
 	}
 
-	std::unique_ptr<Net::Packet> CardPlacedEvent::getPacket() const
+	std::unique_ptr<net::Packet> CardPlacedEvent::getPacket() const
 	{
-		return std::make_unique<Net::CardPlacedPacket>(*this);
+		return std::make_unique<net::CardPlacedPacket>(*this);
 	}
 
 	Vector2 CardPlacedEvent::getPosition() const

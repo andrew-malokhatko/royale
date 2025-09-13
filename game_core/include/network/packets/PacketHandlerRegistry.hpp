@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include "PacketHandler.hpp"
 
-namespace Net
+namespace net
 {
 	class PacketHandlerRegistry
 	{

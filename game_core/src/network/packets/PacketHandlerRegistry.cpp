@@ -2,7 +2,7 @@
 #include "CardPlacedPacketHandler.hpp"
 #include "MatchmakingPacketHandler.hpp"
 
-namespace Net
+namespace net
 {
 	PacketHandlerRegistry::PacketHandlerRegistry()
 	{

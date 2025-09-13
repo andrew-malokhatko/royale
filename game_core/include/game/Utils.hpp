@@ -2,9 +2,9 @@
 
 #include "GamePacket.hpp"
 
-std::vector<std::unique_ptr<Net::Packet>> packetsFromEvents(const std::vector<std::unique_ptr<royale::Event>>& events)
+std::vector<std::unique_ptr<net::Packet>> packetsFromEvents(const std::vector<std::unique_ptr<royale::Event>>& events)
 {
-	std::vector<std::unique_ptr<Net::Packet>> packets{};
+	std::vector<std::unique_ptr<net::Packet>> packets{};
 	packets.reserve(events.size());
 
 	for (const auto& event : events)
@@ -15,7 +15,7 @@ std::vector<std::unique_ptr<Net::Packet>> packetsFromEvents(const std::vector<st
 	return packets;
 }
 
-std::vector<std::unique_ptr<royale::Event>> eventsFromPackets(const std::vector<std::unique_ptr<Net::GamePacket>>& packets)
+std::vector<std::unique_ptr<royale::Event>> eventsFromPackets(const std::vector<std::unique_ptr<net::GamePacket>>& packets)
 {
 	std::vector<std::unique_ptr<royale::Event>> events{};
 	events.reserve(packets.size());

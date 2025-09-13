@@ -25,7 +25,7 @@ namespace royale
 
 		// Each event can be applied to a game 
 		virtual void apply(Game& game) = 0;
-		virtual std::unique_ptr<Net::Packet> getPacket() const = 0;
+		virtual std::unique_ptr<net::Packet> getPacket() const = 0;
 
 		EventType getEventType() const
 		{

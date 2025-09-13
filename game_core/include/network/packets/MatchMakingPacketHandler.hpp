@@ -1,6 +1,6 @@
 #include "PacketHandler.hpp"
 
-namespace Net
+namespace net
 {
     class MatchmakingPacketHandler : public PacketHandler
     {

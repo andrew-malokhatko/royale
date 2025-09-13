@@ -4,13 +4,11 @@
 #include "server.hpp"
 #include <cassert>
 
-namespace Net
+namespace net
 {
 	
 	void CardPlacedPacketHandler::handle(const Packet* packet, Server& server, ClientInfo& clientInfo)
 	{
-		// This is how you could cast the packet
-		// to process it on the server
 		const CardPlacedPacket* cardPacket = static_cast<const CardPlacedPacket*>(packet);
 
 		server.broadcast(packet);

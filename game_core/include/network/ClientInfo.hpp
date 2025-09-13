@@ -2,7 +2,7 @@
 
 #include <winsock2.h>
 
-namespace Net
+namespace net
 {
 	using client_id = size_t;
 

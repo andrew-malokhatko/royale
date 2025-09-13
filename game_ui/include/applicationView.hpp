@@ -31,7 +31,7 @@ private:
 	void loadScene(const std::string& name, std::shared_ptr<ui::Scene> scene);
 
 public:
-	ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game, Net::Client& client);
+	ApplicationView(float resolutionX, float resolutionY, const char* windowTitle, const royale::Game& game, net::Client& client);
 
 	//API for ui::SceneManager
 	void setScene(const std::string& name) override;
@@ -41,7 +41,7 @@ public:
 	void update(const royale::Game& game) override;
 	void render(const royale::Game& game) override;
 	std::vector<std::unique_ptr<royale::Event>> pollEvents() override;
-	void processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets) override;
+	void processPackets(const std::vector<std::unique_ptr<net::Packet>>& packets) override;
 	void startWaiting() override;
 	void stopWaiting() override;
 };

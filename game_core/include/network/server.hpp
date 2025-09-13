@@ -10,7 +10,7 @@
 #include "ClientInfo.hpp"
 #include "PacketHandlerRegistry.hpp"
 
-namespace Net
+namespace net
 {
 	class Server
 	{

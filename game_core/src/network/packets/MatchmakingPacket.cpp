@@ -1,7 +1,7 @@
 #include "MatchmakingPacket.hpp"
 #include <cassert>
 
-namespace Net
+namespace net
 {
 	MatchmakingPacket::MatchmakingPacket(MatchmakingEvent event)
 	{

@@ -10,7 +10,7 @@ namespace ui
 		mSceneManager.setScene("main");
 	}
 
-	SearchScene::SearchScene(Rectangle rectangle, Net::Client& client, SceneManager& sceneManager)
+	SearchScene::SearchScene(Rectangle rectangle, net::Client& client, SceneManager& sceneManager)
 		:
 		Scene(rectangle, sceneManager),
 		mClient(client),
@@ -56,21 +56,21 @@ namespace ui
 		mClient.stopFindMatch();
 	}
 
-	void SearchScene::processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets)
+	void SearchScene::processPackets(const std::vector<std::unique_ptr<net::Packet>>& packets)
 	{
 		for (const auto& packet : packets)
 		{
-			if (packet->getType() == Net::PacketType::MatchmakingPacket)
+			if (packet->getType() == net::PacketType::MatchmakingPacket)
 			{
-				auto* matchPacket = static_cast<Net::MatchmakingPacket*>(packet.get());
+				auto* matchPacket = static_cast<net::MatchmakingPacket*>(packet.get());
 
-				Net::MatchmakingEvent packetEvent = matchPacket->getEvent();
+				net::MatchmakingEvent packetEvent = matchPacket->getEvent();
 
-				if (packetEvent == Net::MatchmakingEvent::START)
+				if (packetEvent == net::MatchmakingEvent::START)
 				{
 					mSceneManager.setScene("game");
 				}
-				else if (packetEvent == Net::MatchmakingEvent::STOP)
+				else if (packetEvent == net::MatchmakingEvent::STOP)
 				{
 					mSceneManager.setScene("main");
 				}

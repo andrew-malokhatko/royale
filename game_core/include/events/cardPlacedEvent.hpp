@@ -15,7 +15,7 @@ namespace royale
 	public:
 		CardPlacedEvent(Vector2 position, CardType card);
 		void apply(Game& game) override;
-		std::unique_ptr<Net::Packet> getPacket() const override;
+		std::unique_ptr<net::Packet> getPacket() const override;
 
 		Vector2 getPosition() const;
 		CardType getCard() const;

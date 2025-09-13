@@ -33,7 +33,7 @@ namespace royale
 		/*
 		* This function updates the UI based on received packets
 		*/
-		virtual void processPackets(const std::vector<std::unique_ptr<Net::Packet>>& packets) = 0;
+		virtual void processPackets(const std::vector<std::unique_ptr<net::Packet>>& packets) = 0;
 
 		/*
 		* This function starts watiting state (Usually a loading screen).

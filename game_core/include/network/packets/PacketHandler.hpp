@@ -2,7 +2,7 @@
 
 #include "Packet.hpp"
 
-namespace Net
+namespace net
 {
 	// Predefinition of server class
 	// this way packet handler can store unique instructions for the 
@@ -15,7 +15,6 @@ namespace Net
 	public:
 		//
 		//	This function handles the specific packet
-		//  It uses server to send responses to the packets or save some data
 		//
 		virtual void handle(const Packet* packet, Server& server, ClientInfo& clientInfo) = 0;
 	};
